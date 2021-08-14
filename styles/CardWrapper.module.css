@@ -1,0 +1,26 @@
+.wrapperTitle{
+    color: black;
+    font-size: 25px;
+}
+
+.seeMore{
+    font-size: small;
+    color: var(--orange-blur);
+    font-weight: bold;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .wrapperTitle{
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    .wrapperTitle{
+        font-size: 36px;
+    }
+}
+
+@media (min-width: 1200px) {}
+
+@media (min-width: 1400px) {}

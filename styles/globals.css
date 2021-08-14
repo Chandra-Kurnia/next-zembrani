@@ -14,3 +14,31 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root{
+  --orange-blur: #FFCD61;
+  --custom-grey: #B8BECD;
+  --footer-color: #F9F9FB;
+  --custom-black: #393939;
+}
+
+@font-face {
+  font-family: 'mulish';
+  src: url('../assets/fonts/mulish/Mulish-Black.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'playfair';
+  src: url('../assets/fonts/playfair/playfairdisplay-black-webfont.woff2') format('woff2'), url('../assets/fonts/playfair/playfairdisplay-black-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nunito';
+  src: url('../assets/fonts/nunito/nunito-black-webfont.woff2') format('woff2'), url('../assets/fonts/nunito/nunito-black-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
