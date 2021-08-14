@@ -16,11 +16,13 @@
   font-size: 40px;
   display: block;
   margin-bottom: 25px;
+  font-family: 'Custom-font', playfair;
 }
 
 .spanFinder {
   color: white;
   font-size: 20px;
+  font-family: 'Custom-font', nunito2;
 }
 
 .hrWrap {
@@ -32,11 +34,13 @@
 .testimonial {
   color: black;
   font-size: 25px;
+  font-family: 'Custom-font', playfair;
 }
 
 .leftTesti{
   padding-right: 20px;
   text-align: justify;
+  font-family: 'Custom-font', mulish;
 }
 
 .imgTesti{
@@ -72,6 +76,10 @@
   .leftTesti{
     padding-right: 200px;
     padding-top: 120px;
+  }
+
+  .testimonial{
+    font-size: 36px;
   }
 }
 

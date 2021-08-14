@@ -10,11 +10,11 @@ import Line from '../../assets/img/line.png';
 import Image from 'next/image';
 import Head from 'next/head';
 
-const login = () => {
+const signUp = () => {
   return (
     <Fragment>
-      <Head>
-        <title>Zembrani | Login</title>
+       <Head>
+        <title>Zembrani | Sign Up</title>
       </Head>
       <div className={styles.cover}>
         <div className="container">
@@ -23,10 +23,10 @@ const login = () => {
               <span className={styles.titleCover}>Le’ts Explore The World</span>
               <br />
               <div className={styles.signupbtn}>
-                <span className={`${styles.question} d-inline-block mt-4`}>Dont have account ?</span>
-                <Link href='/auth/signUp'>
+                <span className={`${styles.question} d-inline-block mt-4`}>Already have account ?</span>
+                <Link href='/auth/login'>
                   <a>
-                    <ButtonAuth text="Sign Up" bgcolor="bg-black" />
+                    <ButtonAuth text="Login" bgcolor="bg-black" />
                   </a>
                 </Link>
               </div>
@@ -36,14 +36,12 @@ const login = () => {
               <Image src={Line} alt="line" className="mt-5" />
             </div>
             <div className={`col-lg-5 col-12 ${styles.rightAuth}`}>
-              <InputAuth type="text" placeholder="Email" /> <br />
-              <InputAuth type="password" placeholder="Password" />
-              <Link href="/forgotpassword">
-                <a>Forgot Password ?</a>
-              </Link>{' '}
+              <InputAuth name="name" type="text" placeholder="Name" /> <br />
+              <InputAuth name="email" type="text" placeholder="Email" /> <br />
+              <InputAuth name="password" type="password" placeholder="Password" />
               <br />
-              <ButtonAuth text="Login" bgcolor="bg-orange" />
-              <ButtonLoginGoogle text="Login With Google" />
+              <ButtonAuth text="Sign up" bgcolor="bg-orange" />
+              <ButtonLoginGoogle text="Sign up With Google" />
             </div>
           </div>
         </div>
@@ -53,4 +51,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default signUp;

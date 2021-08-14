@@ -2,8 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+    font-family: 'Custom-font', playfair;
 }
 
 a {
@@ -22,7 +23,17 @@ a {
   --custom-black: #393939;
 }
 
-@font-face {
+.bg-orange{
+  background-color: var(--orange-blur);
+  color: #393939;
+}
+
+.bg-black{
+  background-color: var(--custom-black);
+  color: var(--orange-blur);
+}
+
+/* @font-face {
   font-family: 'mulish';
   src: url('../assets/fonts/mulish/Mulish-Black.woff') format('woff');
   font-weight: normal;
@@ -41,4 +52,32 @@ a {
   src: url('../assets/fonts/nunito/nunito-black-webfont.woff2') format('woff2'), url('../assets/fonts/nunito/nunito-black-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+} */
+
+@font-face{
+  font-family: 'playfair';
+  src: url('../public/fonts/playfair/PlayfairDisplay-Black.otf');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'mulish';
+  src: url('../public/fonts/mulish/Mulish-Regular.ttf');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'nunito';
+  src: url('../public/fonts/nunito/Nunito-Regular.ttf');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'nunito2';
+  src: url('../public/fonts/nunito/Nunito-Black.ttf');
+  font-style: normal;
+  font-display: swap;
 }

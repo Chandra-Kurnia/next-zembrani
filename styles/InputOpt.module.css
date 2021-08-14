@@ -7,4 +7,9 @@
     color: #393939;
     border-radius: 6px;
     border: none;
+    font-family: 'Custom-font', nunito;
+}
+
+.opt option{
+    font-family: 'Custom-font', nunito;
 }

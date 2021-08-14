@@ -8,7 +8,7 @@ import coll from '../../assets/icons/collapse.png';
 const Navbar = () => {
   return (
     <Fragment>
-      <div className="navbar navbar-expand-lg pt-lg-4 pb-lg-3 shadow-sm">
+      <div className={`navbar navbar-expand-lg pt-lg-4 pb-lg-3 shadow-sm ${styles.content}`}>
         <div className="container">
           <Link href="/">
             <a className="navbar-brand">

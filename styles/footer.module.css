@@ -1,6 +1,7 @@
 .wrapper{
     background-color: var(--footer-color);
     width: 100%;
+    font-family: 'Custom-font', mulish;
 }
 
 .footerLeft{

@@ -1,0 +1,21 @@
+.buttonWrapper{
+    padding-top: 10px;
+}
+
+.button, .buttonGoogle{
+    width: 340px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-family: 'Custom-font', nunito;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+    .button{
+        width: 340px;
+    }
+}

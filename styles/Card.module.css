@@ -1,3 +1,7 @@
+.cardWrapper{
+    font-family: 'Custom-font', nunito;
+}
+
 .cardImage{
     border-radius: 10px;
 }
