@@ -1,0 +1,26 @@
+.button {
+    margin-left: -10px;
+    width: 332px;
+    height: 45px;
+    background-color: var(--orange-blur);
+    border: none;
+    border-radius: 6px;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .button {
+        margin-left: -10px;
+        width: 230px;
+    }
+}
+
+@media (min-width: 992px) {
+    .button {
+        margin-left: 14px;
+        width: 180px;
+    }
+}
+
+@media (min-width: 1200px) {}
+
+@media (min-width: 1400px) {}

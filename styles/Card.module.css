@@ -1,0 +1,23 @@
+.cardImage{
+    border-radius: 10px;
+}
+
+.cardTittleWrapper{
+    background-color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: 20%;
+    border-top-right-radius: 10px;
+    padding-top: 15px;
+}
+
+.cardTittle{
+    color: black;
+    font-size: 18px;
+}
+
+.cardSubTittle{
+    color: var(--custom-grey);
+}
