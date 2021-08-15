@@ -5,7 +5,7 @@ const ButtonAuth = (props) => {
   return (
     <Fragment>
       <div className={`${styles.buttonWrapper}`}>
-        <button className={`${props.bgcolor} ${styles.button}`}>{props.text}</button>
+        <button className={`${props.bgcolor} ${styles.button}`} onClick={props.onClick}>{props.text}</button>
       </div>
     </Fragment>
   );

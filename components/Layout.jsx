@@ -16,7 +16,7 @@ const Layout = (props) => {
           crossOrigin="anonymous"
         ></script>
       </Head>
-      <Navbar />
+      <Navbar home={props.home} vechileType={props.vechileType} history={props.history} about={props.about}/>
       {props.children}
       <Footer />
     </Fragment>

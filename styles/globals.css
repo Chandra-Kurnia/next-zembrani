@@ -33,6 +33,10 @@ a {
   color: var(--orange-blur);
 }
 
+.navActive{
+  color: black !important;
+}
+
 /* @font-face {
   font-family: 'mulish';
   src: url('../assets/fonts/mulish/Mulish-Black.woff') format('woff');

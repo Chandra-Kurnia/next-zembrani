@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import coll from '../../assets/icons/collapse.png';
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <Fragment>
       <div className={`navbar navbar-expand-lg pt-lg-4 pb-lg-3 shadow-sm ${styles.content}`}>
@@ -32,22 +32,22 @@ const Navbar = () => {
             <ul className={`navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center ${styles.navbarSubItem}`}>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-2 mt-2">
                 <Link href="">
-                  <a className={`text-decoration-none ${styles.navigationActive}`}>Home</a>
+                  <a className={`text-decoration-none ${props.home} ${styles.navigation}`}>Home</a>
                 </Link>
               </li>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
                 <Link href="">
-                  <a className={`text-decoration-none ${styles.navigation}`}>Vechile Type</a>
+                  <a className={`text-decoration-none ${props.vechileType} ${styles.navigation}`}>Vechile Type</a>
                 </Link>
               </li>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
                 <Link href="">
-                  <a className={`text-decoration-none ${styles.navigation}`}>History</a>
+                  <a className={`text-decoration-none ${props.history} ${styles.navigation}`}>History</a>
                 </Link>
               </li>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
                 <Link href="">
-                  <a className={`text-decoration-none ${styles.navigation}`}>About</a>
+                  <a className={`text-decoration-none ${props.about} ${styles.navigation}`}>About</a>
                 </Link>
               </li>
               <li className="nav-item ms-lg-5 text-center">
@@ -56,7 +56,7 @@ const Navbar = () => {
                     <button className={`btn m-1 ${styles.btnOutline}`}>Login</button>
                   </a>
                 </Link>
-                <Link href='/register'>
+                <Link href='/auth/signUp'>
                   <a>
                     <button className={`btn m-1 ${styles.btnFull}`}>Register</button>
                   </a>

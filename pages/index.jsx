@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 const index = () => {
   return (
-    <Layout title="Zembrani | Home">
+    <Layout title="Zembrani | Home" home='navActive'>
       <div className={`mb-2 mb-md-4 mb-lg-5 ${styles.cover}`}>
         <div className="container pt-5">
           <div className={styles.explore}>

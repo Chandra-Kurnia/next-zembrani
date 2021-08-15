@@ -5,7 +5,7 @@ const InputAuth = (props) => {
     return (
         <Fragment>
             <div className="mt-2 fw-bold">
-            <input name={props.name} type={props.type} placeholder={props.placeholder} className={styles.input} />
+            <input name={props.name} type={props.type} placeholder={props.placeholder} className={styles.input} autoComplete="off"/>
             </div>
         </Fragment>
     );

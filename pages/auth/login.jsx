@@ -38,7 +38,7 @@ const login = () => {
             <div className={`col-lg-5 col-12 ${styles.rightAuth}`}>
               <InputAuth type="text" placeholder="Email" /> <br />
               <InputAuth type="password" placeholder="Password" />
-              <Link href="/forgotpassword">
+              <Link href="forgotpassword">
                 <a>Forgot Password ?</a>
               </Link>{' '}
               <br />

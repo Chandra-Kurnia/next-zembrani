@@ -15,10 +15,6 @@
     color: black;
 }
 
-.navigationActive {
-    color: black;
-}
-
 .btnOutline, .btnFull {
     width: 100px;
 }
