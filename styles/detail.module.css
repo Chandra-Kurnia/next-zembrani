@@ -1,0 +1,53 @@
+.itemTitle{
+    font-size: 30px;
+    font-family: 'Custom-font', playfair;
+}
+
+.itemLoc{
+    font-size: 20px;
+    font-family: 'Custom-font', playfair-regular;
+}
+
+.itemStatus{
+    margin-top: 10px;
+    font-family: 'Custom-font', nunito;
+    font-weight: bold;
+    color: var(--avaiable);
+}
+
+.itemPay, .itemDesc {
+    font-family: 'Custom-font', nunito;
+}
+
+.itemPay{
+    color: var(--noPay);
+}
+
+.itemDesc{
+    color: #393939;
+}
+
+.itemPrice{
+    font-size: 25px;
+    font-family: 'Custom-font', playfair;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.count{
+    color: black;
+    font-family: 'Custom-font', nunito2;
+    font-size: 30px;
+}
+
+/* .rightItem{
+    width: 10%;
+} */
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {
+    .rightItem{
+        width: 43%;
+    }
+}

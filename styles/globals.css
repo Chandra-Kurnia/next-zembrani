@@ -21,6 +21,8 @@ a {
   --custom-grey: #B8BECD;
   --footer-color: #F9F9FB;
   --custom-black: #393939;
+  --avaiable: #087E0D;
+  --noPay: #9B0A0A;
 }
 
 .bg-orange{
@@ -37,30 +39,16 @@ a {
   color: black !important;
 }
 
-/* @font-face {
-  font-family: 'mulish';
-  src: url('../assets/fonts/mulish/Mulish-Black.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'playfair';
-  src: url('../assets/fonts/playfair/playfairdisplay-black-webfont.woff2') format('woff2'), url('../assets/fonts/playfair/playfairdisplay-black-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'nunito';
-  src: url('../assets/fonts/nunito/nunito-black-webfont.woff2') format('woff2'), url('../assets/fonts/nunito/nunito-black-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-} */
-
 @font-face{
   font-family: 'playfair';
   src: url('../public/fonts/playfair/PlayfairDisplay-Black.otf');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: 'playfair-regular';
+  src: url('../public/fonts/playfair/PlayfairDisplay-Regular.otf');
   font-style: normal;
   font-display: swap;
 }

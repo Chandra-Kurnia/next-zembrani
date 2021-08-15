@@ -1,0 +1,9 @@
+.btncount{
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Custom-font', nunito2;
+    font-weight: bold;
+    font-size: 20px;
+}
