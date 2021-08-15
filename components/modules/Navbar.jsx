@@ -31,12 +31,12 @@ const Navbar = (props) => {
           <div className={`collapse navbar-collapse ${styles.navbarItem}`} id="navbarText">
             <ul className={`navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center ${styles.navbarSubItem}`}>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-2 mt-2">
-                <Link href="">
+                <Link href="/">
                   <a className={`text-decoration-none ${props.home} ${styles.navigation}`}>Home</a>
                 </Link>
               </li>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
-                <Link href="">
+                <Link href="/vechiles">
                   <a className={`text-decoration-none ${props.vechileType} ${styles.navigation}`}>Vechile Type</a>
                 </Link>
               </li>

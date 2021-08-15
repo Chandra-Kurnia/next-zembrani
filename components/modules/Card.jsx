@@ -6,7 +6,7 @@ import Link from 'next/link';
 const Card = (props) => {
   return (
     <Fragment>
-      <Link href='/'>
+      <Link href={`/detail/${props.id}`}>
         <a>
           <div className={`position-relative  mt-3 mt-lg-5 ${styles.cardWrapper}`}>
             <Image className={styles.cardImage} src={props.imgsrc} alt="vechile-img" width="290px" />

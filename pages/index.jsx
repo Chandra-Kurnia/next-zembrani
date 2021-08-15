@@ -5,10 +5,15 @@ import SmallButton from '../components/base/SmallButton';
 import CardWrapper from '../components/modules/CardWrapper';
 import testimonial from '../assets/img/Home/testimonial.png';
 import Image from 'next/image';
+import Card from '../components/modules/Card';
+import merapi from '../assets/img/Home/merapi.png';
+import telukBogam from '../assets/img/Home/teluk-bogam.png';
+import bromo from '../assets/img/Home/bromo.png';
+import malioboro from '../assets/img/Home/malioboro.png';
 
 const index = () => {
   return (
-    <Layout title="Zembrani | Home" home='navActive'>
+    <Layout title="Zembrani | Home" home="navActive">
       <div className={`mb-2 mb-md-4 mb-lg-5 ${styles.cover}`}>
         <div className="container pt-5">
           <div className={styles.explore}>
@@ -36,7 +41,12 @@ const index = () => {
           </div>
         </div>
       </div>
-      <CardWrapper title="Popular in town" />
+      <CardWrapper title="Popular in town" category='popular'>
+        <Card imgsrc={merapi} title="Merapi" subtitle="Yogyakarta" />
+        <Card imgsrc={telukBogam} title="Teluk bogam" subtitle="Kalimantan" />
+        <Card imgsrc={bromo} title="Bromo" subtitle="Malang" />
+        <Card imgsrc={malioboro} title="Malioboro" subtitle="Yogyakarta" />
+      </CardWrapper>
       <div className="container mt-5">
         <span className={styles.testimonial}>Testimonials</span>
         <div className="row ms-1 mt-3">
