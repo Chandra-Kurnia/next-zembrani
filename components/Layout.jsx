@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import {Fragment} from 'react';
 import Navbar from './modules/Navbar';
+import NavbarLogin from './modules/NavbarLogin';
 import Footer from './modules/Footer';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Layout = (props) => {
+  const auth = true;
   return (
     <Fragment>
       <Head>
@@ -16,7 +18,7 @@ const Layout = (props) => {
           crossOrigin="anonymous"
         ></script>
       </Head>
-      <Navbar home={props.home} vechileType={props.vechileType} history={props.history} about={props.about}/>
+      {auth ? <NavbarLogin home={props.home} vechileType={props.vechileType} history={props.history} about={props.about}/> : <Navbar home={props.home} vechileType={props.vechileType} history={props.history} about={props.about}/>}
       {props.children}
       <Footer />
     </Fragment>

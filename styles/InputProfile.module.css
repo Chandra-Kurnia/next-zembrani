@@ -1,0 +1,17 @@
+.title{
+    color: var(--custom-grey);
+    font-family: 'Custom-font', nunito;
+    display: block;
+}
+
+.input{
+    width: 100%;
+    height: 60px;
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+.input:focus{
+    box-shadow: none;
+    outline: none;
+}

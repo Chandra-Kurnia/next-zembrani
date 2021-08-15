@@ -1,4 +1,4 @@
-.content{
+.content {
     font-family: 'Custom-font', nunito;
 }
 
@@ -27,9 +27,39 @@
     background-color: var(--orange-blur) !important;
 }
 
-.navTogler{
+.navTogler {
     background-color: white;
     border: none;
+}
+
+.dropdown {
+    position: absolute;
+    right: 1px;
+    top: 60px;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dropmenu, .dropmenu3{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid var(--custom-grey);
+    padding-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Custom-font', nunito2;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.dropmenu3{
+    border-bottom: none;
 }
 
 @media (min-width: 576px) {}
@@ -37,16 +67,14 @@
 @media (min-width: 768px) {}
 
 @media (min-width: 992px) {
-    .navbarItem{
+    .navbarItem {
         position: relative;
     }
-    
-    .navbarSubItem{
+    .navbarSubItem {
         position: absolute;
         right: 0;
     }
-
-    .navTogler{
+    .navTogler {
         display: none;
     }
 }

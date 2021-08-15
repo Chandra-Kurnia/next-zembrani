@@ -1,0 +1,73 @@
+.title {
+    font-size: 30px;
+}
+
+.imgWrapper {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.edit {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: var(--orange-blur);
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    padding-top: 16px;
+    cursor: pointer;
+}
+
+.desc{
+    display: block;
+    color: var(--custom-grey);
+    font-family: 'Custom-font', nunito;
+    font-weight: bold;
+}
+
+.name{
+    color: black;
+    font-size: 30px;
+    font-family: 'Custom-font', playfair-regular;
+}
+
+.male{
+    padding-left: 40px;
+}
+
+.female{
+    padding-right: 50px;
+}
+
+.formtitle{
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(44, 44, 44);
+    font-family: 'Custom-font', nunito;
+}
+
+@media (min-width: 768px) {
+    .name{
+        font-size: 40px;
+    }
+
+    .male{
+        padding-left: 140px;
+    }
+    
+    .female{
+        padding-right: 150px;
+    }
+}
+
+@media (min-width: 992px) {
+    .male{
+        padding-left: 400px;
+    }
+    
+    .female{
+        padding-right: 400px;
+    }
+}

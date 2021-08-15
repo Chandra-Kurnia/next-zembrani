@@ -4,11 +4,22 @@ import logo from '../../assets/logos/app-logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import coll from '../../assets/icons/collapse.png';
+import email from '../../assets/icons/email.png';
+import profile from '../../assets/img/profile.png';
+import {useState} from 'react';
 
-const Navbar = (props) => {
+const NavbarLogin = (props) => {
+  const [dropdown, setdropdown] = useState(0);
+  const drop = () => {
+    if (dropdown === 1) {
+      setdropdown(0);
+    } else {
+      setdropdown(1);
+    }
+  };
   return (
     <Fragment>
-      <div className={`navbar navbar-expand-lg pt-lg-4 pb-lg-3${styles.content}`}>
+      <div className={`navbar navbar-expand-lg pt-lg-4 pb-lg-3 ${styles.content}`}>
         <div className="container">
           <Link href="/">
             <a className="navbar-brand">
@@ -50,17 +61,36 @@ const Navbar = (props) => {
                   <a className={`text-decoration-none ${props.about} ${styles.navigation}`}>About</a>
                 </Link>
               </li>
-              <li className="nav-item ms-lg-5 text-center">
-                <Link href="/auth/login">
+              <li className="nav-item ms-lg-5 text-center d-flex align-items-center mt-3 mt-lg-0 ms-3 ms-lg-0">
+                <Link href="/chat">
                   <a>
-                    <button className={`btn m-1 ${styles.btnOutline}`}>Login</button>
+                    <Image src={email} alt="emailLogo" width="30px" height="27px" />
                   </a>
                 </Link>
-                <Link href='/auth/signUp'>
-                  <a>
-                    <button className={`btn m-1 ${styles.btnFull}`}>Register</button>
-                  </a>
-                </Link>
+                <section className="ms-4"></section>
+                <label htmlFor="dropdown">
+                  <Image src={profile} alt="avatar" className="rounded-circle" width="35px" height="35px" />
+                </label>
+                <button className="d-none" id="dropdown" onClick={() => drop()}></button>
+                {dropdown === 1 && (
+                  <div className={styles.dropdown}>
+                    <div className={styles.dropmenu}>
+                      <Link href='/profile'>
+                        <a className='text-decoration-none text-dark'>Edit Profile</a>
+                      </Link>
+                    </div>
+                    <div className={styles.dropmenu}>
+                      <Link href='/help'>
+                        <a className='text-decoration-none text-dark'>Help</a>
+                      </Link>
+                    </div>
+                    <div className={styles.dropmenu}>
+                      <Link href='/logout'>
+                        <a className='text-decoration-none text-dark'>Log Out</a>
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </li>
             </ul>
           </div>
@@ -70,4 +100,4 @@ const Navbar = (props) => {
   );
 };
 
-export default Navbar;
+export default NavbarLogin;
