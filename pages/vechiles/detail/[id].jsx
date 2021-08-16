@@ -42,14 +42,16 @@ const Show = () => {
             <div className="row">
               <div className="col-12 col-md-6 col-lg-6">
                 <Image src={imgDetail} alt="imgVechile" />
-                <div className="d-flex justify-content-center">
-                  <div className="w-25">
-                    <Image src={imgDetail} alt="imgVechile" />
-                  </div>
-                  <section className="ms-4 me-4"></section>
-                  <div className="w-25">
-                    <Image src={imgDetail} alt="imgVechile" />
-                  </div>
+                <div className="d-flex justify-content-start">
+                    <div className={styles.imgSub}>
+                      <Image src={imgDetail} alt='imgdetail'/>
+                    </div>
+                    <div className={styles.imgSub}>
+                      <Image src={imgDetail} alt='imgdetail'/>
+                    </div>
+                    <div className={styles.imgSub}>
+                      <Image src={imgDetail} alt='imgdetail'/>
+                    </div>
                 </div>
               </div>
               <div className={`${styles.rightItem} col-12 col-md-6 col-lg-6`}>

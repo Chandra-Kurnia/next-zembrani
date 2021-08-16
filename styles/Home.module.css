@@ -37,13 +37,13 @@
   font-family: 'Custom-font', playfair;
 }
 
-.leftTesti{
+.leftTesti {
   padding-right: 20px;
   text-align: justify;
   font-family: 'Custom-font', mulish;
 }
 
-.imgTesti{
+.imgTesti {
   border-radius: 10px;
 }
 
@@ -54,8 +54,7 @@
   .explore {
     width: 70%;
   }
-
-  .leftTesti{
+  .leftTesti {
     padding-right: 120px;
     padding-top: 10px;
   }
@@ -72,13 +71,11 @@
   .title {
     font-size: 100px;
   }
-
-  .leftTesti{
+  .leftTesti {
     padding-right: 200px;
     padding-top: 120px;
   }
-
-  .testimonial{
+  .testimonial {
     font-size: 36px;
   }
 }

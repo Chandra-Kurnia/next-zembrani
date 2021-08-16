@@ -7,6 +7,7 @@ import pencil from '../assets/icons/pencil.png';
 import InputProfle from '../components/base/InputProfle';
 import SmallButton from '../components/base/SmallButton';
 import {useState} from 'react';
+import Head from 'next/head';
 
 const Profile = () => {
   const [avatar, setavatar] = useState(profile);
@@ -18,7 +19,7 @@ const Profile = () => {
   };
   return (
     <Fragment>
-      <Layout>
+      <Layout title='Zembrani - Profile'>
         <div className="container">
           <span className={styles.title}>Profile</span>
           <div className="text-center">

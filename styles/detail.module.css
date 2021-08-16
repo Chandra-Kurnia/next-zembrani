@@ -1,14 +1,14 @@
-.itemTitle{
+.itemTitle {
     font-size: 30px;
     font-family: 'Custom-font', playfair;
 }
 
-.itemLoc{
+.itemLoc {
     font-size: 20px;
     font-family: 'Custom-font', playfair-regular;
 }
 
-.itemStatus{
+.itemStatus {
     margin-top: 10px;
     font-family: 'Custom-font', nunito;
     font-weight: bold;
@@ -19,35 +19,38 @@
     font-family: 'Custom-font', nunito;
 }
 
-.itemPay{
+.itemPay {
     color: var(--noPay);
 }
 
-.itemDesc{
+.itemDesc {
     color: #393939;
 }
 
-.itemPrice{
+.itemPrice {
     font-size: 25px;
     font-family: 'Custom-font', playfair;
     text-align: right;
     padding-right: 20px;
 }
 
-.count{
+.count {
     color: black;
     font-family: 'Custom-font', nunito2;
     font-size: 30px;
 }
 
-/* .rightItem{
-    width: 10%;
-} */
+.imgSub {
+    width: 196px;
+    height: 140px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
 
 @media (min-width: 768px) {}
 
 @media (min-width: 992px) {
-    .rightItem{
+    .rightItem {
         width: 43%;
     }
 }

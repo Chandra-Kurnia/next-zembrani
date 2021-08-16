@@ -4,8 +4,12 @@
     border: none;
     border-radius: 10px;
     padding-left: 30px;
-    background-color: #6e6e6e73;
+    background-color: #9c9c9c73;
     color: white;
     font-weight: bold;
     font-family: 'Custom-font', nunito;
+}
+
+.input::placeholder{
+    color: white;
 }

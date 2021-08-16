@@ -36,7 +36,7 @@ const index = () => {
                 <InputOpt name="date" placeholder="Date" data={['jakarta', 'Trenggalek', 'Surabaya', 'jogja']} />
               </div>
               <br />
-              <SmallButton text="explore" />
+              <SmallButton text="explore" className='bg-orange' />
             </div>
           </div>
         </div>

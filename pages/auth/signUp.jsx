@@ -17,7 +17,7 @@ const signUp = () => {
         <title>Zembrani | Sign Up</title>
       </Head>
       <div className={styles.cover}>
-        <div className="container">
+        <div className={`${styles.content} container`}>
           <div className="row">
             <div className="col-lg-5 col-12 col-md-12">
               <span className={styles.titleCover}>Le’ts Explore The World</span>
