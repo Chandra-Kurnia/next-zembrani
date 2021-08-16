@@ -1,17 +1,19 @@
 import {Fragment} from 'react';
-import {useRouter} from 'next/router';
 import Layout from '../../../components/Layout';
-import Back from '../../../assets/icons/blackBack.png';
-import Image from 'next/image';
-import imgDetail from '../../../assets/img/vechiles/detail.png';
-import styles from '../../../styles/detail.module.css';
-import ButtonCount from '../../../components/base/ButtonCount';
+import {useRouter} from 'next/router';
+import styles from '../../../styles/reservation.module.css';
 import {useState} from 'react';
-import ButtonAuth from '../../../components/base/ButtonAuth';
+import Image from 'next/image';
+import ButtonCount from '../../../components/base/ButtonCount';
+import Back from '../../../assets/icons/blackBack.png';
+import imgDetail from '../../../assets/img/vechiles/detail.png';
+import InputOpt from '../../../components/base/InputOpt';
+import ButtonPay from '../../../components/base/ButtonPay';
 
-const Show = () => {
+const Reservation = () => {
   const {query, back, push} = useRouter();
   let [amount, setamount] = useState(0);
+  const [date, setdate] = useState('Select date')
 
   const handlePlus = () => {
     setamount((amount += 1));
@@ -42,27 +44,11 @@ const Show = () => {
             <div className="row">
               <div className="col-12 col-md-6 col-lg-6">
                 <Image src={imgDetail} alt="imgVechile" />
-                <div className="d-flex justify-content-start">
-                    <div className={styles.imgSub}>
-                      <Image src={imgDetail} alt='imgdetail'/>
-                    </div>
-                    <div className={styles.imgSub}>
-                      <Image src={imgDetail} alt='imgdetail'/>
-                    </div>
-                    <div className={styles.imgSub}>
-                      <Image src={imgDetail} alt='imgdetail'/>
-                    </div>
-                </div>
               </div>
-              <div className={`${styles.rightItem} col-12 col-md-6 col-lg-6`}>
+              <div className={`${styles.rightItem} col-12 col-md-6 col-lg-6 pe-lg-5 ps-lg-5`}>
                 <span className={`d-block ${styles.itemTitle}`}>Fixie - Gray Only</span>
                 <span className={`d-block ${styles.itemLoc}`}>Yogyakarta</span>
-                <span className={`d-block ${styles.itemStatus}`}>Available</span>
                 <span className={`d-block ${styles.itemPay}`}>No prepayment</span>
-                <span className={`d-block ${styles.itemDesc}`}>Capacity : 1 person</span>
-                <span className={`d-block ${styles.itemDesc}`}>Type : Bike</span>
-                <span className={`d-block ${styles.itemDesc}`}>Reservation before 2 PM</span>
-                <span className={`d-block ${styles.itemPrice}`}>Rp. 78.000/day</span>
                 <div className="d-flex justify-content-between w-100 mt-5 align-items-center">
                   <div>
                     <ButtonCount text="-" onClick={() => handleMinus()} />
@@ -72,13 +58,27 @@ const Show = () => {
                     <ButtonCount text="+" bg="bg-orange" onClick={() => handlePlus()} />
                   </div>
                 </div>
+                <span className={styles.resdate}>Reservation Date : </span>
+                <div className="row">
+                  <div className="col-12 col-md-12 col-lg-6">
+                    <label htmlFor="date">
+                      <span className={styles.inputDate}>{date}</span>
+                    </label>
+                    <input
+                      type="date"
+                      name=""
+                      id="date"
+                      className="d-none"
+                      onChange={(e) => setdate(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-12 col-md-12 col-lg-6 pt-3 pt-md-3 pt-lg-0">
+                      <InputOpt name='day' placeholder='Day' data={['1 Day', '2 Day', '3 Day', '4 Day']}/>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="d-flex flex-wrap justify-content-lg-start">
-              <ButtonAuth bgcolor="bg-black" text="Chat Admin" />
-              <ButtonAuth onClick={() => push({pathname: '/vechiles/reservation/20'})} bgcolor="bg-orange" text="Reservation" className="ms-0 ms-lg-5 ms-md-3" />
-              <ButtonAuth bgcolor="bg-black" text="Like" className="ms-0 ms-lg-5 ms-md-0" />
-            </div>
+            <ButtonPay className='bg-orange w-100 mt-2' text='Pay now : Rp. 178.000'/>
           </div>
         </div>
       </Layout>
@@ -86,4 +86,4 @@ const Show = () => {
   );
 };
 
-export default Show;
+export default Reservation;

@@ -1,0 +1,63 @@
+.itemTitle {
+    font-size: 30px;
+    font-family: 'Custom-font', playfair;
+}
+
+.itemLoc {
+    font-size: 20px;
+    font-family: 'Custom-font', playfair-regular;
+}
+
+.itemPay{
+    font-family: 'Custom-font', nunito;
+}
+
+.itemPay {
+    color: var(--noPay);
+}
+
+.count {
+    color: black;
+    font-family: 'Custom-font', nunito2;
+    font-size: 30px;
+}
+
+.imgSub {
+    width: 196px;
+    height: 140px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.resdate{
+    display: block;
+    color: black;
+    font-family: 'Custom-font', nunito;
+    margin-top: 35px;
+}
+
+.inputDate{
+    display: block;
+    background-color: red;
+    width: 335px;
+    padding-left: 20px;
+    height: 45px;
+    padding-top: 11px;
+    background-color: #afb0b9e0;
+    color: #393939;
+    border-radius: 6px;
+    border: none;
+    font-family: 'Custom-font', nunito;
+}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {
+    .rightItem {
+        width: 43%;
+    }
+
+    .inputDate{
+        width: 230px;
+    }
+}
