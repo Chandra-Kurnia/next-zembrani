@@ -1,0 +1,29 @@
+.wrapper {
+    font-family: 'Custom-font', nunito;
+    font-size: 14px;
+    display: flex;
+    border-bottom: 1px solid var(--custom-grey);
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+.left {
+    width: 80%;
+}
+
+.right {
+    width: 20%;
+    background-color: white;
+}
+
+@media (min-width: 768px) {
+    .wrapper{
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 992px) {
+    .wrapper{
+        font-size: 20px;
+    }
+}

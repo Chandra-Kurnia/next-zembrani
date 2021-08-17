@@ -1,0 +1,87 @@
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.input {
+    width: 100%;
+    height: 45px;
+    background-color: #DADADA45;
+    border-radius: 10px;
+    border: none;
+    padding-left: 10px;
+    margin: 5px;
+    outline: 1px solid #C4C4C4;
+    font-family: 'Custom-font', nunito;
+    font-size: 15px;
+}
+
+.input::placeholder {
+    color: #B8BECD;
+}
+
+.span {
+    display: block;
+    width: 100%;
+    background-color: #DADADA45;
+    color: #B8BECD;
+    margin: 5px;
+    height: 45px;
+    border-radius: 10px;
+    padding-left: 10px;
+    outline: 1px solid #C4C4C4;
+    font-family: 'Custom-font', nunito;
+    padding-top: 10px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 200px;
+    right: 20px;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dropmenu {
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid var(--custom-grey);
+    padding-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Custom-font', nunito2;
+    cursor: pointer;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .dropdown{
+        right: 320px;
+    }
+}
+
+@media (min-width: 992px) {
+    .input{
+        width: 75%;
+    }
+    .span{
+        width: 22%;
+    }
+    .dropdown{
+        right: 450px;
+        top: 190px;
+        width: 300px;
+    }
+    .input, .span{
+        height: 60px;
+    }
+    .span{
+        padding-top: 18px;
+    }
+}

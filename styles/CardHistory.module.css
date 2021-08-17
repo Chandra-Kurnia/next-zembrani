@@ -1,0 +1,83 @@
+.imgWrapper{
+    width: 320px;
+    background-size: cover;
+}
+
+.img{
+    border-radius: 5px;
+}
+
+.title, .time, .prepay, .status{
+    display: block;
+    padding-left: 0px;
+}
+
+.title{
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Custom-font', nunito;
+}
+
+.prepay{
+    font-family: 'Custom-font', nunito;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.status{
+    font-family: 'Custom-font', nunito;
+    color: var(--avaiable);
+}
+
+.btn{
+    position: absolute;
+    bottom: -20;
+    height: 40px;
+    border-radius: 10px;
+    width: 275px;
+    border: none;
+    font-family: 'Custom-font', nunito;
+    font-weight: bold;
+}
+
+
+@media (min-width: 768px) {
+    .title, .time, .prepay, .status{
+        display: block;
+        padding-left: 20px;
+    }
+
+    .btn{
+        margin-bottom: -50px;
+        bottom: 0;
+        width: 400px;
+    }
+
+    .line{
+        margin-top: 60px;
+    }
+    .imgWrapper{
+        width: 100px;
+        background-size: cover;
+    }
+}
+
+@media (min-width: 992px) {
+    .title, .time, .prepay, .status{
+        display: block;
+        padding-left: 20px;
+    }
+
+    .btn{
+        width: 130px;
+        right: 0;
+        top: 43px;
+    }
+    .line{
+        margin-top: 0px;
+    }
+    .imgWrapper{
+        width: 100px;
+        background-size: cover;
+    }
+}
