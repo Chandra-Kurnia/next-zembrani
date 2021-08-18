@@ -13,3 +13,7 @@
 .input::placeholder{
     color: white;
 }
+
+.input:focus{
+    outline: none;
+}

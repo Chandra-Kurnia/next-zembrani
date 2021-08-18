@@ -78,7 +78,7 @@ const Reservation = () => {
                 </div>
               </div>
             </div>
-            <ButtonPay className='bg-orange w-100 mt-2' text='Pay now : Rp. 178.000'/>
+            <ButtonPay onClick={() => push('/payment/20')} className='bg-orange w-100 mt-2' text='Pay now : Rp. 178.000'/>
           </div>
         </div>
       </Layout>
