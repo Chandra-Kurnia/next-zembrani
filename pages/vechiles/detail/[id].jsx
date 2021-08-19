@@ -99,7 +99,7 @@ const Show = () => {
               </div>
             </div>
             <div className="d-flex flex-wrap justify-content-lg-start">
-              <ButtonAuth bgcolor="bg-black" text="Chat Admin" />
+              <ButtonAuth onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})} bgcolor="bg-black" text="Update vehicle" />
               <ButtonAuth
                 onClick={() => push({pathname: '/vechiles/reservation/20'})}
                 bgcolor="bg-orange"

@@ -1,10 +1,15 @@
 .cardWrapper{
     font-family: 'Custom-font', nunito;
+    width: 250px;
+    height: 300px;
 }
 
 .cardImage{
     border-radius: 10px;
-}
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    }
 
 .cardTittleWrapper{
     background-color: white;

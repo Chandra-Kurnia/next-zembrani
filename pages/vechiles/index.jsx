@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Fragment} from 'react';
 import Layout from '../../components/Layout';
 import styles from '../../styles/vechiles.module.css';
@@ -9,18 +10,6 @@ import merapi from '../../assets/img/Home/merapi.png';
 import telukBogam from '../../assets/img/Home/teluk-bogam.png';
 import bromo from '../../assets/img/Home/bromo.png';
 import malioboro from '../../assets/img/Home/malioboro.png';
-import van from '../../assets/img/vechiles/cars/van.png';
-import lambhorghini from '../../assets/img/vechiles/cars/lambhorghini.png';
-import jeep from '../../assets/img/vechiles/cars/jeep.png';
-import whitejeep from '../../assets/img/vechiles/cars/white-jeep.png';
-import vespa from '../../assets/img/vechiles/motorbike/vespa.png';
-import Klx from '../../assets/img/vechiles/motorbike/KLX.png';
-import honda from '../../assets/img/vechiles/motorbike/honda.png';
-import matic from '../../assets/img/vechiles/motorbike/matic.png';
-import fixie from '../../assets/img/vechiles/bike/Fixie.png';
-import sport from '../../assets/img/vechiles/bike/sport.png';
-import onthel from '../../assets/img/vechiles/bike/Onthel.png';
-import fixiegrey from '../../assets/img/vechiles/bike/Fixie-grey.png';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
@@ -98,7 +87,7 @@ const Index = () => {
                   <Card
                     key={car.vehicle_id}
                     id={car.vehicle_id}
-                    imgsrc={van}
+                    imgsrc={car.image}
                     title={car.vehicle_name}
                     subtitle={car.location_name}
                   />
@@ -111,7 +100,7 @@ const Index = () => {
                   <Card
                     key={motorbike.vehicle_id}
                     id={motorbike.vehicle_id}
-                    imgsrc={honda}
+                    imgsrc={motorbike.image}
                     title={motorbike.vehicle_name}
                     subtitle={motorbike.location_name}
                   />
@@ -124,7 +113,7 @@ const Index = () => {
                   <Card
                     key={bike.vehicle_id}
                     id={bike.vehicle_id}
-                    imgsrc={fixie}
+                    imgsrc={bike.image}
                     title={bike.vehicle_name}
                     subtitle={bike.location_name}
                   />

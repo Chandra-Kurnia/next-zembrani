@@ -9,6 +9,10 @@
     font-family: 'Custom-font', nunito;
 }
 
+.search:focus{
+    outline: none;
+}
+
 .btnSearch {
     background-color: white;
     border: 0.8px solid var(--custom-grey);

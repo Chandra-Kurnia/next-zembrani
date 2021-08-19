@@ -10,6 +10,7 @@ import merapi from '../assets/img/Home/merapi.png';
 import telukBogam from '../assets/img/Home/teluk-bogam.png';
 import bromo from '../assets/img/Home/bromo.png';
 import malioboro from '../assets/img/Home/malioboro.png';
+import Link from 'next/link';
 
 const index = () => {
   return (
@@ -36,16 +37,21 @@ const index = () => {
                 <InputOpt name="date" placeholder="Date" data={['jakarta', 'Trenggalek', 'Surabaya', 'jogja']} />
               </div>
               <br />
-              <SmallButton text="explore" className='bg-orange' />
+              <SmallButton text="explore" className="bg-orange" />
             </div>
           </div>
         </div>
       </div>
-      <CardWrapper title="Popular in town" category='popular'>
+      <CardWrapper title="Popular in town" category="popular">
         <Card imgsrc={merapi} title="Merapi" subtitle="Yogyakarta" />
         <Card imgsrc={telukBogam} title="Teluk bogam" subtitle="Kalimantan" />
         <Card imgsrc={bromo} title="Bromo" subtitle="Malang" />
         <Card imgsrc={malioboro} title="Malioboro" subtitle="Yogyakarta" />
+        <Link href='/admin/addvehicle'>
+          <a>
+            <SmallButton text="Add Vehicle" className="bg-black mt-5" />
+          </a>
+        </Link>
       </CardWrapper>
       <div className="container mt-5">
         <span className={styles.testimonial}>Testimonials</span>

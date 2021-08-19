@@ -1,47 +1,136 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useRouter} from 'next/router';
 import {Fragment} from 'react';
 import CardWrapper from '../../components/modules/CardWrapper';
 import Card from '../../components/modules/Card';
 import Layout from '../../components/Layout';
-import merapi from '../../assets/img/Home/merapi.png';
-import telukBogam from '../../assets/img/Home/teluk-bogam.png';
-import bromo from '../../assets/img/Home/bromo.png';
-import malioboro from '../../assets/img/Home/malioboro.png';
-import van from '../../assets/img/vechiles/cars/van.png';
-import lambhorghini from '../../assets/img/vechiles/cars/lambhorghini.png';
-import jeep from '../../assets/img/vechiles/cars/jeep.png';
-import whitejeep from '../../assets/img/vechiles/cars/white-jeep.png';
-import vespa from '../../assets/img/vechiles/motorbike/vespa.png';
-import Klx from '../../assets/img/vechiles/motorbike/KLX.png';
-import honda from '../../assets/img/vechiles/motorbike/honda.png';
-import matic from '../../assets/img/vechiles/motorbike/matic.png';
-import fixie from '../../assets/img/vechiles/bike/Fixie.png';
-import sport from '../../assets/img/vechiles/bike/sport.png';
-import onthel from '../../assets/img/vechiles/bike/Onthel.png';
-import fixiegrey from '../../assets/img/vechiles/bike/Fixie-grey.png';
+import {useEffect, useState} from 'react';
+import axios from 'axios';
+import Image from 'next/image';
+import search from '../../assets/icons/search.png';
+import styles from '../../styles/vechiles.module.css';
+import Pagination from 'rc-pagination';
+import 'rc-pagination/assets/index.css';
 
 const Category = () => {
   const {query} = useRouter();
+  const [vehicles, setvehicles] = useState();
+  const [keyword, setkeyword] = useState('');
+  const [order, setorder] = useState('DESC');
+  const [fieldOrder, setfieldOrder] = useState('vehicle_id');
+  const [pagination, setpagination] = useState();
+  const [limit, setlimit] = useState(2);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8080/vehicle/?limit=${limit}&type=${
+          query.category
+        }&keyword=${keyword}&order=${order}&fieldOrder=${fieldOrder}&page=${pagination && pagination.currentPage}`
+      )
+      .then((result) => {
+        setvehicles(result.data.data);
+        setpagination(result.data.pagination);
+        // console.log(result.data.pagination);
+        // console.log(result.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [keyword, order, fieldOrder, pagination && pagination.currentPage, limit]);
+
+  const handleOrder = () => {
+    if (order === 'DESC') {
+      setorder('ASC');
+    } else {
+      setorder('DESC');
+    }
+  };
+
+  const handlePagination = (e) => {
+    setpagination({...pagination, currentPage: e});
+  };
+
+  const handlefieldOrder = (e) => {
+    setfieldOrder(e.target.value);
+  };
+
+  const handleLimit = (e) => {
+    setlimit(e.target.value);
+  };
+
   return (
     <Fragment>
       <Layout vechileType="navActive" title={`Zembrani | ${query.category}`}>
+        <div className="container">
+          <div className="input-group ms-0 ms-md-2">
+            <input
+              onChange={(e) => setkeyword(e.target.value)}
+              type="text"
+              placeholder="Search vehicle (ex. cars, cars name)"
+              className={styles.search}
+              aria-describedby="search"
+            />
+            <button className={styles.btnSearch} id="basic-addon2" itemID="search" disabled>
+              <Image src={search} alt="search-logo" width="15px" height="15px" />
+            </button>
+          </div>
+          <div className="mt-3 container">
+            <div className="row">
+              <div className="col-6 col-md-4 ps-0 ps-md-2 col-lg-2">
+                <select onChange={handleOrder} className="form-select" aria-label="Default select example">
+                  <option value="1">Ascending</option>
+                  <option value="2" selected>
+                    Descending
+                  </option>
+                </select>
+              </div>
+              <div className="col-6 col-md-4 pe-2 col-lg-2">
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={(e) => handlefieldOrder(e)}
+                >
+                  <option value="vehicle_id" selected>
+                    Time
+                  </option>
+                  <option value="price">Price</option>
+                </select>
+              </div>
+              <div className="col-12 col-md-4 mt-2 ps-0 mt-md-0 mt-lg-0 col-lg-2">
+                <select className="form-select" aria-label="Default select example" onChange={(e) => handleLimit(e)}>
+                  <option value="2" selected>
+                    2 / Page
+                  </option>
+                  <option value="5"> 5 / page</option>
+                  <option value="10">10 / page</option>
+                </select>
+              </div>
+              <div className="col-12 ps-0 ps-md-2 ps-lg-2 mt-3 col-md-4 mt-md-0 col-lg-6 mt-md-2 mt-lg-2">
+                {pagination && (
+                  <Pagination
+                    onChange={(e) => handlePagination(e)}
+                    pageSize={pagination.limit}
+                    current={pagination.currentPage}
+                    total={pagination.count_data}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
         <CardWrapper title={query.category} textSee="d-none">
-          <Card imgsrc={merapi} title="Merapi" subtitle="Yogyakarta" id="20" />
-          <Card imgsrc={telukBogam} title="Teluk bogam" subtitle="Kalimantan" />
-          <Card imgsrc={bromo} title="Bromo" subtitle="Malang" />
-          <Card imgsrc={malioboro} title="Malioboro" subtitle="Yogyakarta" />
-          <Card imgsrc={van} title="Van" subtitle="Yogyakarta" />
-          <Card imgsrc={lambhorghini} title="Lamborghini" subtitle="South jakarta" />
-          <Card imgsrc={jeep} title="Jeep" subtitle="Malang" />
-          <Card imgsrc={whitejeep} title="White jeep" subtitle="Kalimantan" />
-          <Card imgsrc={vespa} title="Vespa" subtitle="Yogyakarta" />
-          <Card imgsrc={Klx} title="Honda KLX" subtitle="Kalimantan" />
-          <Card imgsrc={honda} title="Honda" subtitle="Malang" />
-          <Card imgsrc={matic} title="Matic bike" subtitle="Yogyakarta" />
-          <Card imgsrc={fixie} title="Fixie" subtitle="Yogyakarta" />
-          <Card imgsrc={sport} title="Sport Bike" subtitle="Kalimantan" />
-          <Card imgsrc={onthel} title="Onthel" subtitle="Malang" />
-          <Card imgsrc={fixiegrey} title="Fixie Grey" subtitle="Yogyakarta" />
+          {vehicles
+            ? vehicles.map((vehicle) => (
+                <Card
+                  key={vehicle.vehicle_id}
+                  id={vehicle.vehicle_id}
+                  imgsrc={vehicle.image}
+                  title={vehicle.vehicle_name}
+                  subtitle={vehicle.location_name}
+                />
+              ))
+            : 'Data Not Found'}
         </CardWrapper>
       </Layout>
     </Fragment>
