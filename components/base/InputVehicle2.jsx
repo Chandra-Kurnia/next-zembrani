@@ -5,7 +5,7 @@ const InputVehicle2 = (props) => {
     return (
         <Fragment>
             <span className={styles.inputTitle}>{props.title}</span>
-            <input name={props.name} type="text" placeholder={props.placeholder} className={`${props.className} ${styles.input}`} />
+            <input onChange={(e) => props.onChange(e)} name={props.name} type="text" placeholder={props.placeholder} className={`${props.className} ${styles.input}`} />
         </Fragment>
     );
 }

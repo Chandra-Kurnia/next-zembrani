@@ -11,10 +11,60 @@ import cam from '../../assets/icons/cam.png';
 import addmore from '../../assets/icons/addMore.png';
 import vehicle from '../../assets/img/vechiles/detail.png';
 import ButtonPay from '../../components/base/ButtonPay';
+import axios from 'axios';
 
 const AddVehicle = () => {
+  const {push} = useRouter()
+  const [form, setform] = useState({
+    location_id: '',
+    type_id: 1,
+    vehicle_name: '',
+    price: '',
+    status: '',
+    stock: '',
+    description: '',
+    vehicle_img: {},
+  });
   const [dropdown, setdropdown] = useState(0);
   const [status, setstatus] = useState('Select status');
+  const [vehicle_img, setvehicle_img] = useState();
+  const handleForm = (e) => {
+    setform({
+      ...form,
+      [e.target.name]: e.target.value,
+      status,
+      vehicle_img,
+    });
+  };
+
+  const handleImg = (e) => {
+    setvehicle_img(e.target.files[0]);
+  };
+
+  const handleSave = () => {
+    const formData = new FormData();
+    formData.append('location_id', form.location_id);
+    formData.append('type_id', form.type_id);
+    formData.append('vehicle_name', form.vehicle_name);
+    formData.append('price', form.price);
+    formData.append('status', form.status);
+    formData.append('stock', form.stock);
+    formData.append('description', form.description);
+    formData.append('vehicle_img', form.vehicle_img);
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
+    axios
+      .post('http://localhost:8080/vehicle/', formData)
+      .then(() => {
+        alert('data sukses masuk');
+        push('/vechiles')
+      })
+      .catch((err) => {
+        alert(err.response.data.error[0].msg);
+      });
+  };
+
   const {back} = useRouter();
   const handleDrop = () => {
     if (dropdown === 0) {
@@ -25,7 +75,7 @@ const AddVehicle = () => {
   };
 
   const changeStatus = (e) => {
-    setstatus(e.target.textContent);
+    setstatus(e.target.id);
     setdropdown(0);
   };
   return (
@@ -45,7 +95,11 @@ const AddVehicle = () => {
           </div>
           <div className="row">
             <div className="col-12 col-md-6 col-lg-7">
-              <InputVehicle name="vehicleName" placeholder="Name (max up to 50 words)" />
+              <InputVehicle
+                onChange={(e) => handleForm(e)}
+                name="vehicle_name"
+                placeholder="Name (max up to 50 words)"
+              />
               <label htmlFor="img1" className={styles.cam}>
                 <div className={styles.cam}>
                   <Image src={cam} alt="cam" />
@@ -67,14 +121,23 @@ const AddVehicle = () => {
                   </label>
                 </div>
               </div>
-              <input className="d-none" type="file" name="" id="img1" />
+              <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img" id="img1" />
               <input className="d-none" type="file" name="" id="img2" />
               <input className="d-none" type="file" name="" id="img3" />
             </div>
             <div className="col-12 col-md-6 col-lg-5">
-              <InputVehicle name="location" placeholder="Location" />
-              <InputVehicle name="description" placeholder="Description (max up to 150 words)" />
-              <InputVehicle2 name="price" placeholder="Type the price" title="Price : " />
+              <InputVehicle onChange={(e) => handleForm(e)} name="location_id" placeholder="Location" />
+              <InputVehicle
+                onChange={(e) => handleForm(e)}
+                name="description"
+                placeholder="Description (max up to 150 words)"
+              />
+              <InputVehicle2
+                onChange={(e) => handleForm(e)}
+                name="price"
+                placeholder="Type the price"
+                title="Price : "
+              />
               <span className={styles.inputTitle}>Status : </span>
               <span onClick={() => handleDrop()} className={styles.status}>
                 {status}
@@ -82,22 +145,22 @@ const AddVehicle = () => {
               {dropdown === 1 && (
                 <div className={styles.dropdown}>
                   <div onClick={(e) => changeStatus(e)} className={styles.dropmenu}>
-                    <span className={styles.avaiable}>Avaiable</span>
+                    <span id='avaiable' className={styles.avaiable}>Avaiable</span>
                   </div>
                   <div onClick={(e) => changeStatus(e)} className={styles.dropmenu}>
-                    <span className={styles.full}>Full Booked</span>
+                    <span id='fullBooked' className={styles.full}>Full Booked</span>
                   </div>
                 </div>
               )}
-              <InputVehicle2 name="stock" placeholder="Insert stock" title="Stock : " />
+              <InputVehicle2 onChange={(e) => handleForm(e)} name="stock" placeholder="Insert stock" title="Stock : " />
             </div>
           </div>
           <div className="row mt-3">
             <div className="col-12 col-md-6 col-lg-6">
-                <ButtonPay text='category' className='w-100 bg-black'/>
+              <ButtonPay text="category" className="w-100 bg-black" />
             </div>
             <div className="col-12 col-md-6 col-lg-6 mt-3 mt-md-0 mt-lg-0">
-                <ButtonPay text='Save' className='w-100 bg-orange'/>
+              <ButtonPay onClick={() => handleSave()} text="Save" className="w-100 bg-orange" />
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ const CardWrapper = (props) => {
             </a>
           </Link>
         </div>
-        <div className="d-flex justify-content-lg-between flex-wrap justify-content-md-evenly justify-content-center">
+        <div className="d-flex justify-content-lg-evenly flex-wrap justify-content-md-evenly justify-content-center">
             {props.children}
         </div>
       </div>
