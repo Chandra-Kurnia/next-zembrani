@@ -57,7 +57,7 @@ const AddVehicle = () => {
     axios
       .post('http://localhost:8080/vehicle/', formData)
       .then(() => {
-        alert('data sukses masuk');
+        alert('data successfully inserted');
         push('/vechiles')
       })
       .catch((err) => {
