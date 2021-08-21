@@ -37,18 +37,7 @@ const Show = () => {
       setamount(amount - 1);
     }
   };
-
-  const handleDelete = () => {
-    axios
-      .delete(`http://localhost:8080/vehicle/${query.id}`)
-      .then(() => {
-        alert('Data successfully deleted');
-        back();
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
-      });
-  };
+  
   return (
     <Fragment>
       <Layout title="Zembrani | vechiles">

@@ -12,6 +12,7 @@ import cam from '../../../assets/icons/cam.png';
 import addmore from '../../../assets/icons/addMore.png';
 import ButtonPay from '../../../components/base/ButtonPay';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const AddVehicle = () => {
   const {query, push, back} = useRouter();
@@ -35,10 +36,10 @@ const AddVehicle = () => {
     axios
       .get(`http://localhost:8080/vehicle/${query.id}`)
       .then((result) => {
-        console.log(result.data.data.image);
-        setimage(`http://localhost:8080${result.data.data.image}`)
-        setimage2(`http://localhost:8080${result.data.data.image}`)
-        setimage3(`http://localhost:8080${result.data.data.image}`)
+        // console.log(result.data.data.image);
+        setimage(`http://localhost:8080${result.data.data.image}`);
+        setimage2(`http://localhost:8080${result.data.data.image}`);
+        setimage3(`http://localhost:8080${result.data.data.image}`);
         delete result.data.data.image;
         setform(result.data.data);
         setstatus(result.data.data.status);
@@ -46,7 +47,7 @@ const AddVehicle = () => {
       .catch((err) => {
         console.log(err);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleForm = (e) => {
@@ -81,18 +82,41 @@ const AddVehicle = () => {
     formData.append('stock', form.stock);
     formData.append('description', form.description);
     formData.append('vehicle_img', form.image);
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
     axios
       .post(`http://localhost:8080/vehicle/${query.id}`, formData)
-      .then(() => {
-        alert('data successfully updated');
+      .then((res) => {
+        swal('Success', res.data.message, 'success');
         push(`/vechiles/detail/${query.id}`);
       })
       .catch((err) => {
-        alert(err.response.data.error[0].msg);
+        swal('Error', err.response.data.error[0].msg, 'error');
       });
+  };
+
+  const handleDelete = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'you cannot restore vehicle data after deletion!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .delete(`http://localhost:8080/vehicle/${query.id}`)
+          .then((res) => {
+            swal('Success', res.data.message, 'success').then(() => {
+              push(`/vechiles/`);
+            });
+          })
+          .catch((err) => {
+            swal('Error', err.response.data.error[0].msg, 'error');
+          });
+      }
+    });
   };
 
   const handleDrop = () => {
@@ -203,11 +227,14 @@ const AddVehicle = () => {
             </div>
           </div>
           <div className="row mt-3">
-            <div className="col-12 col-md-6 col-lg-6">
-              <ButtonPay text="category" className="w-100 bg-black" />
+            <div className="col-12 col-md-4 col-lg-4">
+              <ButtonPay text="Add Item to" className="w-100 bg-black" />
             </div>
-            <div className="col-12 col-md-6 col-lg-6 mt-3 mt-md-0 mt-lg-0">
+            <div className="col-12 col-md-4 col-lg-4 mt-3 mt-md-0 mt-lg-0">
               <ButtonPay onClick={() => handleSave()} text="Update" className="w-100 bg-orange" />
+            </div>
+            <div className="col-12 col-md-4 col-lg-4 mt-3 mt-md-0 mt-lg-0">
+              <ButtonPay onClick={() => handleDelete()} text="Delete" className="w-100 bg-black" />
             </div>
           </div>
         </div>
