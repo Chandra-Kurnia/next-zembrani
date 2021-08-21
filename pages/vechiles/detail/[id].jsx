@@ -10,17 +10,32 @@ import {useState} from 'react';
 import ButtonAuth from '../../../components/base/ButtonAuth';
 import {useEffect} from 'react';
 import axios from 'axios';
+import swal from 'sweetalert';
 
-const Show = () => {
+export const getServerSideProps = async(context) => {
+  try{
+    const vehicleId = context.query.id
+    const res = await axios.get(`${process.env.API_SERVER}/vehicle/${vehicleId}`)
+    const vehicle = res.data.data
+    return{
+      props: {vehicle}
+    }
+  }catch(error){
+    swal('Error', 'Error during get data from server', 'error')
+  }
+}
+
+const Show = (props) => {
+  const vehicle = props.vehicle
   const admin = true;
   const {query, back, push} = useRouter();
-  const [vehicle, setvehicle] = useState('');
+  // const [vehicle, setvehicle] = useState('');
   let [amount, setamount] = useState(0);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/vehicle/${query.id}`)
-      .then((result) => setvehicle(result.data.data))
-      .catch((err) => alert(err.response.data.error[0].msg));
+      .get(`${process.env.API_SERVER}/vehicle/${query.id}`)
+      // .then((result) => setvehicle(result.data.data))
+      // .catch((err) => alert(err.response.data.error[0].msg));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handlePlus = () => {
@@ -57,26 +72,25 @@ const Show = () => {
             <div className="row">
               <div className="col-12 col-md-6 col-lg-6">
                 <div className={styles.primaryImg}>
-                  <img className={styles.img} src={`http://localhost:8080${vehicle.image}`} alt="vehicle_img" />
+                  <img className={styles.img} src={`${process.env.API_SERVER}${vehicle.image}`} alt="vehicle_img" />
                 </div>
                 <div className="container">
                   <div className="row">
                     <div className={`col-12 col-md-6 col-lg-6 ${styles.subimg}`}>
-                      <img className={styles.img} src={`http://localhost:8080${vehicle.image}`} alt="vehicle_img" />
+                      <img className={styles.img} src={`${process.env.API_SERVER}${vehicle.image}`} alt="vehicle_img" />
                     </div>
                     <div className={`col-12 col-md-6 col-lg-6 ${styles.subimg}`}>
-                      <img className={styles.img} src={`http://localhost:8080${vehicle.image}`} alt="vehicle_img" />
+                      <img className={styles.img} src={`${process.env.API_SERVER}${vehicle.image}`} alt="vehicle_img" />
                     </div>
                   </div>
                 </div>
               </div>
               <div className={`${styles.rightItem} col-12 col-md-6 col-lg-6`}>
                 <span className={`d-block ${styles.itemTitle}`}>{vehicle && vehicle.vehicle_name}</span>
-                <span className={`d-block ${styles.itemLoc}`}>Yogyakarta</span>
+                <span className={`d-block ${styles.itemLoc}`}>{vehicle && vehicle.location_name}</span>
                 <span className={`d-block ${styles.itemStatus}`}>{vehicle && vehicle.status}</span>
-                <span className={`d-block ${styles.itemPay}`}>No prepayment</span>
                 <span className={`d-block ${styles.itemDesc}`}>{vehicle && vehicle.description}</span>
-                <span className={`d-block ${styles.itemDesc}`}>Type : Bike</span>
+                <span className={`d-block ${styles.itemDesc}`}>Type : {vehicle && vehicle.type_name}</span>
                 <span className={`d-block ${styles.itemDesc}`}>Reservation before 2 PM</span>
                 <span className={`d-block ${styles.itemPrice}`}>Rp. {vehicle && vehicle.price}/day</span>
                 <div className="d-flex justify-content-between w-100 mt-5 align-items-center">

@@ -6,13 +6,28 @@ import CardWrapper from '../components/modules/CardWrapper';
 import testimonial from '../assets/img/Home/testimonial.png';
 import Image from 'next/image';
 import Card from '../components/modules/Card';
-import merapi from '../assets/img/Home/merapi.png';
-import telukBogam from '../assets/img/Home/teluk-bogam.png';
-import bromo from '../assets/img/Home/bromo.png';
-import malioboro from '../assets/img/Home/malioboro.png';
 import Link from 'next/link';
+import axios from 'axios';
 
-const index = () => {
+export const getServerSideProps = async () => {
+  try {
+    const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
+    const popularVehicles = result.data.data;
+    return {
+      props: {
+        post: popularVehicles,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+};
+
+const index = (props) => {
+  const {post} = props;
+  const admin = true;
   return (
     <Layout title="Zembrani | Home" home="navActive">
       <div className={`mb-2 mb-md-4 mb-lg-5 ${styles.cover}`}>
@@ -42,16 +57,25 @@ const index = () => {
           </div>
         </div>
       </div>
-      <CardWrapper title="Popular in town" category="popular">
-        <Card imgsrc={merapi} title="Merapi" subtitle="Yogyakarta" />
-        <Card imgsrc={telukBogam} title="Teluk bogam" subtitle="Kalimantan" />
-        <Card imgsrc={bromo} title="Bromo" subtitle="Malang" />
-        <Card imgsrc={malioboro} title="Malioboro" subtitle="Yogyakarta" />
-        <Link href='/admin/addvehicle'>
-          <a>
-            <SmallButton text="Add Vehicle" className="bg-black mt-5" />
-          </a>
-        </Link>
+      <CardWrapper title="Popular in town" category="">
+        {post
+          ? post.map((vehicle, index) => (
+              <Card
+                key={index}
+                imgsrc={vehicle.image}
+                title={vehicle.vehicle_name}
+                subtitle={vehicle.location_name}
+                id={vehicle.vehicle_id}
+              />
+            ))
+          : 'Data Not Found'}
+        {admin && (
+          <Link href="/admin/addvehicle">
+            <a>
+              <SmallButton text="Add Vehicle" className="bg-black mt-5" />
+            </a>
+          </Link>
+        )}
       </CardWrapper>
       <div className="container mt-5">
         <span className={styles.testimonial}>Testimonials</span>

@@ -6,43 +6,39 @@ import search from '../../assets/icons/search.png';
 import Image from 'next/image';
 import CardWrapper from '../../components/modules/CardWrapper';
 import Card from '../../components/modules/Card';
-import merapi from '../../assets/img/Home/merapi.png';
-import telukBogam from '../../assets/img/Home/teluk-bogam.png';
-import bromo from '../../assets/img/Home/bromo.png';
-import malioboro from '../../assets/img/Home/malioboro.png';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
 export const getServerSideProps = async () => {
-  const res = await axios.get('http://localhost:8080/vehicle/?type=cars&limit=4');
-  const cars = res.data.data;
+  const res = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
+  const popular = res.data.data;
   return {
-    props: {cars},
+    props: {popular},
   };
 };
 
 const Index = (props) => {
-  const cars = props.cars;
-  // const [cars, setcars] = useState([])
+  const popular = props.popular;
+  const [cars, setcars] = useState([])
   const [motorbikes, setmotorbike] = useState();
   const [bikes, setbike] = useState();
   const [keyword, setkeyword] = useState('');
 
-  // const getCars = () => {
-  //   axios
-  //     .get(`http://localhost:8080/vehicle/?type=cars&limit=4&keyword=${keyword}`)
-  //     .then((data) => {
-  //       // console.log(data.data.data);
-  //       setcars(data.data.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const getCars = () => {
+    axios
+      .get(`${process.env.API_SERVER}/vehicle/?type=cars&limit=4&keyword=${keyword}`)
+      .then((data) => {
+        // console.log(data.data.data);
+        setcars(data.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getMotorBike = () => {
     axios
-      .get(`http://localhost:8080/vehicle/?type=motorbike&limit=4&keyword=${keyword}`)
+      .get(`${process.env.API_SERVER}/vehicle/?type=motorbike&limit=4&keyword=${keyword}`)
       .then((data) => {
         // console.log(data.data.data);
         setmotorbike(data.data.data);
@@ -53,7 +49,7 @@ const Index = (props) => {
   };
   const getBike = () => {
     axios
-      .get(`http://localhost:8080/vehicle/?type=bike&limit=4&keyword=${keyword}`)
+      .get(`${process.env.API_SERVER}/vehicle/?type=bike&limit=4&keyword=${keyword}`)
       .then((data) => {
         // console.log(data.data.data);
         setbike(data.data.data);
@@ -63,7 +59,7 @@ const Index = (props) => {
       });
   };
   useEffect(() => {
-    // getCars();
+    getCars();
     getMotorBike();
     getBike();
   }, [keyword]);
@@ -84,11 +80,10 @@ const Index = (props) => {
             </button>
           </div>
           <div className="pt-4">
-            <CardWrapper title="Popular in town" category="popular">
-              <Card imgsrc={merapi} title="Merapi" subtitle="Yogyakarta" id="20" />
-              <Card imgsrc={telukBogam} title="Teluk bogam" subtitle="Kalimantan" />
-              <Card imgsrc={bromo} title="Bromo" subtitle="Malang" />
-              <Card imgsrc={malioboro} title="Malioboro" subtitle="Yogyakarta" />
+            <CardWrapper title="Popular in town" category="">
+              {popular ? popular.map((vehicle, index) => (
+                <Card imgsrc={vehicle.image} title={vehicle.vehicle_name} subtitle={vehicle.location_name} id={vehicle.vehicle_id} key={index} />
+              )) : "Data not found"}
             </CardWrapper>
             <section className="mt-5"></section>
             <CardWrapper title="Cars" category="cars">

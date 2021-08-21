@@ -19,12 +19,14 @@ const Category = () => {
   const [order, setorder] = useState('DESC');
   const [fieldOrder, setfieldOrder] = useState('vehicle_id');
   const [pagination, setpagination] = useState();
-  const [limit, setlimit] = useState(2);
+  const [limit, setlimit] = useState(5);
 
   useEffect(() => {
+    console.log(query.category);
+    setTimeout(() => {}, 1000);
     axios
       .get(
-        `http://localhost:8080/vehicle/?limit=${limit}&type=${
+        `${process.env.API_SERVER}/vehicle/?limit=${limit}&type=${
           query.category
         }&keyword=${keyword}&order=${order}&fieldOrder=${fieldOrder}&page=${pagination && pagination.currentPage}`
       )
@@ -37,7 +39,7 @@ const Category = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [keyword, order, fieldOrder, pagination && pagination.currentPage, limit]);
+  }, [keyword, order, fieldOrder, pagination && pagination.currentPage, limit, query.category]);
 
   const handleOrder = () => {
     if (order === 'DESC') {
@@ -99,10 +101,11 @@ const Category = () => {
               </div>
               <div className="col-12 col-md-4 mt-2 ps-0 mt-md-0 mt-lg-0 col-lg-2">
                 <select className="form-select" aria-label="Default select example" onChange={(e) => handleLimit(e)}>
-                  <option value="2" selected>
-                    2 / Page
+                  <option value="2">2 / Page</option>
+                  <option value="5" selected>
+                    {' '}
+                    5 / page
                   </option>
-                  <option value="5"> 5 / page</option>
                   <option value="10">10 / page</option>
                 </select>
               </div>

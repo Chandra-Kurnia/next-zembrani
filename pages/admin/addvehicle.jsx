@@ -10,15 +10,15 @@ import styles from '../../styles/AddVehicle.module.css';
 import {useState} from 'react';
 import cam from '../../assets/icons/cam.png';
 import addmore from '../../assets/icons/addMore.png';
-import vehicle from '../../assets/img/vechiles/detail.png';
 import ButtonPay from '../../components/base/ButtonPay';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 const AddVehicle = () => {
   const {push} = useRouter();
   const [form, setform] = useState({
     location_id: '',
-    type_id: 1,
+    type_id: 2,
     vehicle_name: '',
     price: '',
     status: '',
@@ -68,13 +68,14 @@ const AddVehicle = () => {
     //   console.log(`${key}: ${value}`);
     // }
     axios
-      .post('http://localhost:8080/vehicle/', formData)
-      .then(() => {
-        alert('data successfully inserted');
-        push('/vechiles');
+      .post(`${process.env.API_SERVER}/vehicle/`, formData)
+      .then((res) => {
+        swal('Success', res.data.message, 'success').then(() => {
+          push('/vechiles');
+        });
       })
       .catch((err) => {
-        alert(err.response.data.error[0].msg);
+        swal('Error', err.response.data.error[0].msg, 'error')
       });
   };
 

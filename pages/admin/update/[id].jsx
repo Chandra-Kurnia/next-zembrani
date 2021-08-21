@@ -23,7 +23,7 @@ const AddVehicle = () => {
   const [image3, setimage3] = useState(addmore.src);
   const [form, setform] = useState({
     location_id: '',
-    type_id: 1,
+    type_id: '',
     vehicle_name: '',
     price: '',
     status: '',
@@ -34,12 +34,11 @@ const AddVehicle = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/vehicle/${query.id}`)
+      .get(`${process.env.API_SERVER}/vehicle/${query.id}`)
       .then((result) => {
-        // console.log(result.data.data.image);
-        setimage(`http://localhost:8080${result.data.data.image}`);
-        setimage2(`http://localhost:8080${result.data.data.image}`);
-        setimage3(`http://localhost:8080${result.data.data.image}`);
+        setimage(`${process.env.API_SERVER}${result.data.data.image}`);
+        setimage2(`${process.env.API_SERVER}${result.data.data.image}`);
+        setimage3(`${process.env.API_SERVER}${result.data.data.image}`);
         delete result.data.data.image;
         setform(result.data.data);
         setstatus(result.data.data.status);
@@ -48,7 +47,7 @@ const AddVehicle = () => {
         console.log(err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [query.id]);
 
   const handleForm = (e) => {
     setform({
@@ -73,6 +72,7 @@ const AddVehicle = () => {
   };
 
   const handleSave = () => {
+    console.log(form);
     const formData = new FormData();
     formData.append('location_id', form.location_id);
     formData.append('type_id', form.type_id);
@@ -82,17 +82,19 @@ const AddVehicle = () => {
     formData.append('stock', form.stock);
     formData.append('description', form.description);
     formData.append('vehicle_img', form.image);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     axios
-      .post(`http://localhost:8080/vehicle/${query.id}`, formData)
+      .post(`${process.env.API_SERVER}/vehicle/${query.id}`, formData)
       .then((res) => {
-        swal('Success', res.data.message, 'success');
-        push(`/vechiles/detail/${query.id}`);
+        swal('Success', res.data.message, 'success').then(() => {
+          push(`/vechiles/detail/${query.id}`);
+        });
       })
       .catch((err) => {
-        swal('Error', err.response.data.error[0].msg, 'error');
+        console.log(err.response);
+        swal('Error', 'Erro bro', 'error');
       });
   };
 
@@ -106,7 +108,7 @@ const AddVehicle = () => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .delete(`http://localhost:8080/vehicle/${query.id}`)
+          .delete(`${process.env.API_SERVER}/vehicle/${query.id}`)
           .then((res) => {
             swal('Success', res.data.message, 'success').then(() => {
               push(`/vechiles/`);
