@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {Fragment} from 'react';
 import Layout from '../../../components/Layout';
 import Image from 'next/image';
@@ -13,11 +14,12 @@ import ButtonPay from '../../../components/base/ButtonPay';
 import axios from 'axios';
 
 const AddVehicle = () => {
-  const {query, push} = useRouter();
-  const [vehicle, setvehicle] = useState();
+  const {query, push, back} = useRouter();
   const [dropdown, setdropdown] = useState(0);
   const [status, setstatus] = useState('Select status');
-  const [image, setimage] = useState();
+  const [image, setimage] = useState(cam.src);
+  const [image2, setimage2] = useState(cam.src);
+  const [image3, setimage3] = useState(addmore.src);
   const [form, setform] = useState({
     location_id: '',
     type_id: 1,
@@ -33,14 +35,18 @@ const AddVehicle = () => {
     axios
       .get(`http://localhost:8080/vehicle/${query.id}`)
       .then((result) => {
-        // console.log(result.data.data);
-        delete result.data.data.image
+        console.log(result.data.data.image);
+        setimage(`http://localhost:8080${result.data.data.image}`)
+        setimage2(`http://localhost:8080${result.data.data.image}`)
+        setimage3(`http://localhost:8080${result.data.data.image}`)
+        delete result.data.data.image;
         setform(result.data.data);
         setstatus(result.data.data.status);
       })
       .catch((err) => {
         console.log(err);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleForm = (e) => {
@@ -53,8 +59,16 @@ const AddVehicle = () => {
   };
 
   const handleImg = (e) => {
-    // setimage(e.target.files[0]);
-    setform({...form, image: e.target.files[0]});
+    const urlImg = URL.createObjectURL(e.target.files[0]);
+    const inputId = e.target.id;
+    if (inputId === 'img1') {
+      setform({...form, image: e.target.files[0]});
+      setimage(urlImg);
+    } else if (inputId === 'img2') {
+      setimage2(urlImg);
+    } else {
+      setimage3(urlImg);
+    }
   };
 
   const handleSave = () => {
@@ -74,14 +88,13 @@ const AddVehicle = () => {
       .post(`http://localhost:8080/vehicle/${query.id}`, formData)
       .then(() => {
         alert('data successfully updated');
-        push('/vechiles');
+        push(`/vechiles/detail/${query.id}`);
       })
       .catch((err) => {
         alert(err.response.data.error[0].msg);
       });
   };
 
-  const {back} = useRouter();
   const handleDrop = () => {
     if (dropdown === 0) {
       setdropdown(1);
@@ -119,28 +132,28 @@ const AddVehicle = () => {
               />
               <label htmlFor="img1" className={styles.cam}>
                 <div className={styles.cam}>
-                  <Image src={cam} alt="cam" />
+                  <img src={image} alt="cam" />
                 </div>
               </label>
               <div className="row mt-3">
                 <div className="col-12 col-md-12 col-lg-6">
                   <label htmlFor="img2" className={styles.subcam}>
                     <div className={styles.subcam}>
-                      <Image src={cam} alt="cam" />
+                      <img src={image2} alt="cam" />
                     </div>
                   </label>
                 </div>
                 <div className="col-12 col-md-12 col-lg-6 mt-3 mt-md-3 mt-lg-0">
                   <label htmlFor="img3" className={styles.subcam}>
                     <div className={styles.subcam}>
-                      <Image src={addmore} alt="cam" />
+                      <img src={image3} alt="cam" />
                     </div>
                   </label>
                 </div>
               </div>
               <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img" id="img1" />
-              <input className="d-none" type="file" name="" id="img2" />
-              <input className="d-none" type="file" name="" id="img3" />
+              <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img2" id="img2" />
+              <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img3" id="img3" />
             </div>
             <div className="col-12 col-md-6 col-lg-5">
               <InputVehicle

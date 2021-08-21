@@ -1,9 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import {Fragment} from 'react';
 import {useRouter} from 'next/router';
 import Layout from '../../../components/Layout';
 import Back from '../../../assets/icons/blackBack.png';
 import Image from 'next/image';
-import imgDetail from '../../../assets/img/vechiles/detail.png';
 import styles from '../../../styles/detail.module.css';
 import ButtonCount from '../../../components/base/ButtonCount';
 import {useState} from 'react';
@@ -12,6 +12,7 @@ import {useEffect} from 'react';
 import axios from 'axios';
 
 const Show = () => {
+  const admin = true;
   const {query, back, push} = useRouter();
   const [vehicle, setvehicle] = useState('');
   let [amount, setamount] = useState(0);
@@ -20,6 +21,7 @@ const Show = () => {
       .get(`http://localhost:8080/vehicle/${query.id}`)
       .then((result) => setvehicle(result.data.data))
       .catch((err) => alert(err.response.data.error[0].msg));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handlePlus = () => {
     if (amount >= vehicle.stock) {
@@ -65,16 +67,17 @@ const Show = () => {
             </div>
             <div className="row">
               <div className="col-12 col-md-6 col-lg-6">
-                <Image src={imgDetail} alt="imgVechile" />
-                <div className="d-flex justify-content-start">
-                  <div className={styles.imgSub}>
-                    <Image src={imgDetail} alt="imgdetail" />
-                  </div>
-                  <div className={styles.imgSub}>
-                    <Image src={imgDetail} alt="imgdetail" />
-                  </div>
-                  <div className={styles.imgSub}>
-                    <Image src={imgDetail} alt="imgdetail" />
+                <div className={styles.primaryImg}>
+                  <img className={styles.img} src={`http://localhost:8080${vehicle.image}`} alt="vehicle_img" />
+                </div>
+                <div className="container">
+                  <div className="row">
+                    <div className={`col-12 col-md-6 col-lg-6 ${styles.subimg}`}>
+                      <img className={styles.img} src={`http://localhost:8080${vehicle.image}`} alt="vehicle_img" />
+                    </div>
+                    <div className={`col-12 col-md-6 col-lg-6 ${styles.subimg}`}>
+                      <img className={styles.img} src={`http://localhost:8080${vehicle.image}`} alt="vehicle_img" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -99,19 +102,41 @@ const Show = () => {
               </div>
             </div>
             <div className="d-flex flex-wrap justify-content-lg-start">
-              <ButtonAuth onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})} bgcolor="bg-black" text="Update vehicle" />
-              <ButtonAuth
-                onClick={() => push({pathname: '/vechiles/reservation/20'})}
-                bgcolor="bg-orange"
-                text="Reservation"
-                className="ms-0 ms-lg-5 ms-md-3"
-              />
-              <ButtonAuth
-                onClick={() => handleDelete()}
-                bgcolor="bg-black"
-                text="Delete Vehicle"
-                className="ms-0 ms-lg-5 ms-md-0"
-              />
+              {admin === true ? (
+                <>
+                  <ButtonAuth
+                    onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})}
+                    bgcolor="bg-black"
+                    text="Add to home page"
+                  />
+                  <ButtonAuth
+                    onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})}
+                    bgcolor="bg-orange"
+                    text="Edit Vehicle"
+                    className="ms-0 ms-lg-1 ms-md-3"
+                  />
+                </>
+              ) : (
+                <>
+                  <ButtonAuth
+                    // onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})}
+                    bgcolor="bg-black"
+                    text="Chat Admin"
+                  />
+                  <ButtonAuth
+                    onClick={() => push({pathname: '/vechiles/reservation/20'})}
+                    bgcolor="bg-orange"
+                    text="Reservation"
+                    className="ms-0 ms-lg-5 ms-md-3"
+                  />
+                  <ButtonAuth
+                    // onClick={() => handleDelete()}
+                    bgcolor="bg-black"
+                    text="Like"
+                    className="ms-0 ms-lg-5 ms-md-0"
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>

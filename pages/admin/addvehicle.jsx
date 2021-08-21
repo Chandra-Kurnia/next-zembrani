@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {Fragment} from 'react';
 import Layout from '../../components/Layout';
 import Image from 'next/image';
@@ -14,7 +15,7 @@ import ButtonPay from '../../components/base/ButtonPay';
 import axios from 'axios';
 
 const AddVehicle = () => {
-  const {push} = useRouter()
+  const {push} = useRouter();
   const [form, setform] = useState({
     location_id: '',
     type_id: 1,
@@ -28,6 +29,9 @@ const AddVehicle = () => {
   const [dropdown, setdropdown] = useState(0);
   const [status, setstatus] = useState('Select status');
   const [vehicle_img, setvehicle_img] = useState();
+  const [urlImage, seturlImage] = useState(cam.src);
+  const [urlImage2, seturlImage2] = useState(cam.src);
+  const [urlImage3, seturlImage3] = useState(addmore.src);
   const handleForm = (e) => {
     setform({
       ...form,
@@ -38,7 +42,16 @@ const AddVehicle = () => {
   };
 
   const handleImg = (e) => {
-    setvehicle_img(e.target.files[0]);
+    const urlImg = URL.createObjectURL(e.target.files[0]);
+    const inputId = e.target.id;
+    if (inputId === 'img1') {
+      setvehicle_img(e.target.files[0]);
+      seturlImage(urlImg);
+    } else if (inputId === 'img2') {
+      seturlImage2(urlImg);
+    } else {
+      seturlImage3(urlImg);
+    }
   };
 
   const handleSave = () => {
@@ -58,7 +71,7 @@ const AddVehicle = () => {
       .post('http://localhost:8080/vehicle/', formData)
       .then(() => {
         alert('data successfully inserted');
-        push('/vechiles')
+        push('/vechiles');
       })
       .catch((err) => {
         alert(err.response.data.error[0].msg);
@@ -102,28 +115,28 @@ const AddVehicle = () => {
               />
               <label htmlFor="img1" className={styles.cam}>
                 <div className={styles.cam}>
-                  <Image src={cam} alt="cam" />
+                  <img src={urlImage} alt="" />
                 </div>
               </label>
               <div className="row mt-3">
                 <div className="col-12 col-md-12 col-lg-6">
                   <label htmlFor="img2" className={styles.subcam}>
                     <div className={styles.subcam}>
-                      <Image src={cam} alt="cam" />
+                      <img src={urlImage2} alt="" />
                     </div>
                   </label>
                 </div>
                 <div className="col-12 col-md-12 col-lg-6 mt-3 mt-md-3 mt-lg-0">
                   <label htmlFor="img3" className={styles.subcam}>
                     <div className={styles.subcam}>
-                      <Image src={addmore} alt="cam" />
+                      <img src={urlImage3} alt="" />
                     </div>
                   </label>
                 </div>
               </div>
               <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img" id="img1" />
-              <input className="d-none" type="file" name="" id="img2" />
-              <input className="d-none" type="file" name="" id="img3" />
+              <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img2" id="img2" />
+              <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img3" id="img3" />
             </div>
             <div className="col-12 col-md-6 col-lg-5">
               <InputVehicle onChange={(e) => handleForm(e)} name="location_id" placeholder="Location" />
@@ -145,10 +158,14 @@ const AddVehicle = () => {
               {dropdown === 1 && (
                 <div className={styles.dropdown}>
                   <div onClick={(e) => changeStatus(e)} className={styles.dropmenu}>
-                    <span id='avaiable' className={styles.avaiable}>Avaiable</span>
+                    <span id="avaiable" className={styles.avaiable}>
+                      Avaiable
+                    </span>
                   </div>
                   <div onClick={(e) => changeStatus(e)} className={styles.dropmenu}>
-                    <span id='fullBooked' className={styles.full}>Full Booked</span>
+                    <span id="fullBooked" className={styles.full}>
+                      Full Booked
+                    </span>
                   </div>
                 </div>
               )}

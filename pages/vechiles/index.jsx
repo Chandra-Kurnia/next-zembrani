@@ -13,28 +13,38 @@ import malioboro from '../../assets/img/Home/malioboro.png';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const Index = () => {
-  const [cars, setcars] = useState([]);
+export const getServerSideProps = async () => {
+  const res = await axios.get('http://localhost:8080/vehicle/?type=cars&limit=4');
+  const cars = res.data.data;
+  return {
+    props: {cars},
+  };
+};
+
+const Index = (props) => {
+  const cars = props.cars;
+  // const [cars, setcars] = useState([])
   const [motorbikes, setmotorbike] = useState();
   const [bikes, setbike] = useState();
   const [keyword, setkeyword] = useState('');
 
-  const getCars = () => {
-    axios
-      .get(`http://localhost:8080/vehicle/?type=cars&limit=4&keyword=${keyword}`)
-      .then((data) => {
-        console.log(data.data.data);
-        setcars(data.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const getCars = () => {
+  //   axios
+  //     .get(`http://localhost:8080/vehicle/?type=cars&limit=4&keyword=${keyword}`)
+  //     .then((data) => {
+  //       // console.log(data.data.data);
+  //       setcars(data.data.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
   const getMotorBike = () => {
     axios
       .get(`http://localhost:8080/vehicle/?type=motorbike&limit=4&keyword=${keyword}`)
       .then((data) => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         setmotorbike(data.data.data);
       })
       .catch((err) => {
@@ -45,7 +55,7 @@ const Index = () => {
     axios
       .get(`http://localhost:8080/vehicle/?type=bike&limit=4&keyword=${keyword}`)
       .then((data) => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         setbike(data.data.data);
       })
       .catch((err) => {
@@ -53,7 +63,7 @@ const Index = () => {
       });
   };
   useEffect(() => {
-    getCars();
+    // getCars();
     getMotorBike();
     getBike();
   }, [keyword]);
@@ -82,42 +92,45 @@ const Index = () => {
             </CardWrapper>
             <section className="mt-5"></section>
             <CardWrapper title="Cars" category="cars">
-              {cars ?
-                cars.map((car) => (
-                  <Card
-                    key={car.vehicle_id}
-                    id={car.vehicle_id}
-                    imgsrc={car.image}
-                    title={car.vehicle_name}
-                    subtitle={car.location_name}
-                  />
-                )) : 'Data Not Found'}
+              {cars
+                ? cars.map((car) => (
+                    <Card
+                      key={car.vehicle_id}
+                      id={car.vehicle_id}
+                      imgsrc={car.image}
+                      title={car.vehicle_name}
+                      subtitle={car.location_name}
+                    />
+                  ))
+                : 'Data Not Found'}
             </CardWrapper>
             <section className="mt-5"></section>
             <CardWrapper title="MotorBike" category="motorbike">
-              {motorbikes ?
-                motorbikes.map((motorbike) => (
-                  <Card
-                    key={motorbike.vehicle_id}
-                    id={motorbike.vehicle_id}
-                    imgsrc={motorbike.image}
-                    title={motorbike.vehicle_name}
-                    subtitle={motorbike.location_name}
-                  />
-                )) : "Data not found"}
+              {motorbikes
+                ? motorbikes.map((motorbike) => (
+                    <Card
+                      key={motorbike.vehicle_id}
+                      id={motorbike.vehicle_id}
+                      imgsrc={motorbike.image}
+                      title={motorbike.vehicle_name}
+                      subtitle={motorbike.location_name}
+                    />
+                  ))
+                : 'Data not found'}
             </CardWrapper>
             <section className="mt-5"></section>
             <CardWrapper title="Bike" category="bike">
-              {bikes ?
-                bikes.map((bike) => (
-                  <Card
-                    key={bike.vehicle_id}
-                    id={bike.vehicle_id}
-                    imgsrc={bike.image}
-                    title={bike.vehicle_name}
-                    subtitle={bike.location_name}
-                  />
-                )) : "Data not found"}
+              {bikes
+                ? bikes.map((bike) => (
+                    <Card
+                      key={bike.vehicle_id}
+                      id={bike.vehicle_id}
+                      imgsrc={bike.image}
+                      title={bike.vehicle_name}
+                      subtitle={bike.location_name}
+                    />
+                  ))
+                : 'Data not found'}
             </CardWrapper>
           </div>
         </div>
