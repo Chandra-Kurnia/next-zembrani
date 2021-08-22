@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import InputVehicle from '../../components/base/InputVehicle';
 import InputVehicle2 from '../../components/base/InputVehicle2';
 import styles from '../../styles/AddVehicle.module.css';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import cam from '../../assets/icons/cam.png';
 import addmore from '../../assets/icons/addMore.png';
 import ButtonPay from '../../components/base/ButtonPay';
@@ -15,10 +15,10 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 const AddVehicle = () => {
-  const {push} = useRouter();
+  const {push, back} = useRouter();
   const [form, setform] = useState({
     location_id: '',
-    type_id: 2,
+    type_id: '',
     vehicle_name: '',
     price: '',
     status: '',
@@ -26,18 +26,50 @@ const AddVehicle = () => {
     description: '',
     vehicle_img: {},
   });
+  const [types, settypes] = useState();
+  const [locations, setlocations] = useState();
+  const [searchLocations, setsearchLocations] = useState('');
   const [dropdown, setdropdown] = useState(0);
+  const [dropdowncategory, setdropdowncategory] = useState(0);
+  const [textCategory, settextCategory] = useState();
+  const [textLocation, settextLocation] = useState();
   const [status, setstatus] = useState('Select status');
-  const [vehicle_img, setvehicle_img] = useState();
   const [urlImage, seturlImage] = useState(cam.src);
   const [urlImage2, seturlImage2] = useState(cam.src);
   const [urlImage3, seturlImage3] = useState(addmore.src);
+
+  useEffect(() => {
+    getTypes();
+    getLocations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchLocations]);
+
+  const getTypes = () => {
+    axios
+      .get(`${process.env.API_SERVER}/types/`)
+      .then((result) => {
+        settypes(result.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getLocations = () => {
+    axios
+      .get(`${process.env.API_SERVER}/locations/?keyword=${searchLocations}`)
+      .then((result) => {
+        setlocations(result.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleForm = (e) => {
     setform({
       ...form,
       [e.target.name]: e.target.value,
-      status,
-      vehicle_img,
     });
   };
 
@@ -45,7 +77,10 @@ const AddVehicle = () => {
     const urlImg = URL.createObjectURL(e.target.files[0]);
     const inputId = e.target.id;
     if (inputId === 'img1') {
-      setvehicle_img(e.target.files[0]);
+      setform({
+        ...form,
+        vehicle_img: e.target.files[0],
+      });
       seturlImage(urlImg);
     } else if (inputId === 'img2') {
       seturlImage2(urlImg);
@@ -64,9 +99,9 @@ const AddVehicle = () => {
     formData.append('stock', form.stock);
     formData.append('description', form.description);
     formData.append('vehicle_img', form.vehicle_img);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     axios
       .post(`${process.env.API_SERVER}/vehicle/`, formData)
       .then((res) => {
@@ -75,11 +110,10 @@ const AddVehicle = () => {
         });
       })
       .catch((err) => {
-        swal('Error', err.response.data.error[0].msg, 'error')
+        swal('Error', err.response.data.error[0].msg, 'error');
       });
   };
 
-  const {back} = useRouter();
   const handleDrop = () => {
     if (dropdown === 0) {
       setdropdown(1);
@@ -88,10 +122,45 @@ const AddVehicle = () => {
     }
   };
 
+  const handleCategory = () => {
+    if (dropdowncategory === 0) {
+      setdropdowncategory(1);
+    } else {
+      setdropdowncategory(0);
+    }
+  };
+
+  const handleLocations = (e) => {
+    setsearchLocations(e.target.value);
+  };
+
   const changeStatus = (e) => {
-    setstatus(e.target.id);
+    setstatus(e.target.textContent);
+    setform({
+      ...form,
+      status: e.target.id,
+    });
     setdropdown(0);
   };
+
+  const changetype = (e) => {
+    setform({
+      ...form,
+      type_id: e.target.id,
+    });
+    settextCategory(e.target.textContent);
+    setdropdowncategory(0);
+  };
+
+  const changeLocations = (e) => {
+    setform({
+      ...form,
+      location_id: e.target.id,
+    });
+    settextLocation(e.target.textContent);
+    setsearchLocations('');
+  };
+
   return (
     <Fragment>
       <Layout title="Zembrani | Add Vehicle">
@@ -140,7 +209,29 @@ const AddVehicle = () => {
               <input onChange={(e) => handleImg(e)} className="d-none" type="file" name="vehicle_img3" id="img3" />
             </div>
             <div className="col-12 col-md-6 col-lg-5">
-              <InputVehicle onChange={(e) => handleForm(e)} name="location_id" placeholder="Location" />
+              <InputVehicle
+                defaultValue={textLocation}
+                onChange={(e) => handleLocations(e)}
+                name="location_id"
+                placeholder="Locations"
+              />
+              {searchLocations !== '' && (
+                <div className={styles.dropdownlocations}>
+                  <div className={styles.dropmenu} onClick={() => setsearchLocations('')}>
+                    <span className={styles.category}>
+                      <b>{locations ? "Choose location" : "Locations not found"}</b>
+                    </span>
+                  </div>
+                  {locations &&
+                    locations.map((location, index) => (
+                      <div key={index} className={styles.dropmenu} onClick={(e) => changeLocations(e)}>
+                        <span id={location.location_id} className={styles.category}>
+                          {location.location_name}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              )}
               <InputVehicle
                 onChange={(e) => handleForm(e)}
                 name="description"
@@ -175,7 +266,28 @@ const AddVehicle = () => {
           </div>
           <div className="row mt-3">
             <div className="col-12 col-md-6 col-lg-6">
-              <ButtonPay text="category" className="w-100 bg-black" />
+              <ButtonPay
+                onClick={() => handleCategory()}
+                text={textCategory ? textCategory : 'Add item to'}
+                className="w-100 bg-black"
+              />
+              {dropdowncategory === 1 && (
+                <div className={styles.dropdowncategory}>
+                  <div className={styles.dropmenu} onClick={() => setdropdowncategory(0)}>
+                    <span className={styles.category}>
+                      <b>Choose Locations</b>
+                    </span>
+                  </div>
+                  {types &&
+                    types.map((type, index) => (
+                      <div key={index} onClick={(e) => changetype(e)} className={styles.dropmenu}>
+                        <span id={type.type_id} className={styles.category}>
+                          {type.type_name}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
             <div className="col-12 col-md-6 col-lg-6 mt-3 mt-md-0 mt-lg-0">
               <ButtonPay onClick={() => handleSave()} text="Save" className="w-100 bg-orange" />
