@@ -23,7 +23,6 @@ const Category = () => {
 
   useEffect(() => {
     console.log(query.category);
-    setTimeout(() => {}, 1000);
     axios
       .get(
         `${process.env.API_SERVER}/vehicle/?limit=${limit}&type=${
