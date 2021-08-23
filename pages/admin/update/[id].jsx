@@ -14,47 +14,56 @@ import ButtonPay from '../../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';
 
-const AddVehicle = () => {
+export const getServerSideProps = async (context) => {
+  try {
+    const vehicle_id = context.query.id;
+    const result = await axios.get(`${process.env.API_SERVER}/vehicle/${vehicle_id}`);
+    const typesResult = await axios.get(`${process.env.API_SERVER}/types/`);
+    const locResult = await axios.get(`${process.env.API_SERVER}/locations/`);
+    const vehicle = result.data.data;
+    const image = `${process.env.API_SERVER}${result.data.data.image}`;
+    delete vehicle.image;
+    const types = typesResult.data.data;
+    const locations = locResult.data.data;
+    return {
+      props: {vehicle, image, types, locations},
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const UpdateVehicle = (props) => {
+  // console.log(props.types);
+  // console.log(props.locations);
+  const types = props.types;
+  const [dropdowncategory, setdropdowncategory] = useState(0);
+  const [textcategory, settextCategory] = useState(props.vehicle.type_name);
+  const [textlocation, settextlocation] = useState();
+  const [locations, setlocations] = useState();
+  const [searchLocations, setsearchLocations] = useState('');
   const {query, push, back} = useRouter();
   const [dropdown, setdropdown] = useState(0);
-  const [status, setstatus] = useState('Select status');
-  const [image, setimage] = useState(cam.src);
-  const [image2, setimage2] = useState(cam.src);
-  const [image3, setimage3] = useState(addmore.src);
+  const [status, setstatus] = useState(props.vehicle.status);
+  const [image, setimage] = useState(props.image);
+  const [image2, setimage2] = useState(props.image);
+  const [image3, setimage3] = useState(props.image);
   const [form, setform] = useState({
-    location_id: '',
-    type_id: '',
-    vehicle_name: '',
-    price: '',
-    status: '',
-    stock: '',
-    description: '',
+    location_id: props.vehicle.location_id,
+    type_id: props.vehicle.type_id,
+    vehicle_name: props.vehicle.vehicle_name,
+    price: props.vehicle.price,
+    status: props.vehicle.status,
+    stock: props.vehicle.stock,
+    description: props.vehicle.description,
     image: '',
   });
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.API_SERVER}/vehicle/${query.id}`)
-      .then((result) => {
-        setimage(`${process.env.API_SERVER}${result.data.data.image}`);
-        setimage2(`${process.env.API_SERVER}${result.data.data.image}`);
-        setimage3(`${process.env.API_SERVER}${result.data.data.image}`);
-        delete result.data.data.image;
-        setform(result.data.data);
-        setstatus(result.data.data.status);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.id]);
 
   const handleForm = (e) => {
     setform({
       ...form,
       [e.target.name]: e.target.value,
       status,
-      // image,
     });
   };
 
@@ -64,6 +73,7 @@ const AddVehicle = () => {
     if (inputId === 'img1') {
       setform({...form, image: e.target.files[0]});
       setimage(urlImg);
+      console.log(form);
     } else if (inputId === 'img2') {
       setimage2(urlImg);
     } else {
@@ -72,7 +82,6 @@ const AddVehicle = () => {
   };
 
   const handleSave = () => {
-    console.log(form);
     const formData = new FormData();
     formData.append('location_id', form.location_id);
     formData.append('type_id', form.type_id);
@@ -82,9 +91,9 @@ const AddVehicle = () => {
     formData.append('stock', form.stock);
     formData.append('description', form.description);
     formData.append('vehicle_img', form.image);
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
     axios
       .post(`${process.env.API_SERVER}/vehicle/${query.id}`, formData)
       .then((res) => {
@@ -94,7 +103,7 @@ const AddVehicle = () => {
       })
       .catch((err) => {
         console.log(err.response);
-        swal('Error', 'Erro bro', 'error');
+        swal('Error', 'Error', 'error');
       });
   };
 
@@ -129,10 +138,50 @@ const AddVehicle = () => {
     }
   };
 
+  const handleCategory = () => {
+    if (dropdowncategory === 0) {
+      setdropdowncategory(1);
+    } else {
+      setdropdowncategory(0);
+    }
+  };
+
+  const handleLocation = (e) => {
+    axios
+      .get(`${process.env.API_SERVER}/locations/?keyword=${e.target.value}`)
+      .then((result) => {
+        setlocations(result.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setsearchLocations(e.target.value);
+    settextlocation(e.target.value)
+  };
+
   const changeStatus = (e) => {
     setstatus(e.target.id);
     setdropdown(0);
   };
+
+  const changetype = (e) => {
+    setform({
+      ...form,
+      type_id: e.target.id,
+    });
+    settextCategory(e.target.textContent);
+    setdropdowncategory(0);
+  };
+
+  const changeLocations = (e) => {
+    setform({
+      ...form,
+      location_id: e.target.id,
+    });
+    settextlocation(e.target.textContent)
+    setsearchLocations('');
+  };
+
   return (
     <Fragment>
       <Layout title="Zembrani | Add Vehicle">
@@ -183,11 +232,29 @@ const AddVehicle = () => {
             </div>
             <div className="col-12 col-md-6 col-lg-5">
               <InputVehicle
-                defaultValue={form.location_id}
-                onChange={(e) => handleForm(e)}
+                value={textlocation}
+                defaultValue={props.vehicle.location_name}
+                onChange={(e) => handleLocation(e)}
                 name="location_id"
                 placeholder="Location"
               />
+              {searchLocations !== '' && (
+                <div className={styles.dropdownlocations}>
+                  <div className={styles.dropmenu} onClick={() => setsearchLocations('')}>
+                    <span className={styles.category}>
+                      <b>{locations ? 'Choose location' : 'Locations not found'}</b>
+                    </span>
+                  </div>
+                  {locations &&
+                    locations.map((location, index) => (
+                      <div key={index} className={styles.dropmenu} onClick={(e) => changeLocations(e)}>
+                        <span id={location.location_id} className={styles.category}>
+                          {location.location_name}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              )}
               <InputVehicle
                 onChange={(e) => handleForm(e)}
                 defaultValue={form.description}
@@ -230,8 +297,25 @@ const AddVehicle = () => {
           </div>
           <div className="row mt-3">
             <div className="col-12 col-md-4 col-lg-4">
-              <ButtonPay text="Add Item to" className="w-100 bg-black" />
+              <ButtonPay onClick={() => handleCategory()} text={textcategory} className="w-100 bg-black" />
             </div>
+            {dropdowncategory === 1 && (
+              <div className={styles.dropdowncategory}>
+                <div className={styles.dropmenu} onClick={() => setdropdowncategory(0)}>
+                  <span className={styles.category}>
+                    <b>Choose Category</b>
+                  </span>
+                </div>
+                {types &&
+                  types.map((type, index) => (
+                    <div key={index} onClick={(e) => changetype(e)} className={styles.dropmenu}>
+                      <span id={type.type_id} className={styles.category}>
+                        {type.type_name}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            )}
             <div className="col-12 col-md-4 col-lg-4 mt-3 mt-md-0 mt-lg-0">
               <ButtonPay onClick={() => handleSave()} text="Update" className="w-100 bg-orange" />
             </div>
@@ -245,4 +329,4 @@ const AddVehicle = () => {
   );
 };
 
-export default AddVehicle;
+export default UpdateVehicle;

@@ -78,7 +78,7 @@ const Show = (props) => {
       .catch(() => {
         swal('Error!', 'Failed to add vehicle to home page, please try again later', 'error');
       });
-  }
+  };
 
   return (
     <Fragment>
@@ -92,7 +92,7 @@ const Show = (props) => {
                 width="20px"
                 height="30px"
                 style={{cursor: 'pointer'}}
-                onClick={() => back()}
+                onClick={() => push(`/vechiles/${vehicle.type_name}`)}
               />
               <span className="fw-bold d-block ms-3">Detail</span>
             </div>
@@ -120,15 +120,23 @@ const Show = (props) => {
                 <span className={`d-block ${styles.itemDesc}`}>Type : {vehicle && vehicle.type_name}</span>
                 <span className={`d-block ${styles.itemDesc}`}>Reservation before 2 PM</span>
                 <span className={`d-block ${styles.itemPrice}`}>Rp. {vehicle && vehicle.price}/day</span>
-                <div className="d-flex justify-content-between w-100 mt-5 align-items-center">
-                  <div>
-                    <ButtonCount text="-" onClick={() => handleMinus()} />
-                  </div>
-                  <span className={styles.count}>{amount}</span>
-                  <div>
-                    <ButtonCount text="+" bg="bg-orange" onClick={() => handlePlus()} />
-                  </div>
-                </div>
+                {admin === true ? (
+                  <>
+                  <h2>Stock : {vehicle.stock}</h2>
+                  </>
+                ) : (
+                  <>
+                    <div className="d-flex justify-content-between w-100 mt-5 align-items-center">
+                      <div>
+                        <ButtonCount text="-" onClick={() => handleMinus()} />
+                      </div>
+                      <span className={styles.count}>{amount}</span>
+                      <div>
+                        <ButtonCount text="+" bg="bg-orange" onClick={() => handlePlus()} />
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div className="d-flex flex-wrap justify-content-lg-start">
@@ -151,11 +159,7 @@ const Show = (props) => {
                 </>
               ) : (
                 <>
-                  <ButtonAuth
-                    // onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})}
-                    bgcolor="bg-black"
-                    text="Chat Admin"
-                  />
+                  <ButtonAuth bgcolor="bg-black" text="Chat Admin" />
                   <ButtonAuth
                     onClick={() => push({pathname: '/vechiles/reservation/20'})}
                     bgcolor="bg-orange"

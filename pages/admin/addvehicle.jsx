@@ -132,6 +132,7 @@ const AddVehicle = () => {
 
   const handleLocations = (e) => {
     setsearchLocations(e.target.value);
+    settextLocation(e.target.value);
   };
 
   const changeStatus = (e) => {
@@ -210,7 +211,7 @@ const AddVehicle = () => {
             </div>
             <div className="col-12 col-md-6 col-lg-5">
               <InputVehicle
-                defaultValue={textLocation}
+                value={textLocation}
                 onChange={(e) => handleLocations(e)}
                 name="location_id"
                 placeholder="Locations"
@@ -219,7 +220,7 @@ const AddVehicle = () => {
                 <div className={styles.dropdownlocations}>
                   <div className={styles.dropmenu} onClick={() => setsearchLocations('')}>
                     <span className={styles.category}>
-                      <b>{locations ? "Choose location" : "Locations not found"}</b>
+                      <b>{locations ? 'Choose location' : 'Locations not found'}</b>
                     </span>
                   </div>
                   {locations &&
@@ -275,7 +276,7 @@ const AddVehicle = () => {
                 <div className={styles.dropdowncategory}>
                   <div className={styles.dropmenu} onClick={() => setdropdowncategory(0)}>
                     <span className={styles.category}>
-                      <b>Choose Locations</b>
+                      <b>Choose Category</b>
                     </span>
                   </div>
                   {types &&
