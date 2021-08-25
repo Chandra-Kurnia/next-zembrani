@@ -8,8 +8,6 @@ import InputVehicle from '../../../components/base/InputVehicle';
 import InputVehicle2 from '../../../components/base/InputVehicle2';
 import styles from '../../../styles/AddVehicle.module.css';
 import {useState, useEffect} from 'react';
-import cam from '../../../assets/icons/cam.png';
-import addmore from '../../../assets/icons/addMore.png';
 import ButtonPay from '../../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';

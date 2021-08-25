@@ -1,25 +1,30 @@
-import { Fragment } from "react";
-import Image from 'next/image'
-import styles from '../../styles/CardHistory.module.css'
+/* eslint-disable @next/next/no-img-element */
+import {Fragment} from 'react';
+import styles from '../../styles/CardHistory.module.css';
+import Link from 'next/link';
 
 const CardHistory = (props) => {
-    return (
-        <Fragment>
-            <div className={`${styles.wrapper} d-lg-flex d-md-flex position-relative mb-5 mb-md-0 mb-lg-0`}>
-                <div className={styles.imgWrapper}>
-                    <Image className={styles.img} src={props.imgsrc} alt='imgVehicle'/>
-                </div>
-                <div className={styles.content}>
-                    <span className={styles.title}>{props.title}</span>
-                    <span className={styles.time}>{props.time}</span>
-                    <span className={styles.prepay}>Prepayment : Rp. {props.prepay}</span>
-                    <span className={styles.status}>Has been returned</span>
-                </div>
-                <button className={`${styles.btn} bg-orange`}>Delete</button>
+  return (
+    <Fragment>
+      <div className={`${styles.wrapper} d-lg-flex d-md-flex position-relative mb-5 mb-md-0 mb-lg-0`}>
+        <div className={styles.imgWrapper}>
+          <img className={styles.img} src={`${process.env.API_SERVER}${props.imgsrc}`} alt="imgVehicle" />
+        </div>
+        <Link href={`/payment/${props.idHistory}`}>
+          <a className={styles.a}>
+            <div className={styles.content}>
+              <span className={styles.title}>{props.title}</span>
+              <span className={styles.time}>{props.time}</span>
+              <span className={styles.prepay}>Cost : Rp. {props.prepay}</span>
+              <span className={styles.status}>{props.status}</span>
             </div>
-            <hr className={styles.line}/>
-        </Fragment>
-    );
-}
+          </a>
+        </Link>
+        <button onClick={() => props.onClick()} className={`${styles.btn} bg-orange`}>Delete</button>
+      </div>
+      <hr className={styles.line} />
+    </Fragment>
+  );
+};
 
 export default CardHistory;

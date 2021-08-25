@@ -8,8 +8,12 @@
     font-family: 'Custom-font', playfair-regular;
 }
 
-.itemPay{
+.itemPay, .itemavaiable{
     font-family: 'Custom-font', nunito;
+}
+
+.itemavaiable{
+    color: var(--avaiable);
 }
 
 .itemPay {
@@ -50,7 +54,22 @@
     font-family: 'Custom-font', nunito;
 }
 
-@media (min-width: 768px) {}
+.vehicleImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imgwrapper{
+    width: 636px;
+    height: 500px;
+}
+
+@media (min-width: 768px) {
+    .imgwrapper{
+        width: 100%;
+    }
+}
 
 @media (min-width: 992px) {
     .rightItem {
@@ -59,5 +78,8 @@
 
     .inputDate{
         width: 230px;
+    }
+    .imgwrapper{
+        width: 636px;
     }
 }

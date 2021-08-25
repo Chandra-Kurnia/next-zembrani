@@ -30,7 +30,7 @@ export const getServerSideProps = async (context) => {
 const Show = (props) => {
   const vehicle = props.vehicle;
   const populars = props.populars;
-  const admin = true;
+  const admin = false;
   const {query, back, push} = useRouter();
   let [amount, setamount] = useState(0);
   useEffect(() => {
@@ -39,20 +39,6 @@ const Show = (props) => {
     // .catch((err) => alert(err.response.data.error[0].msg));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handlePlus = () => {
-    if (amount >= vehicle.stock) {
-      setamount(vehicle.stock);
-    } else {
-      setamount((amount += 1));
-    }
-  };
-  const handleMinus = () => {
-    if (amount === 0) {
-      setamount(0);
-    } else {
-      setamount(amount - 1);
-    }
-  };
 
   const addtohomepage = () => {
     axios
@@ -120,7 +106,7 @@ const Show = (props) => {
                 <span className={`d-block ${styles.itemDesc}`}>Type : {vehicle && vehicle.type_name}</span>
                 <span className={`d-block ${styles.itemDesc}`}>Reservation before 2 PM</span>
                 <span className={`d-block ${styles.itemPrice}`}>Rp. {vehicle && vehicle.price}/day</span>
-                {admin === true ? (
+                {/* {admin === true ? (
                   <>
                   <h2>Stock : {vehicle.stock}</h2>
                   </>
@@ -136,7 +122,7 @@ const Show = (props) => {
                       </div>
                     </div>
                   </>
-                )}
+                )} */}
               </div>
             </div>
             <div className="d-flex flex-wrap justify-content-lg-start">
@@ -161,7 +147,7 @@ const Show = (props) => {
                 <>
                   <ButtonAuth bgcolor="bg-black" text="Chat Admin" />
                   <ButtonAuth
-                    onClick={() => push({pathname: '/vechiles/reservation/20'})}
+                    onClick={() => push({pathname: `/vechiles/reservation/${vehicle.vehicle_id}`})}
                     bgcolor="bg-orange"
                     text="Reservation"
                     className="ms-0 ms-lg-5 ms-md-3"

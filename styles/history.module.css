@@ -21,6 +21,8 @@
     outline: 1px solid #C4C4C4;
     text-align: center;
     padding-top: 20px;
+    padding-left: 30px !important;
+    padding-bottom: 20px;
 }
 
 .titleSpan{

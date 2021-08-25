@@ -41,7 +41,7 @@ const Navbar = (props) => {
                 </Link>
               </li>
               <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
-                <Link href="">
+                <Link href="/history">
                   <a className={`text-decoration-none ${props.history} ${styles.navigation}`}>History</a>
                 </Link>
               </li>

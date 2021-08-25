@@ -1,4 +1,4 @@
-import {Fragment} from 'react';
+import {Fragment, useState} from 'react';
 import Footer from '../../components/modules/Footer';
 import styles from '../../styles/login.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -9,8 +9,45 @@ import ButtonLoginGoogle from '../../components/base/ButtonLoginGoogle';
 import Line from '../../assets/img/line.png';
 import Image from 'next/image';
 import Head from 'next/head';
+import axios from 'axios';
+import swal from 'sweetalert';
+import { useRouter } from 'next/router';
 
-const login = () => {
+const Login = () => {
+  const {push} = useRouter()
+  const [form, setform] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleForm = (e) => {
+    setform({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = () => {
+    axios
+      .post(`${process.env.API_SERVER}/user/login`, form, {withCredentials: true})
+      .then((res) => {
+        swal('Login Success', 'Now you can explore vehicle!', 'success')
+        .then(() => {
+          push('/')
+        })
+        // console.log(res);
+      })
+      .catch((err) => {
+        // console.log(err.response);
+        swal('Login Failed', 'Check Your Info', 'error');
+        // if (err.response.data.error[0].msg === undefined) {
+        //   swal('Error', err.response.data.message, 'error');
+        // } else {
+        //   swal('Error', err.response.data.error[0].msg, 'error');
+        // }
+      });
+  };
+
   return (
     <Fragment>
       <Head>
@@ -24,7 +61,7 @@ const login = () => {
               <br />
               <div className={styles.signupbtn}>
                 <span className={`${styles.question} d-inline-block mt-4`}>Dont have account ?</span>
-                <Link href='/auth/signUp'>
+                <Link href="/auth/signUp">
                   <a>
                     <ButtonAuth text="Sign Up" bgcolor="bg-black" />
                   </a>
@@ -36,13 +73,13 @@ const login = () => {
               <Image src={Line} alt="line" className="mt-5" />
             </div>
             <div className={`col-lg-5 col-12 ${styles.rightAuth}`}>
-              <InputAuth type="text" placeholder="Email" /> <br />
-              <InputAuth type="password" placeholder="Password" />
+              <InputAuth name="email" onChange={handleForm} type="text" placeholder="Email" /> <br />
+              <InputAuth name="password" onChange={handleForm} type="password" placeholder="Password" />
               <Link href="forgotpassword">
                 <a>Forgot Password ?</a>
               </Link>{' '}
               <br />
-              <ButtonAuth text="Login" bgcolor="bg-orange" />
+              <ButtonAuth onClick={handleLogin} text="Login" bgcolor="bg-orange" />
               <ButtonLoginGoogle text="Login With Google" />
             </div>
           </div>
@@ -53,4 +90,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

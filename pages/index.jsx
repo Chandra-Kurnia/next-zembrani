@@ -9,22 +9,6 @@ import Card from '../components/modules/Card';
 import Link from 'next/link';
 import axios from 'axios';
 
-export const getServerSideProps = async () => {
-  try {
-    const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
-    const popularVehicles = result.data.data;
-    return {
-      props: {
-        post: popularVehicles,
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
-};
-
 const index = (props) => {
   const {post} = props;
   const admin = true;
@@ -42,14 +26,39 @@ const index = (props) => {
                 <InputOpt
                   name="location"
                   placeholder="Location"
-                  data={['jakarta', 'Trenggalek', 'Surabaya', 'jogja']}
+                  data={[
+                    {id: 1, text: 'Jakarta'},
+                    {id: 2, text: 'Trenggalek'},
+                  ]}
                 />{' '}
                 <br />
-                <InputOpt name="payment" placeholder="Payment" data={['jakarta', 'Trenggalek', 'Surabaya', 'jogja']} />
+                <InputOpt
+                  name="payment"
+                  placeholder="Payment"
+                  data={[
+                    {id: 1, text: 'Jakarta'},
+                    {id: 2, text: 'Trenggalek'},
+                  ]}
+                />
               </div>
               <div className="col-6 col-lg-5">
-                <InputOpt name="type" placeholder="Type" data={['jakarta', 'Trenggalek', 'Surabaya', 'jogja']} /> <br />
-                <InputOpt name="date" placeholder="Date" data={['jakarta', 'Trenggalek', 'Surabaya', 'jogja']} />
+                <InputOpt
+                  name="type"
+                  placeholder="Type"
+                  data={[
+                    {id: 1, text: 'Jakarta'},
+                    {id: 2, text: 'Trenggalek'},
+                  ]}
+                />{' '}
+                <br />
+                <InputOpt
+                  name="date"
+                  placeholder="Date"
+                  data={[
+                    {id: 1, text: 'Jakarta'},
+                    {id: 2, text: 'Trenggalek'},
+                  ]}
+                />
               </div>
               <br />
               <SmallButton text="explore" className="bg-orange" />
@@ -98,6 +107,37 @@ const index = (props) => {
       </div>
     </Layout>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  try {
+    // console.log(context.req.headers.cookie);
+    const cookie = context.req.headers.cookie;
+    // console.log(context.req.headers.cookie);
+    const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
+    // const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+    //   withCredentials: true,
+    //   headers: {cookie},
+    // });
+    // const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`, {
+    //   withCredentials: true,
+    //   headers: {cookie},
+    // });
+    const popularVehicles = result.data.data;
+    return {
+      props: {
+        post: popularVehicles,
+        // dataUser: dataUser.data.data
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        post: [],
+      },
+    };
+  }
 };
 
 export default index;
