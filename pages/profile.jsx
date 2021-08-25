@@ -3,12 +3,12 @@ import {Fragment} from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/Profile.module.css';
 import Image from 'next/image';
-import profile from '../assets/img/profile.png';
 import pencil from '../assets/icons/pencil.png';
 import InputProfle from '../components/base/InputProfle';
 import SmallButton from '../components/base/SmallButton';
 import {useState} from 'react';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export const getServerSideProps = async (context) => {
   try {
@@ -33,14 +33,46 @@ export const getServerSideProps = async (context) => {
 
 const Profile = (props) => {
   const {dataUser} = props;
-  // console.log(dataUser);
+  const [form, setform] = useState({
+    email: dataUser.email,
+    address: dataUser.address,
+    phone_number: dataUser.phone_number,
+    name: dataUser.name,
+    date_of_birth: dataUser.date_of_birth,
+    avatar: '',
+  });
+  // console.log(form);
   const yearJoin = dataUser.created_at.substr(0, 4);
-  const [avatar, setavatar] = useState(profile.src);
+  const [avatar, setavatar] = useState(`${process.env.API_SERVER}${dataUser.avatar}`);
   const handleFile = (e) => {
     const [file] = e.target.files;
     const urlImage = URL.createObjectURL(file);
     setavatar(urlImage);
-    console.log(urlImage);
+    setform({...form, avatar: e.target.files[0]});
+  };
+
+  const handleForm = (e) => {
+    setform({...form, [e.target.name]: e.target.value});
+  };
+  const handleSave = () => {
+    const formData = new FormData();
+    formData.append('email', form.email);
+    formData.append('address', form.address);
+    formData.append('phone_number', form.phone_number);
+    formData.append('name', form.name);
+    formData.append('date_of_birth', form.date_of_birth);
+    formData.append('avatar', form.avatar);
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
+    axios
+      .post(`${process.env.API_SERVER}/user/updateprofile`, formData, {withCredentials: true})
+      .then(() => {
+        swal('Success', 'update data success', 'success');
+      })
+      .catch((err) => {
+        swal('Error', 'Error updated data, try again later', 'error');
+      });
   };
   return (
     <Fragment>
@@ -76,20 +108,44 @@ const Profile = (props) => {
           </div>
           <div className="form mt-4">
             <span className={styles.formtitle}>Contact</span> <br />
-            <InputProfle title="Email address :" name="email" value={dataUser.email} />
-            <InputProfle className="mt-3" title="Address :" name="address" value={dataUser.address} />
-            <InputProfle className="mt-3" title="Mobile Number :" name="phone" value={dataUser.phone_number} />
+            <InputProfle onChange={(e) => handleForm(e)} title="Email address :" name="email" value={dataUser.email} />
+            <InputProfle
+              onChange={(e) => handleForm(e)}
+              className="mt-3"
+              title="Address :"
+              name="address"
+              value={dataUser.address}
+            />
+            <InputProfle
+              onChange={(e) => handleForm(e)}
+              className="mt-3"
+              title="Mobile Number :"
+              name="phone_number"
+              value={dataUser.phone_number}
+            />
             <span className={`mt-5 d-block ${styles.formtitle}`}>Identity</span> <br />
             <div className="row mb-3">
               <div className="col-12 col-md-6 col-lg-6">
-                <InputProfle className="mt-3" title="Display name :" name="displayName" value={dataUser.name} />
+                <InputProfle
+                  onChange={(e) => handleForm(e)}
+                  className="mt-3"
+                  title="Display name :"
+                  name="name"
+                  value={dataUser.name}
+                />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <InputProfle className="mt-3" title="DD/MM/YY" name="birth" value={dataUser.date_of_birth} />
+                <InputProfle
+                  onChange={(e) => handleForm(e)}
+                  className="mt-3"
+                  title="DD/MM/YY"
+                  name="date_of_birth"
+                  value={dataUser.date_of_birth}
+                />
               </div>
             </div>
             <div className="d-flex justify-content-between justify-content-lg-start flex-wrap ps-2 ps-lg-0">
-              <SmallButton text="Save changes" className="fw-bold mb-3 bg-orange" />
+              <SmallButton onClick={handleSave} text="Save changes" className="fw-bold mb-3 bg-orange" />
               <SmallButton text="Edit password" className="fw-bold mb-3 bg-black" />
               <SmallButton text="Cancel" className="fw-bold mb-3" />
             </div>
