@@ -27,11 +27,12 @@ export const getServerSideProps = async (context) => {
 };
 
 const Reservation = (props) => {
-  const {vehicle, image} = props;
   const {back, push} = useRouter();
   let [amount, setamount] = useState(1);
   const [date, setdate] = useState('Select date');
   const [day, setday] = useState(1);
+  
+  const {vehicle, image} = props;
   const [rental, setrental] = useState({
     user_id: 20,
     vehicle_id: vehicle.vehicle_id,
@@ -73,7 +74,6 @@ const Reservation = (props) => {
   };
 
   const handlePay = () => {
-    console.log(rental);
     axios.post(`${process.env.API_SERVER}/vehicle/R/rental`, rental)
     .then(() => {
       swal('Success', 'Rental Success, please finish the payment', 'success')

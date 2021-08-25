@@ -99,18 +99,22 @@ const AddVehicle = () => {
     formData.append('stock', form.stock);
     formData.append('description', form.description);
     formData.append('vehicle_img', form.vehicle_img);
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
     axios
-      .post(`${process.env.API_SERVER}/vehicle/`, formData)
+      .post(`${process.env.API_SERVER}/vehicle/`, formData, {withCredentials: true})
       .then((res) => {
         swal('Success', res.data.message, 'success').then(() => {
           push('/vechiles');
         });
       })
       .catch((err) => {
-        swal('Error', err.response.data.error[0].msg, 'error');
+        if (err.response.data.error[0] === undefined) {
+          swal('Error', err.response.data.message, 'error');
+        } else {
+          swal('Error', err.response.data.error[0].msg, 'error');
+        }
       });
   };
 

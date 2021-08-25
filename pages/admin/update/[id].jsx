@@ -93,15 +93,18 @@ const UpdateVehicle = (props) => {
     //   console.log(`${key}: ${value}`);
     // }
     axios
-      .post(`${process.env.API_SERVER}/vehicle/${query.id}`, formData)
+      .post(`${process.env.API_SERVER}/vehicle/${query.id}`, formData, {withCredentials: true})
       .then((res) => {
         swal('Success', res.data.message, 'success').then(() => {
           push(`/vechiles/detail/${query.id}`);
         });
       })
       .catch((err) => {
-        console.log(err.response);
-        swal('Error', 'Error', 'error');
+        if (err.response.data.error[0] === undefined) {
+          swal('Error', err.response.data.message, 'error');
+        } else {
+          swal('Error', err.response.data.error[0].msg, 'error');
+        }
       });
   };
 
@@ -115,14 +118,19 @@ const UpdateVehicle = (props) => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .delete(`${process.env.API_SERVER}/vehicle/${query.id}`)
+          .delete(`${process.env.API_SERVER}/vehicle/${query.id}`, {withCredentials: true})
           .then((res) => {
             swal('Success', res.data.message, 'success').then(() => {
               push(`/vechiles/`);
             });
           })
           .catch((err) => {
-            swal('Error', err.response.data.error[0].msg, 'error');
+            console.log(err.response);
+            if (err.response.data.error[0] === undefined) {
+              swal('Error', err.response.data.message, 'error');
+            } else {
+              swal('Error', err.response.data.error[0].msg, 'error');
+            }
           });
       }
     });

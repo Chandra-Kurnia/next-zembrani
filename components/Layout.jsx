@@ -7,34 +7,35 @@ import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
-export const getServerSideProps = async(context) => {
-  try{
-    console.log('1');
-    const cookie = context.req.headers.cookie;
-    const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
-    return {
-      props:{
-        dataUser
-      }
-    }
-  }catch(error){
-    console.log(2);
-    return{
-      props:{
-        dataUser: {}
-      }
-    }
-  }
-}
+// export const getServerSideProps = async(context) => {
+//   try{
+//     console.log('1');
+//     const cookie = context.req.headers.cookie;
+//     const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+//       withCredentials: true,
+//       headers: {cookie},
+//     });
+//     return {
+//       props:{
+//         dataUser
+//       }
+//     }
+//   }catch(error){
+//     console.log(2);
+//     return{
+//       props:{
+//         dataUser: {}
+//       }
+//     }
+//   }
+// }
 
 const Layout = (props) => {
-  let auth = false;
-  if (props.dataUser) {
-    auth = true;
-  }
+  let auth = true;
+  // if (props.dataUser) {
+  //   auth = true;
+  // }
+  // console.log(props);
 
   return (
     <Fragment>

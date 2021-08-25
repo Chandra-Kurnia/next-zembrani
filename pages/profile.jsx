@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {Fragment} from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/Profile.module.css';
@@ -7,25 +8,49 @@ import pencil from '../assets/icons/pencil.png';
 import InputProfle from '../components/base/InputProfle';
 import SmallButton from '../components/base/SmallButton';
 import {useState} from 'react';
-import Head from 'next/head';
+import axios from 'axios';
 
-const Profile = () => {
-  const [avatar, setavatar] = useState(profile);
+export const getServerSideProps = async (context) => {
+  try {
+    const cookie = context.req.headers.cookie;
+    // console.log(cookie);
+    const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+      withCredentials: true,
+      headers: {cookie},
+    });
+    // console.log(dataUser.data.data);
+    const dataUser = ResdataUser.data.data;
+    return {
+      props: {dataUser},
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {},
+    };
+  }
+};
+
+const Profile = (props) => {
+  const {dataUser} = props;
+  // console.log(dataUser);
+  const yearJoin = dataUser.created_at.substr(0, 4);
+  const [avatar, setavatar] = useState(profile.src);
   const handleFile = (e) => {
     const [file] = e.target.files;
     const urlImage = URL.createObjectURL(file);
-    setavatar({...profile});
+    setavatar(urlImage);
     console.log(urlImage);
   };
   return (
     <Fragment>
-      <Layout title='Zembrani - Profile'>
+      <Layout title="Zembrani - Profile">
         <div className="container">
           <span className={styles.title}>Profile</span>
           <div className="text-center">
             <div className="w-100 d-flex justify-content-center mb-4">
               <div className={styles.imgWrapper}>
-                <Image src={avatar} alt="imgProfile" className="rounded-circle" />
+                <img src={avatar} alt="imgProfile" className={styles.imgProfile} />
                 <label htmlFor="avatar">
                   <div className={styles.edit}>
                     <Image src={pencil} alt="pencil" />
@@ -34,10 +59,10 @@ const Profile = () => {
                 <input className="d-none" type="file" name="avatar" id="avatar" onChange={(e) => handleFile(e)} />
               </div>
             </div>
-            <span className={`${styles.desc} ${styles.name}`}>Samantha Doe</span>
-            <span className={`${styles.desc}`}>samanthadoe@mail.com</span>
-            <span className={`${styles.desc}`}>+62833467823</span>
-            <span className={`${styles.desc}`}>Has been active since 2013</span>
+            <span className={`${styles.desc} ${styles.name}`}>{dataUser.name}</span>
+            <span className={`${styles.desc}`}>{dataUser.email}</span>
+            <span className={`${styles.desc}`}>{dataUser.phone_number}</span>
+            <span className={`${styles.desc}`}>Has been active since {yearJoin}</span>
             <div className="row mt-3">
               <div className={`col ${styles.male}`}>
                 <input className="me-1" type="radio" name="gender" id="male" />
@@ -51,21 +76,16 @@ const Profile = () => {
           </div>
           <div className="form mt-4">
             <span className={styles.formtitle}>Contact</span> <br />
-            <InputProfle title="Email address :" name="email" value="zulaikha17@gmail.com" />
-            <InputProfle
-              className="mt-3"
-              title="Address :"
-              name="address"
-              value="Iskandar Street no. 67 Block A Near Bus Stop"
-            />
-            <InputProfle className="mt-3" title="Mobile Number :" name="phone" value="(+62)813456782" />
+            <InputProfle title="Email address :" name="email" value={dataUser.email} />
+            <InputProfle className="mt-3" title="Address :" name="address" value={dataUser.address} />
+            <InputProfle className="mt-3" title="Mobile Number :" name="phone" value={dataUser.phone_number} />
             <span className={`mt-5 d-block ${styles.formtitle}`}>Identity</span> <br />
             <div className="row mb-3">
               <div className="col-12 col-md-6 col-lg-6">
-                <InputProfle className="mt-3" title="Display name :" name="displayName" value="zulaikha" />
+                <InputProfle className="mt-3" title="Display name :" name="displayName" value={dataUser.name} />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <InputProfle className="mt-3" title="DD/MM/YY" name="birth" value="03/09/2003" />
+                <InputProfle className="mt-3" title="DD/MM/YY" name="birth" value={dataUser.date_of_birth} />
               </div>
             </div>
             <div className="d-flex justify-content-between justify-content-lg-start flex-wrap ps-2 ps-lg-0">

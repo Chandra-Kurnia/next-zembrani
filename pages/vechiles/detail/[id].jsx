@@ -30,7 +30,7 @@ export const getServerSideProps = async (context) => {
 const Show = (props) => {
   const vehicle = props.vehicle;
   const populars = props.populars;
-  const admin = false;
+  const admin = true;
   const {query, back, push} = useRouter();
   let [amount, setamount] = useState(0);
   useEffect(() => {
