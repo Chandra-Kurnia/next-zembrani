@@ -14,33 +14,49 @@ import swal from 'sweetalert';
 
 export const getServerSideProps = async (context) => {
   try {
+    const cookie = context.req.headers.cookie;
     const vehicle_id = context.query.id;
     const result = await axios.get(`${process.env.API_SERVER}/vehicle/${vehicle_id}`);
     const typesResult = await axios.get(`${process.env.API_SERVER}/types/`);
     const locResult = await axios.get(`${process.env.API_SERVER}/locations/`);
+    const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+      withCredentials: true,
+      headers: {cookie},
+    });
     const vehicle = result.data.data;
     const image = `${process.env.API_SERVER}${result.data.data.image}`;
     delete vehicle.image;
     const types = typesResult.data.data;
     const locations = locResult.data.data;
+    let dataUser = ResdataUser.data.data;
     return {
-      props: {vehicle, image, types, locations},
+      props: {vehicle, image, types, locations, dataUser},
     };
   } catch (error) {
-    console.log(error);
+    return {
+      notFound: true,
+    };
   }
 };
 
 const UpdateVehicle = (props) => {
   // console.log(props.types);
   // console.log(props.locations);
+  const {query, push, back} = useRouter();
+  useEffect(() => {
+    if (props.dataUser.roles !== 'admin') {
+      swal('Error', 'Only admin', 'error').then(() => {
+        push('/');
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const types = props.types;
   const [dropdowncategory, setdropdowncategory] = useState(0);
   const [textcategory, settextCategory] = useState(props.vehicle.type_name);
   const [textlocation, settextlocation] = useState();
   const [locations, setlocations] = useState();
   const [searchLocations, setsearchLocations] = useState('');
-  const {query, push, back} = useRouter();
   const [dropdown, setdropdown] = useState(0);
   const [status, setstatus] = useState(props.vehicle.status);
   const [image, setimage] = useState(props.image);
@@ -162,7 +178,7 @@ const UpdateVehicle = (props) => {
         console.log(err);
       });
     setsearchLocations(e.target.value);
-    settextlocation(e.target.value)
+    settextlocation(e.target.value);
   };
 
   const changeStatus = (e) => {
@@ -184,7 +200,7 @@ const UpdateVehicle = (props) => {
       ...form,
       location_id: e.target.id,
     });
-    settextlocation(e.target.textContent)
+    settextlocation(e.target.textContent);
     setsearchLocations('');
   };
 

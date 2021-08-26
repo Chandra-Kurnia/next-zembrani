@@ -24,9 +24,8 @@ export const getServerSideProps = async (context) => {
       props: {dataUser},
     };
   } catch (error) {
-    console.log(error);
     return {
-      props: {},
+      notFound: true,
     };
   }
 };

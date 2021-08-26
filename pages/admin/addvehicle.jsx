@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import {Fragment} from 'react';
 import Layout from '../../components/Layout';
 import Image from 'next/image';
 import Back from '../../assets/icons/blackBack.png';
@@ -7,15 +6,45 @@ import {useRouter} from 'next/router';
 import InputVehicle from '../../components/base/InputVehicle';
 import InputVehicle2 from '../../components/base/InputVehicle2';
 import styles from '../../styles/AddVehicle.module.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, Fragment} from 'react';
 import cam from '../../assets/icons/cam.png';
 import addmore from '../../assets/icons/addMore.png';
 import ButtonPay from '../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';
 
-const AddVehicle = () => {
+export const getServerSideProps = async (context) => {
+  try {
+    const cookie = context.req.headers.cookie;
+    // console.log(cookie);
+    const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+      withCredentials: true,
+      headers: {cookie},
+    });
+    // console.log(dataUser.data.data);
+    const dataUser = ResdataUser.data.data;
+    return {
+      props: {dataUser},
+    };
+  } catch (error) {
+    // console.log(error);
+    return {
+      notFound: true,
+    };
+  }
+};
+
+const AddVehicle = (props) => {
   const {push, back} = useRouter();
+  const {dataUser} = props;
+  useEffect(() => {
+    if (dataUser.roles !== 'admin') {
+      swal('Error', 'Only admin', 'error').then(() => {
+        push('/');
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [form, setform] = useState({
     location_id: '',
     type_id: '',

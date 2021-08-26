@@ -9,7 +9,6 @@ import axios from 'axios';
 
 // export const getServerSideProps = async(context) => {
 //   try{
-//     console.log('1');
 //     const cookie = context.req.headers.cookie;
 //     const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
 //       withCredentials: true,
@@ -21,7 +20,6 @@ import axios from 'axios';
 //       }
 //     }
 //   }catch(error){
-//     console.log(2);
 //     return{
 //       props:{
 //         dataUser: {}
@@ -31,11 +29,11 @@ import axios from 'axios';
 // }
 
 const Layout = (props) => {
-  let auth = true;
+  let auth = false;
   // if (props.dataUser) {
   //   auth = true;
   // }
-  // console.log(props);
+  // console.log(props.dataUser);
 
   return (
     <Fragment>

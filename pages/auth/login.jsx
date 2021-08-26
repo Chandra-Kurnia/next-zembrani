@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useState, useEffect} from 'react';
 import Footer from '../../components/modules/Footer';
 import styles from '../../styles/login.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,10 +11,13 @@ import Image from 'next/image';
 import Head from 'next/head';
 import axios from 'axios';
 import swal from 'sweetalert';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 
 const Login = () => {
-  const {push} = useRouter()
+  useEffect(() => {
+    axios.get(`${process.env.API_SERVER}/user/logout`, {withCredentials: true});
+  }, []);
+  const {push} = useRouter();
   const [form, setform] = useState({
     email: '',
     password: '',
@@ -31,20 +34,19 @@ const Login = () => {
     axios
       .post(`${process.env.API_SERVER}/user/login`, form, {withCredentials: true})
       .then((res) => {
-        swal('Login Success', 'Now you can explore vehicle!', 'success')
-        .then(() => {
-          push('/')
-        })
+        swal('Login Success', 'Now you can explore vehicle!', 'success').then(() => {
+          push('/');
+        });
         // console.log(res);
       })
       .catch((err) => {
-        // console.log(err.response);
-        swal('Login Failed', 'Check Your Info', 'error');
-        // if (err.response.data.error[0].msg === undefined) {
-        //   swal('Error', err.response.data.message, 'error');
-        // } else {
-        //   swal('Error', err.response.data.error[0].msg, 'error');
-        // }
+        console.log(err.response);
+        // swal('Login Failed', 'Check Your Info', 'error');
+        if (err.response.data.error.length < 1) {
+          swal('Error', err.response.data.message, 'error');
+        } else {
+          swal('Error', err.response.data.error[0].msg, 'error');
+        }
       });
   };
 

@@ -67,8 +67,16 @@ const ForgotPassword = () => {
                 name="email"
                 placeholder="Enter your email address"
               />
+              <InputAuth
+                onChange={(e) =>
+                  setemail({
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                name="email"
+                placeholder="Enter your email address"
+              />
               <ButtonAuth text="Send Link" bgcolor="bg-orange" onClick={() => handleSend()} />
-              <ButtonAuth text="Resend Link" />
             </div>
           </div>
         </div>

@@ -14,23 +14,61 @@ import swal from 'sweetalert';
 
 export const getServerSideProps = async (context) => {
   try {
+    const cookie = context.req.headers.cookie || "";
     const vehicleId = context.query.id;
     const res = await axios.get(`${process.env.API_SERVER}/vehicle/${vehicleId}`);
     const popularvehicle = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
+    const resdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+      withCredentials: true,
+      headers: {cookie},
+    });
     const vehicle = res.data.data;
     const populars = popularvehicle.data.data;
+    const dataUser = resdataUser.data.data || null;
     return {
-      props: {vehicle, populars},
+      props: {vehicle, populars, dataUser},
     };
   } catch (error) {
-    swal('Error', 'Error during get data from server', 'error');
+    console.log(error);
+    return {
+      props: {},
+    };
   }
 };
+
+// export const getStaticPaths = async() =>{
+//   const {data} = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`)
+//   const vehicles = data.map((item) => ({ params: { id: item.id.toString()}}))
+//   const paths = [{ params: { id: '23' }}]
+//   return {
+//     paths: paths,
+//     fallback: true
+//   }
+// }
+
+// export const getStaticProps =async(context)=>{
+//   const id = context.params.id
+//   const resvehicledata = await axios.get(`${process.env.API_SERVER}/vehicle/detail/${id}`)
+//   const data = resvehicledata.data.data
+//   return {
+//     props: {
+//       vehicle: data
+//     }
+//   }
+// }
 
 const Show = (props) => {
   const vehicle = props.vehicle;
   const populars = props.populars;
-  const admin = true;
+  const dataUser = props.dataUser;
+  console.log(dataUser);
+  let admin = false;
+  // console.log(dataUser);
+  if (dataUser) {
+    if (dataUser.roles === 'admin') {
+      admin = true;
+    }
+  }
   const {query, back, push} = useRouter();
   let [amount, setamount] = useState(0);
   useEffect(() => {
@@ -146,12 +184,14 @@ const Show = (props) => {
               ) : (
                 <>
                   <ButtonAuth bgcolor="bg-black" text="Chat Admin" />
-                  <ButtonAuth
-                    onClick={() => push({pathname: `/vechiles/reservation/${vehicle.vehicle_id}`})}
-                    bgcolor="bg-orange"
-                    text="Reservation"
-                    className="ms-0 ms-lg-5 ms-md-3"
-                  />
+                  {dataUser !== null ? (
+                    <ButtonAuth
+                      onClick={() => push({pathname: `/vechiles/reservation/${vehicle.vehicle_id}`})}
+                      bgcolor="bg-orange"
+                      text="Reservation"
+                      className="ms-0 ms-lg-5 ms-md-3"
+                    />
+                  ) : ""}
                   <ButtonAuth
                     // onClick={() => handleDelete()}
                     bgcolor="bg-black"

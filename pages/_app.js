@@ -18,12 +18,17 @@ function MyApp({Component, pageProps}) {
   );
 }
 
-// MyApp.getInitialProps = async ({ctx}) => {
+// export const getServerSideProps = async ({ctx}) => {
 //   try {
 //     // console.log(ctx.req.headers.cookie);
 //     const cookie = ctx.req.headers.cookie;
+//     const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+//       withCredentials: true,
+//       headers: {cookie},
+//     });
 //     return {
 //       props: cookie,
+//       dataUser: dataUser.data.data
 //     };
 //   } catch (error) {
 //     return {

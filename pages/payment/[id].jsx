@@ -13,17 +13,29 @@ export const getServerSideProps = async (context) => {
   const rental_id = context.query.id;
   const resRental = await axios(`${process.env.API_SERVER}/history/${rental_id}`);
   const rental = resRental.data.data;
+  const cookie = context.req.headers.cookie;
+  const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+    withCredentials: true,
+    headers: {cookie},
+  });
+  const dataUser = ResdataUser.data.data;
   return {
     props: {
-      data: {rental},
+      data: {rental, dataUser},
     },
   };
 };
 
 const Payment = (props) => {
   const {back, push, query} = useRouter();
-  const {rental} = props.data;
-  const admin = false;
+  const {rental, dataUser} = props.data;
+  let admin = false;
+  if(dataUser === {}){
+    push('/auth/login')
+  }
+  if(dataUser.roles === 'admin'){
+    admin = true;
+  }
   const rentalStatus = rental.status;
   const start_date = rental.start_date.substr(0, 10);
   const return_date = rental.return_date.substr(0, 10);

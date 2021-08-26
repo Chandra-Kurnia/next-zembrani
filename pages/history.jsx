@@ -8,10 +8,15 @@ import CardHistory from '../components/modules/CardHistory';
 import swal from 'sweetalert';
 import axios from 'axios';
 import {useRouter} from 'next/router';
+import SideCardHistory from '../components/modules/sideCardHistory';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   try {
-    const resHistory = await axios.get(`${process.env.API_SERVER}/history/getAll`);
+    const cookie = context.req.headers.cookie;
+    const resHistory = await axios.get(`${process.env.API_SERVER}/history/getAll`, {
+      withCredentials: true,
+      headers: {cookie},
+    });
     const histories = resHistory.data.data || [];
     return {
       props: {
@@ -19,6 +24,7 @@ export const getServerSideProps = async () => {
       },
     };
   } catch (error) {
+    console.log(error);
     swal('Error', 'Failed laod history, please try again later', 'error');
     return {
       props: {
@@ -42,7 +48,7 @@ const History = (props) => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .post(`${process.env.API_SERVER}/history/deletehistory`, {rental_id})
+          .post(`${process.env.API_SERVER}/history/deletehistory`, {rental_id},{withCredentials: true})
           .then((res) => {
             swal('Success', res.data.message, 'success').then(() => {
               push(`/history`);
@@ -89,10 +95,11 @@ const History = (props) => {
               {histories[0] && (
                 <div className={styles.arrival}>
                   <span className={styles.titleSpan}>New Arrival</span>
-                  <Card imgsrc={histories[0].image} title="Lambhorghini" subtitle="South Jakarta" />
-                  {histories[1] && <Card imgsrc={histories[1].image} title="Lambhorghini" subtitle="South Jakarta" />}
+                  <Card imgsrc={histories[0].image} title={histories[0].vehicle_name} subtitle="Yogyakarta" />
+                  {histories[1] && <Card imgsrc={histories[1].image} title={histories[1].vehicle_name} subtitle="South Jakarta" />}
                 </div>
               )}
+              {/* <SideCardHistory/> */}
             </div>
           </div>
         </div>

@@ -11,8 +11,10 @@ import Image from 'next/image';
 import Head from 'next/head';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
+  const router = useRouter()
   const [form, setform] = useState({
     name: '',
     email: '',
@@ -29,7 +31,8 @@ const SignUp = () => {
     axios
       .post(`${process.env.API_SERVER}/user/register`, form)
       .then((res) => {
-        swal('Success', res.data.message, 'success');
+        swal('Success', res.data.message, 'success')
+        router.push('/auth/login')
       })
       .catch((err) => {
         if (err.response.data.error[0] === undefined) {

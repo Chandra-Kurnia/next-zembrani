@@ -10,8 +10,14 @@ import Link from 'next/link';
 import axios from 'axios';
 
 const index = (props) => {
-  const {post} = props;
-  const admin = true;
+  const {post, dataUser} = props;
+  let admin = false;
+  console.log(dataUser);
+  if (dataUser) {
+    if (dataUser.roles === 'admin') {
+      admin = true;
+    }
+  }
   return (
     <Layout title="Zembrani | Home" home="navActive">
       <div className={`mb-2 mb-md-4 mb-lg-5 ${styles.cover}`}>
@@ -112,13 +118,14 @@ const index = (props) => {
 export const getServerSideProps = async (context) => {
   try {
     // console.log(context.req.headers.cookie);
-    const cookie = context.req.headers.cookie;
+    const cookie = context.req.headers.cookie || "";
     // console.log(context.req.headers.cookie);
     const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
-    // const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-    //   withCredentials: true,
-    //   headers: {cookie},
-    // });
+    const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+      withCredentials: true,
+      headers: {cookie},
+    });
+    // console.log(dataUser);
     // const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`, {
     //   withCredentials: true,
     //   headers: {cookie},
@@ -127,7 +134,7 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         post: popularVehicles,
-        // dataUser: dataUser.data.data
+        dataUser: dataUser.data.data || {},
       },
     };
   } catch (error) {
