@@ -34,7 +34,7 @@ const Reservation = (props) => {
   
   const {vehicle, image} = props;
   const [rental, setrental] = useState({
-    user_id: 20,
+    // user_id: 20,
     vehicle_id: vehicle.vehicle_id,
     cost: vehicle.price,
     start_date: '',
@@ -74,7 +74,7 @@ const Reservation = (props) => {
   };
 
   const handlePay = () => {
-    axios.post(`${process.env.API_SERVER}/vehicle/R/rental`, rental)
+    axios.post(`${process.env.API_SERVER}/vehicle/R/rental`, rental, {withCredentials:true})
     .then(() => {
       swal('Success', 'Rental Success, please finish the payment', 'success')
       .then(() => {

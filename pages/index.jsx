@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Layout from '../components/Layout';
 import InputOpt from '../components/base/InputOpt';
 import styles from '../styles/Home.module.css';
@@ -7,19 +8,28 @@ import testimonial from '../assets/img/Home/testimonial.png';
 import Image from 'next/image';
 import Card from '../components/modules/Card';
 import Link from 'next/link';
-import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux'
+import { useEffect } from 'react';
+import { getPopularVehicle } from '../redux/actions/vehicleAction';
 
-const index = (props) => {
-  const {post, dataUser} = props;
+const Index = (props) => {
+  const dispatch = useDispatch()
+  const {dataUser} = props;
   let admin = false;
-  console.log(dataUser);
   if (dataUser) {
     if (dataUser.roles === 'admin') {
       admin = true;
     }
   }
+
+useEffect(() => {
+ dispatch(getPopularVehicle)
+}, [])
+
+const {vehicles} = useSelector(state => state.vehicle)
+
   return (
-    <Layout title="Zembrani | Home" home="navActive">
+    <Layout title="Zembrani | Home" home="navActive" dataUser={dataUser}>
       <div className={`mb-2 mb-md-4 mb-lg-5 ${styles.cover}`}>
         <div className="container pt-5">
           <div className={styles.explore}>
@@ -73,8 +83,8 @@ const index = (props) => {
         </div>
       </div>
       <CardWrapper title="Popular in town" category="">
-        {post
-          ? post.map((vehicle, index) => (
+        {vehicles
+          ? vehicles.map((vehicle, index) => (
               <Card
                 key={index}
                 imgsrc={vehicle.image}
@@ -115,36 +125,36 @@ const index = (props) => {
   );
 };
 
-export const getServerSideProps = async (context) => {
-  try {
-    // console.log(context.req.headers.cookie);
-    const cookie = context.req.headers.cookie || "";
-    // console.log(context.req.headers.cookie);
-    const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
-    const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
-    // console.log(dataUser);
-    // const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`, {
-    //   withCredentials: true,
-    //   headers: {cookie},
-    // });
-    const popularVehicles = result.data.data;
-    return {
-      props: {
-        post: popularVehicles,
-        dataUser: dataUser.data.data || {},
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        post: [],
-      },
-    };
-  }
-};
+// export const getServerSideProps = async (context) => {
+//   try {
+//     // console.log(context.req.headers.cookie);
+//     const cookie = context.req.headers.cookie || "";
+//     // console.log(context.req.headers.cookie);
+//     const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
+//     const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+//       withCredentials: true,
+//       headers: {cookie},
+//     });
+//     // console.log(dataUser);
+//     // const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`, {
+//     //   withCredentials: true,
+//     //   headers: {cookie},
+//     // });
+//     const popularVehicles = result.data.data;
+//     return {
+//       props: {
+//         post: popularVehicles,
+//         dataUser: dataUser.data.data || {},
+//       },
+//     };
+//   } catch (error) {
+//     console.log(error);
+//     return {
+//       props: {
+//         post: [],
+//       },
+//     };
+//   }
+// };
 
-export default index;
+export default Index;

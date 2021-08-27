@@ -11,18 +11,19 @@ import search from '../../assets/icons/search.png';
 import styles from '../../styles/vechiles.module.css';
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
+import {useSelector} from 'react-redux';
 
-const Category = () => {
+const Category = (props) => {
   const {query} = useRouter();
-  const [vehicles, setvehicles] = useState();
+  const [vehicles, setvehicles] = useState(props.vehicles.data);
   const [keyword, setkeyword] = useState('');
   const [order, setorder] = useState('DESC');
   const [fieldOrder, setfieldOrder] = useState('vehicle_id');
   const [pagination, setpagination] = useState();
   const [limit, setlimit] = useState(5);
+  console.log(props.vehicles.data);
 
   useEffect(() => {
-    console.log(query.category);
     axios
       .get(
         `${process.env.API_SERVER}/vehicle/?limit=${limit}&type=${
@@ -140,3 +141,23 @@ const Category = () => {
 };
 
 export default Category;
+
+export const getStaticPaths = async () => {
+  const result = await axios.get(`${process.env.API_SERVER}/vehicle/?type=cars&limit=5`);
+  result.data.data.map((item) => ({params: {category: item.type_name}}));
+  const paths = [{params: {category: 'cars'}}];
+  return {
+    paths: paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const category = context.params.category;
+  const {data} = await axios.get(`${process.env.API_SERVER}/vehicle/?type=${category}&limit=5`);
+  return {
+    props: {
+      vehicles: data,
+    },
+  };
+};

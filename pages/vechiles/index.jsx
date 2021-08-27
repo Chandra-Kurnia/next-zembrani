@@ -8,6 +8,7 @@ import CardWrapper from '../../components/modules/CardWrapper';
 import Card from '../../components/modules/Card';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import {useSelector} from 'react-redux';
 
 export const getServerSideProps = async () => {
   const res = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
@@ -19,10 +20,11 @@ export const getServerSideProps = async () => {
 
 const Index = (props) => {
   const popular = props.popular;
-  const [cars, setcars] = useState([])
+  const [cars, setcars] = useState([]);
   const [motorbikes, setmotorbike] = useState();
   const [bikes, setbike] = useState();
   const [keyword, setkeyword] = useState('');
+  const {vehicles} = useSelector((state) => state.vehicle);
 
   const getCars = () => {
     axios
@@ -81,9 +83,17 @@ const Index = (props) => {
           </div>
           <div className="pt-4">
             <CardWrapper title="Popular in town" category="">
-              {popular ? popular.map((vehicle, index) => (
-                <Card imgsrc={vehicle.image} title={vehicle.vehicle_name} subtitle={vehicle.location_name} id={vehicle.vehicle_id} key={index} />
-              )) : "Data not found"}
+              {popular
+                ? popular.map((vehicle, index) => (
+                    <Card
+                      imgsrc={vehicle.image}
+                      title={vehicle.vehicle_name}
+                      subtitle={vehicle.location_name}
+                      id={vehicle.vehicle_id}
+                      key={index}
+                    />
+                  ))
+                : 'Data not found'}
             </CardWrapper>
             <section className="mt-5"></section>
             <CardWrapper title="Cars" category="cars">
