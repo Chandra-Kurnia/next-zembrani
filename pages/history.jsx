@@ -8,7 +8,6 @@ import CardHistory from '../components/modules/CardHistory';
 import swal from 'sweetalert';
 import axios from 'axios';
 import {useRouter} from 'next/router';
-import SideCardHistory from '../components/modules/sideCardHistory';
 
 export const getServerSideProps = async (context) => {
   try {
