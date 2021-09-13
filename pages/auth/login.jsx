@@ -10,10 +10,13 @@ import Line from '../../assets/img/line.png';
 import Image from 'next/image';
 import Head from 'next/head';
 import axios from 'axios';
-import swal from 'sweetalert';
 import {useRouter} from 'next/router';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../redux/actions/userAction';
 
-const Login = () => {
+const Login = (props) => {
+  const dispatch = useDispatch()
+
   useEffect(() => {
     axios.get(`${process.env.API_SERVER}/user/logout`, {withCredentials: true});
   }, []);
@@ -31,24 +34,28 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    axios
-      .post(`${process.env.API_SERVER}/user/login`, form, {withCredentials: true})
-      .then((res) => {
-        swal('Login Success', 'Now you can explore vehicle!', 'success').then(() => {
-          push('/');
-        });
-        // console.log(res);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        // swal('Login Failed', 'Check Your Info', 'error');
-        if (err.response.data.error.length < 1) {
-          swal('Error', err.response.data.message, 'error');
-        } else {
-          swal('Error', err.response.data.error[0].msg, 'error');
-        }
-      });
-  };
+    dispatch(userLogin(form, push))
+  }
+
+  // const handleLogin = () => {
+  //   axios
+  //     .post(`${process.env.API_SERVER}/user/login`, form, {withCredentials: true})
+  //     .then((res) => {
+  //       swal('Login Success', 'Now you can explore vehicle!', 'success').then(() => {
+  //         push('/');
+  //       });
+  //       // console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //       // swal('Login Failed', 'Check Your Info', 'error');
+  //       if (err.response.data.error.length < 1) {
+  //         swal('Error', err.response.data.message, 'error');
+  //       } else {
+  //         swal('Error', err.response.data.error[0].msg, 'error');
+  //       }
+  //     });
+  // };
 
   return (
     <Fragment>

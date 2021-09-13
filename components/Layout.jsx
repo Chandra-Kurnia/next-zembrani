@@ -5,17 +5,14 @@ import NavbarLogin from './modules/NavbarLogin';
 import Footer from './modules/Footer';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.css';
-import axios from 'axios';
 
 const Layout = (props) => {
   let auth = false;
-  if (props.dataUser) {
-    if (props.dataUser.roles) {
+  if(props.user){
+    if(Object.keys(props.user).length > 0){
       auth = true;
     }
   }
-  // console.log(props.dataUser);
-
   return (
     <Fragment>
       <Head>
@@ -27,7 +24,13 @@ const Layout = (props) => {
         ></script>
       </Head>
       {auth ? (
-        <NavbarLogin home={props.home} vechileType={props.vechileType} history={props.history} about={props.about} />
+        <NavbarLogin
+          home={props.home}
+          vechileType={props.vechileType}
+          history={props.history}
+          about={props.about}
+          avatar={`${process.env.API_SERVER}${props.user.avatar}`}
+        />
       ) : (
         <Navbar home={props.home} vechileType={props.vechileType} history={props.history} about={props.about} />
       )}

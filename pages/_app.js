@@ -1,13 +1,15 @@
 import '../styles/globals.css';
 import NextNProgress from 'nextjs-progressbar';
 import {Fragment} from 'react';
-import store from '../redux/store';
+import {store} from '../redux/store'
 import {Provider} from 'react-redux';
+import { PersistGate } from 'redux-persist';
 
 function MyApp({Component, pageProps}) {
   return (
     <Fragment>
       <Provider store={store}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
         <NextNProgress
           color="#FFCD61"
           startPosition={0.3}
@@ -16,29 +18,11 @@ function MyApp({Component, pageProps}) {
           showOnShallow={true}
           options={{easing: 'ease', speed: 100}}
         />
-        <Component {...pageProps} />;
+        <Component {...pageProps} user={store.getState().user.user}/>;
+        {/* </PersistGate> */}
       </Provider>
     </Fragment>
   );
 }
-
-// export const getServerSideProps = async ({ctx}) => {
-//   try {
-//     // console.log(ctx.req.headers.cookie);
-//     const cookie = ctx.req.headers.cookie;
-//     const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-//       withCredentials: true,
-//       headers: {cookie},
-//     });
-//     return {
-//       props: cookie,
-//       dataUser: dataUser.data.data
-//     };
-//   } catch (error) {
-//     return {
-//       props: [],
-//     };
-//   }
-// };
 
 export default MyApp;

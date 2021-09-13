@@ -67,7 +67,7 @@ const Index = (props) => {
   }, [keyword]);
   return (
     <Fragment>
-      <Layout title="Zembrani | Vechiles" vechileType="navActive">
+      <Layout title="Zembrani | Vechiles" vechileType="navActive" {...props}>
         <div className="container pt-3">
           <div className="input-group ms-0 ms-md-2">
             <input

@@ -8,60 +8,37 @@ import styles from '../../../styles/detail.module.css';
 import ButtonCount from '../../../components/base/ButtonCount';
 import {useState} from 'react';
 import ButtonAuth from '../../../components/base/ButtonAuth';
+import ButtonPay from '../../../components/base/ButtonPay'
 import {useEffect} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
 
 export const getServerSideProps = async (context) => {
   try {
-    const cookie = context.req.headers.cookie || "";
     const vehicleId = context.query.id;
     const res = await axios.get(`${process.env.API_SERVER}/vehicle/${vehicleId}`);
     const popularvehicle = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
-    const resdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
-    const vehicle = res.data.data;
+    const vehicle = res.data.data || null;
     const populars = popularvehicle.data.data;
-    const dataUser = resdataUser.data.data || null;
+    if(vehicle === null){
+      return{
+        notFound: true
+      }
+    }
     return {
-      props: {vehicle, populars, dataUser},
+      props: {vehicle, populars},
     };
   } catch (error) {
-    console.log(error);
     return {
-      props: {},
+      notFound: true
     };
   }
 };
 
-// export const getStaticPaths = async() =>{
-//   const {data} = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`)
-//   const vehicles = data.map((item) => ({ params: { id: item.id.toString()}}))
-//   const paths = [{ params: { id: '23' }}]
-//   return {
-//     paths: paths,
-//     fallback: true
-//   }
-// }
-
-// export const getStaticProps =async(context)=>{
-//   const id = context.params.id
-//   const resvehicledata = await axios.get(`${process.env.API_SERVER}/vehicle/detail/${id}`)
-//   const data = resvehicledata.data.data
-//   return {
-//     props: {
-//       vehicle: data
-//     }
-//   }
-// }
-
 const Show = (props) => {
   const vehicle = props.vehicle;
   const populars = props.populars;
-  const dataUser = props.dataUser;
-  console.log(dataUser);
+  const dataUser = props.user;
   let admin = false;
   // console.log(dataUser);
   if (dataUser) {
@@ -106,7 +83,7 @@ const Show = (props) => {
 
   return (
     <Fragment>
-      <Layout title="Zembrani | vechiles">
+      <Layout title="Zembrani | vechiles" {...props}>
         <div className="">
           <div className="container">
             <div className="d-flex align-items-center mt-3 mb-lg-5 mb-md-4 mb-4">
@@ -144,23 +121,6 @@ const Show = (props) => {
                 <span className={`d-block ${styles.itemDesc}`}>Type : {vehicle && vehicle.type_name}</span>
                 <span className={`d-block ${styles.itemDesc}`}>Reservation before 2 PM</span>
                 <span className={`d-block ${styles.itemPrice}`}>Rp. {vehicle && vehicle.price}/day</span>
-                {/* {admin === true ? (
-                  <>
-                  <h2>Stock : {vehicle.stock}</h2>
-                  </>
-                ) : (
-                  <>
-                    <div className="d-flex justify-content-between w-100 mt-5 align-items-center">
-                      <div>
-                        <ButtonCount text="-" onClick={() => handleMinus()} />
-                      </div>
-                      <span className={styles.count}>{amount}</span>
-                      <div>
-                        <ButtonCount text="+" bg="bg-orange" onClick={() => handlePlus()} />
-                      </div>
-                    </div>
-                  </>
-                )} */}
               </div>
             </div>
             <div className="d-flex flex-wrap justify-content-lg-start">
@@ -170,33 +130,30 @@ const Show = (props) => {
                   populars[1].vehicle_id === vehicle.vehicle_id ||
                   populars[2].vehicle_id === vehicle.vehicle_id ||
                   populars[3].vehicle_id === vehicle.vehicle_id ? (
-                    <ButtonAuth onClick={() => removefromhomepage()} bgcolor="bg-black" text="Remove from home page" />
+                    <ButtonPay onClick={() => removefromhomepage()} className='bg-black w-100' text="Remove from home page" />
                   ) : (
-                    <ButtonAuth onClick={() => addtohomepage()} bgcolor="bg-black" text="Add to home page" />
+                    <ButtonPay onClick={() => addtohomepage()} className='bg-black w-100' text="Add to home page" />
                   )}
-                  <ButtonAuth
+                  <ButtonPay
                     onClick={() => push({pathname: `/admin/update/${vehicle?.vehicle_id}`})}
-                    bgcolor="bg-orange"
+                    className='bg-orange w-100 mt-2'
                     text="Edit Vehicle"
-                    className="ms-0 ms-lg-1 ms-md-3"
                   />
                 </>
               ) : (
                 <>
-                  <ButtonAuth bgcolor="bg-black" text="Chat Admin" />
-                  {dataUser !== null ? (
-                    <ButtonAuth
+                  <ButtonPay className='bg-black w-100' text="Chat Admin" />
+                  {Object.keys(dataUser).length > 0 ? (
+                    <ButtonPay
                       onClick={() => push({pathname: `/vechiles/reservation/${vehicle.vehicle_id}`})}
                       bgcolor="bg-orange"
                       text="Reservation"
-                      className="ms-0 ms-lg-5 ms-md-3"
+                      className='bg-orange w-100 mt-2'
                     />
                   ) : ""}
-                  <ButtonAuth
-                    // onClick={() => handleDelete()}
-                    bgcolor="bg-black"
+                  <ButtonPay
                     text="Like"
-                    className="ms-0 ms-lg-5 ms-md-0"
+                    className="bg-black w-100 mt-2"
                   />
                 </>
               )}

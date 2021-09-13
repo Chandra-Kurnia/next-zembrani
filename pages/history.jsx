@@ -8,6 +8,7 @@ import CardHistory from '../components/modules/CardHistory';
 import swal from 'sweetalert';
 import axios from 'axios';
 import {useRouter} from 'next/router';
+import withAuth from './utils/Auth';
 
 export const getServerSideProps = async (context) => {
   try {
@@ -62,7 +63,7 @@ const History = (props) => {
   };
   return (
     <Fragment>
-      <Layout history="navActive" title="Zembrani | History">
+      <Layout history="navActive" title="Zembrani | History" {...props}>
         <div className="container">
           <div className={styles.content}>
             <div className={styles.flexLeft}>
@@ -107,4 +108,5 @@ const History = (props) => {
   );
 };
 
-export default History;
+export default withAuth(History);
+// export default History;

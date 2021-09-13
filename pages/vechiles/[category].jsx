@@ -21,7 +21,7 @@ const Category = (props) => {
   const [fieldOrder, setfieldOrder] = useState('vehicle_id');
   const [pagination, setpagination] = useState();
   const [limit, setlimit] = useState(5);
-  console.log(props.vehicles.data);
+  // console.log(props.vehicles.data);
 
   useEffect(() => {
     axios
@@ -63,7 +63,7 @@ const Category = (props) => {
 
   return (
     <Fragment>
-      <Layout vechileType="navActive" title={`Zembrani | ${query.category}`}>
+      <Layout vechileType="navActive" title={`Zembrani | ${query.category}`} {...props}>
         <div className="container">
           <div className="input-group ms-0 ms-md-2">
             <input

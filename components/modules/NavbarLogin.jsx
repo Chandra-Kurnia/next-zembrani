@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {Fragment} from 'react';
 import styles from './../../styles/Navbar.module.css';
 import logo from '../../assets/logos/app-logo.png';
@@ -5,8 +6,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import coll from '../../assets/icons/collapse.png';
 import email from '../../assets/icons/email.png';
-import profile from '../../assets/img/profile.png';
+import profile from '../../assets/img/profile2.jpg';
 import {useState} from 'react';
+import styled from 'styled-components';
 
 const NavbarLogin = (props) => {
   const [dropdown, setdropdown] = useState(0);
@@ -69,7 +71,7 @@ const NavbarLogin = (props) => {
                 </Link>
                 <section className="ms-4"></section>
                 <label htmlFor="dropdown">
-                  <Image src={profile} alt="avatar" className="rounded-circle" width="35px" height="35px" />
+                  <Img src={props.avatar} alt="avatar" className="rounded-circle"/>
                 </label>
                 <button className="d-none" id="dropdown" onClick={() => drop()}></button>
                 {dropdown === 1 && (
@@ -99,5 +101,10 @@ const NavbarLogin = (props) => {
     </Fragment>
   );
 };
+
+const Img = styled.img`
+  width: 40px;
+  height: 40px;
+`
 
 export default NavbarLogin;

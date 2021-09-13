@@ -11,26 +11,21 @@ import {useState, useEffect} from 'react';
 import ButtonPay from '../../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';
+import withAuth from '../../utils/Auth';
 
 export const getServerSideProps = async (context) => {
   try {
-    const cookie = context.req.headers.cookie;
     const vehicle_id = context.query.id;
     const result = await axios.get(`${process.env.API_SERVER}/vehicle/${vehicle_id}`);
     const typesResult = await axios.get(`${process.env.API_SERVER}/types/`);
     const locResult = await axios.get(`${process.env.API_SERVER}/locations/`);
-    const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
     const vehicle = result.data.data;
     const image = `${process.env.API_SERVER}${result.data.data.image}`;
     delete vehicle.image;
     const types = typesResult.data.data;
     const locations = locResult.data.data;
-    let dataUser = ResdataUser.data.data;
     return {
-      props: {vehicle, image, types, locations, dataUser},
+      props: {vehicle, image, types, locations},
     };
   } catch (error) {
     return {
@@ -40,11 +35,9 @@ export const getServerSideProps = async (context) => {
 };
 
 const UpdateVehicle = (props) => {
-  // console.log(props.types);
-  // console.log(props.locations);
   const {query, push, back} = useRouter();
   useEffect(() => {
-    if (props.dataUser.roles !== 'admin') {
+    if (props.user.roles !== 'admin') {
       swal('Error', 'Only admin', 'error').then(() => {
         push('/');
       });
@@ -206,7 +199,7 @@ const UpdateVehicle = (props) => {
 
   return (
     <Fragment>
-      <Layout title="Zembrani | Add Vehicle">
+      <Layout title="Zembrani | Add Vehicle" {...props}>
         <div className="container mb-5 pb-5">
           <div className="d-flex align-items-center mt-3 mb-lg-5 mb-md-4 mb-4">
             <Image
@@ -351,4 +344,4 @@ const UpdateVehicle = (props) => {
   );
 };
 
-export default UpdateVehicle;
+export default withAuth(UpdateVehicle);

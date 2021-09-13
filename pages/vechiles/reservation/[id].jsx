@@ -75,7 +75,8 @@ const Reservation = (props) => {
 
   const handlePay = () => {
     axios.post(`${process.env.API_SERVER}/vehicle/R/rental`, rental, {withCredentials:true})
-    .then(() => {
+    .then((res) => {
+      // console.log(res);
       swal('Success', 'Rental Success, please finish the payment', 'success')
       .then(() => {
         push('/history')
@@ -83,7 +84,7 @@ const Reservation = (props) => {
     })
     .catch((err) => {
       swal('Error', 'Rental failed, please check vehicle info', 'error')
-      console.log(err);
+      // console.log(err.response);
     })
   };
   

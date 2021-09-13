@@ -14,12 +14,10 @@ import { getPopularVehicle } from '../redux/actions/vehicleAction';
 
 const Index = (props) => {
   const dispatch = useDispatch()
-  const {dataUser} = props;
-  let admin = false;
-  if (dataUser) {
-    if (dataUser.roles === 'admin') {
-      admin = true;
-    }
+  let admin = false
+  if(props.user){
+    if(props.user.roles === 'admin')
+    admin = true;
   }
 
 useEffect(() => {
@@ -29,7 +27,7 @@ useEffect(() => {
 const {vehicles} = useSelector(state => state.vehicle)
 
   return (
-    <Layout title="Zembrani | Home" home="navActive" dataUser={dataUser}>
+    <Layout title="Zembrani | Home" home="navActive" {...props}>
       <div className={`mb-2 mb-md-4 mb-lg-5 ${styles.cover}`}>
         <div className="container pt-5">
           <div className={styles.explore}>
@@ -124,37 +122,5 @@ const {vehicles} = useSelector(state => state.vehicle)
     </Layout>
   );
 };
-
-// export const getServerSideProps = async (context) => {
-//   try {
-//     // console.log(context.req.headers.cookie);
-//     const cookie = context.req.headers.cookie || "";
-//     // console.log(context.req.headers.cookie);
-//     const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`);
-//     const dataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-//       withCredentials: true,
-//       headers: {cookie},
-//     });
-//     // console.log(dataUser);
-//     // const result = await axios.get(`${process.env.API_SERVER}/vehicle/4/popular`, {
-//     //   withCredentials: true,
-//     //   headers: {cookie},
-//     // });
-//     const popularVehicles = result.data.data;
-//     return {
-//       props: {
-//         post: popularVehicles,
-//         dataUser: dataUser.data.data || {},
-//       },
-//     };
-//   } catch (error) {
-//     console.log(error);
-//     return {
-//       props: {
-//         post: [],
-//       },
-//     };
-//   }
-// };
 
 export default Index;

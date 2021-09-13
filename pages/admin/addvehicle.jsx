@@ -12,31 +12,11 @@ import addmore from '../../assets/icons/addMore.png';
 import ButtonPay from '../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';
-
-export const getServerSideProps = async (context) => {
-  try {
-    const cookie = context.req.headers.cookie;
-    // console.log(cookie);
-    const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
-    // console.log(dataUser.data.data);
-    const dataUser = ResdataUser.data.data;
-    return {
-      props: {dataUser},
-    };
-  } catch (error) {
-    // console.log(error);
-    return {
-      notFound: true,
-    };
-  }
-};
+import withAuth from '../utils/Auth';
 
 const AddVehicle = (props) => {
   const {push, back} = useRouter();
-  const {dataUser} = props;
+  const dataUser = props.user;
   useEffect(() => {
     if (dataUser.roles !== 'admin') {
       swal('Error', 'Only admin', 'error').then(() => {
@@ -197,7 +177,7 @@ const AddVehicle = (props) => {
 
   return (
     <Fragment>
-      <Layout title="Zembrani | Add Vehicle">
+      <Layout title="Zembrani | Add Vehicle" {...props}>
         <div className="container mb-5 pb-5">
           <div className="d-flex align-items-center mt-3 mb-lg-5 mb-md-4 mb-4">
             <Image
@@ -333,4 +313,4 @@ const AddVehicle = (props) => {
   );
 };
 
-export default AddVehicle;
+export default withAuth(AddVehicle);

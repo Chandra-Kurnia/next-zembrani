@@ -9,29 +9,30 @@ import SmallButton from '../components/base/SmallButton';
 import {useState} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
+import withAuth from './utils/Auth';
 
-export const getServerSideProps = async (context) => {
-  try {
-    const cookie = context.req.headers.cookie;
-    // console.log(cookie);
-    const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
-    // console.log(dataUser.data.data);
-    const dataUser = ResdataUser.data.data;
-    return {
-      props: {dataUser},
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
-};
+// export const getServerSideProps = async (context) => {
+//   try {
+//     const cookie = context.req.headers.cookie;
+//     // console.log(cookie);
+//     const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+//       withCredentials: true,
+//       headers: {cookie},
+//     });
+//     // console.log(dataUser.data.data);
+//     const dataUser = ResdataUser.data.data;
+//     return {
+//       props: {dataUser},
+//     };
+//   } catch (error) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+// };
 
 const Profile = (props) => {
-  const {dataUser} = props;
+  const dataUser = props.user;
   const [form, setform] = useState({
     email: dataUser.email,
     address: dataUser.address,
@@ -40,7 +41,6 @@ const Profile = (props) => {
     date_of_birth: dataUser.date_of_birth,
     avatar: '',
   });
-  // console.log(form);
   const yearJoin = dataUser.created_at.substr(0, 4);
   const [avatar, setavatar] = useState(`${process.env.API_SERVER}${dataUser.avatar}`);
   const handleFile = (e) => {
@@ -75,7 +75,7 @@ const Profile = (props) => {
   };
   return (
     <Fragment>
-      <Layout title="Zembrani - Profile">
+      <Layout title="Zembrani - Profile" {...props}>
         <div className="container">
           <span className={styles.title}>Profile</span>
           <div className="text-center">
@@ -155,4 +155,4 @@ const Profile = (props) => {
   );
 };
 
-export default Profile;
+export default withAuth(Profile);
