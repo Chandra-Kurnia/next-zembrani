@@ -1,34 +1,96 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Contents
 
-First, run the development server:
+- [Contents](#contents)
+- [About](#about)
+- [Packages](#packages)
+  - [Built With](#built-with)
+  - [Packages](#packages-1)
+- [Installation](#installation)
+- [Zembrani - Backend](#zembrani-backend)
+- [Screenshots](#screenshots)
+- [Authors](#authors)
 
-```bash
-npm run dev
-# or
-yarn dev
+## About
+
+<p align="justify">
+Zembrani is a vehicle rental application built with Next JS.
+This application provides various features such as vehicle rental, vehicle search, history, profile, and others.
+</p>
+
+## Packages
+
+### Built With
+
+- NextJs
+- Redux
+- JavaScript
+- Styled Component
+- bootstrap
+
+### Packages
+
+    "axios": "^0.21.1",
+    "bootstrap": "^5.0.0-beta3",
+    "js-cookie": "^3.0.0",
+    "next": "11.1.0",
+    "nextjs-progressbar": "0.0.11",
+    "rc-pagination": "^3.1.9",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "redux-persist-cookie-storage": "^1.0.0",
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^4.1.3",
+    "styled-components": "^5.3.1",
+    "sweetalert": "^2.1.2"
+
+## Installation
+
+- Clone This Front End Repo
+
+```
+git clone https://github.com/Chandra-Kurnia/next-zembrani.git
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Go To Folder Repo
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```
+cd next-zembrani
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Install Module
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+npm install
+```
 
-## Learn More
+- Type ` npm run dev` To Start Website
 
-To learn more about Next.js, take a look at the following resources:
+<br/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Zembrani - Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+:rocket: [`Backend Zembrani`](https://github.com/Chandra-Kurnia/express-zembrani.git)
 
-## Deploy on Vercel
+<br/>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Screenshots
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<p align="center">
+  <span>
+   <img src="https://i.postimg.cc/W1GjJ8H0/landing.png"   alt= border="0" /> <br/><br/><br/><br/>
+   <img src="https://i.postimg.cc/PqdHbDg9/type.png"   alt= border="0" /> <br/><br/><br/><br/>
+   <img src="https://i.postimg.cc/qMCpp4cb/history.png"   alt= border="0" /> <br/><br/><br/><br/>
+   <img src="https://i.postimg.cc/kg3q4zfn/profile.png"   alt= border="0" /> <br/><br/><br/><br/>
+  </span>
+</p>
+
+## Author
+
+[Chandra Kurniawan](https://github.com/Chandra-Kurnia) - https://github.com/Chandra-Kurnia
