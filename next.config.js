@@ -4,7 +4,7 @@ module.exports = {
     domains: ['localhost'],
   },
   env: {
-    API_SERVER: 'https://zembrani.herokuapp.com/',
+    API_SERVER: 'https://zembrani.herokuapp.com',
   },
   typescript: {
     // !! WARN !!
