@@ -5,11 +5,13 @@ import NavbarLogin from './modules/NavbarLogin';
 import Footer from './modules/Footer';
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.css';
+import { useSelector } from 'react-redux';
 
 const Layout = (props) => {
+  const {user} = useSelector(state => state.user)
   let auth = false;
   if(props.user){
-    if(Object.keys(props.user).length > 0){
+    if(Object.keys(user).length > 0){
       auth = true;
     }
   }
@@ -29,7 +31,7 @@ const Layout = (props) => {
           vechileType={props.vechileType}
           history={props.history}
           about={props.about}
-          avatar={`${process.env.API_SERVER}${props.user.avatar}`}
+          avatar={`${process.env.API_SERVER}${user.avatar}`}
         />
       ) : (
         <Navbar home={props.home} vechileType={props.vechileType} history={props.history} about={props.about} />

@@ -12,7 +12,7 @@ import withAuth from './utils/Auth';
 
 export const getServerSideProps = async (context) => {
   try {
-    const cookie = context.req.headers.cookie;
+    const cookie = context.req.headers.cookie || '';
     const resHistory = await axios.get(`${process.env.API_SERVER}/history/getAll`, {
       withCredentials: true,
       headers: {cookie},
@@ -24,8 +24,6 @@ export const getServerSideProps = async (context) => {
       },
     };
   } catch (error) {
-    console.log(error);
-    swal('Error', 'Failed laod history, please try again later', 'error');
     return {
       props: {
         histories: [],

@@ -4,7 +4,7 @@ module.exports = {
     domains: ['localhost'],
   },
   env: {
-    API_SERVER: 'http://localhost:8080',
+    API_SERVER: 'http://localhost:4646',
   },
   typescript: {
     // !! WARN !!

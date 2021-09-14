@@ -11,9 +11,14 @@ import Head from 'next/head';
 import axios from 'axios';
 import swal from 'sweetalert';
 import {useRouter} from 'next/router';
+import { useSelector } from 'react-redux';
 
 const ForgotPassword = () => {
+  const {user} = useSelector(state => state.user)
   const {push} = useRouter();
+  if(Object.keys(user).length > 0){
+    push('/')
+  }
   const [email, setemail] = useState({
     email: '',
   });

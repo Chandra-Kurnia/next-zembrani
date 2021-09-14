@@ -33,8 +33,6 @@ const Category = (props) => {
       .then((result) => {
         setvehicles(result.data.data);
         setpagination(result.data.pagination);
-        // console.log(result.data.pagination);
-        // console.log(result.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -142,22 +140,32 @@ const Category = (props) => {
 
 export default Category;
 
-export const getStaticPaths = async () => {
-  const result = await axios.get(`${process.env.API_SERVER}/vehicle/?type=cars&limit=5`);
-  result.data.data.map((item) => ({params: {category: item.type_name}}));
-  const paths = [{params: {category: 'cars'}}];
-  return {
-    paths: paths,
-    fallback: true,
-  };
-};
+// export const getStaticPaths = async () => {
+//   const result = await axios.get(`${process.env.API_SERVER}/vehicle/?type=cars&limit=5`);
+//   result.data.data.map((item) => ({params: {category: item.type_name}}));
+//   const paths = [{params: {category: 'cars'}}];
+//   return {
+//     paths: paths,
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps = async (context) => {
-  const category = context.params.category;
-  const {data} = await axios.get(`${process.env.API_SERVER}/vehicle/?type=${category}&limit=5`);
-  return {
+// export const getStaticProps = async (context) => {
+//   const category = context.params.category;
+//   const {data} = await axios.get(`${process.env.API_SERVER}/vehicle/?type=${category}&limit=5`);
+//   return {
+//     props: {
+//       vehicles: data,
+//     },
+//   };
+// };
+
+export const getServerSideProps = async(ctx) => {
+  const category = ctx.params.category;
+  const resVehicle = await axios.get(`${process.env.API_SERVER}/vehicle/?type=${category}&limit=5`)
+  return{
     props: {
-      vehicles: data,
-    },
-  };
-};
+      vehicles: resVehicle.data.data
+    }
+  }
+}

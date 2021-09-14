@@ -6,15 +6,20 @@ import InputAuth from '../../components/base/InputAuth';
 import Link from 'next/link';
 import ButtonAuth from '../../components/base/ButtonAuth';
 import ButtonLoginGoogle from '../../components/base/ButtonLoginGoogle';
-import Line from '../../assets/img/line.png';
+import Line from '../../assets/img/line.svg';
 import Image from 'next/image';
 import Head from 'next/head';
 import axios from 'axios';
 import swal from 'sweetalert';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const SignUp = () => {
+  const {user} = useSelector(state => state.user)
   const router = useRouter()
+  if(Object.keys(user).length > 0){
+    router.push('/')
+  }
   const [form, setform] = useState({
     name: '',
     email: '',

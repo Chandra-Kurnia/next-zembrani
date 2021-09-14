@@ -11,26 +11,6 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import withAuth from './utils/Auth';
 
-// export const getServerSideProps = async (context) => {
-//   try {
-//     const cookie = context.req.headers.cookie;
-//     // console.log(cookie);
-//     const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-//       withCredentials: true,
-//       headers: {cookie},
-//     });
-//     // console.log(dataUser.data.data);
-//     const dataUser = ResdataUser.data.data;
-//     return {
-//       props: {dataUser},
-//     };
-//   } catch (error) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-// };
-
 const Profile = (props) => {
   const dataUser = props.user;
   const [form, setform] = useState({

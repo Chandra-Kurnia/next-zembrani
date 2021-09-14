@@ -6,21 +6,23 @@ import InputAuth from '../../components/base/InputAuth';
 import Link from 'next/link';
 import ButtonAuth from '../../components/base/ButtonAuth';
 import ButtonLoginGoogle from '../../components/base/ButtonLoginGoogle';
-import Line from '../../assets/img/line.png';
+import Line from '../../assets/img/line.svg';
 import Image from 'next/image';
 import Head from 'next/head';
 import axios from 'axios';
 import {useRouter} from 'next/router';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/actions/userAction';
+import { useSelector } from 'react-redux';
 
 const Login = (props) => {
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    axios.get(`${process.env.API_SERVER}/user/logout`, {withCredentials: true});
-  }, []);
   const {push} = useRouter();
+
+  const {user} = useSelector(state => state.user)
+  if(Object.keys(user).length > 0){
+    push('/')
+  }
   const [form, setform] = useState({
     email: '',
     password: '',
@@ -36,26 +38,6 @@ const Login = (props) => {
   const handleLogin = () => {
     dispatch(userLogin(form, push))
   }
-
-  // const handleLogin = () => {
-  //   axios
-  //     .post(`${process.env.API_SERVER}/user/login`, form, {withCredentials: true})
-  //     .then((res) => {
-  //       swal('Login Success', 'Now you can explore vehicle!', 'success').then(() => {
-  //         push('/');
-  //       });
-  //       // console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response);
-  //       // swal('Login Failed', 'Check Your Info', 'error');
-  //       if (err.response.data.error.length < 1) {
-  //         swal('Error', err.response.data.message, 'error');
-  //       } else {
-  //         swal('Error', err.response.data.error[0].msg, 'error');
-  //       }
-  //     });
-  // };
 
   return (
     <Fragment>

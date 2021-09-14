@@ -19,3 +19,23 @@ export const userLogin = (form, push) => async (dispatch) => {
     }
   }
 };
+
+export const userLogout = (push) => async(dispatch) => {
+  try{
+    await axios.get(`${process.env.API_SERVER}/user/logout`)
+    dispatch({type: 'LOGOUT', payload: {}})
+    push('/auth/login')
+  }catch(err){
+    console.log(err.response);
+    swal('Error', 'Logout failed', 'error')
+  }
+}
+
+export const getProfile = async(dispatch) => {
+  try {
+    const user = await axios.get(`${process.env.API_SERVER}/user/checktoken`)
+    dispatch({type: 'LOGIN', payload: user.data.data})
+  } catch (err) {
+    console.log(err.response);
+  }
+}

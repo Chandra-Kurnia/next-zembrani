@@ -13,7 +13,7 @@ export const getServerSideProps = async (context) => {
   const rental_id = context.query.id;
   const resRental = await axios(`${process.env.API_SERVER}/history/${rental_id}`);
   const rental = resRental.data.data;
-  const cookie = context.req.headers.cookie;
+  const cookie = context.req.headers.cookie || '';
   const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
     withCredentials: true,
     headers: {cookie},
@@ -125,7 +125,7 @@ const Payment = (props) => {
             </div>
             <div className="row">
               <div className="col-12 col-md-6 col-lg-4">
-                <img src={`${process.env.API_SERVER}${rental.image}`} alt="imgVechile" />
+                <img className='img-history' src={`${process.env.API_SERVER}${rental.image}`} alt="imgVechile" />
               </div>
               <div className={`${styles.rightItem} col-12 col-md-6 col-lg-6`}>
                 <span className={`d-block ${styles.itemTitle}`}>{rental.vehicle_name}</span>

@@ -39,6 +39,12 @@ a {
   color: black !important;
 }
 
+.img-history{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
 @font-face{
   font-family: 'playfair';
   src: url('../public/fonts/playfair/PlayfairDisplay-Black.otf');

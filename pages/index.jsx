@@ -45,15 +45,6 @@ const {vehicles} = useSelector(state => state.vehicle)
                     {id: 2, text: 'Trenggalek'},
                   ]}
                 />{' '}
-                <br />
-                <InputOpt
-                  name="payment"
-                  placeholder="Payment"
-                  data={[
-                    {id: 1, text: 'Jakarta'},
-                    {id: 2, text: 'Trenggalek'},
-                  ]}
-                />
               </div>
               <div className="col-6 col-lg-5">
                 <InputOpt
@@ -64,15 +55,6 @@ const {vehicles} = useSelector(state => state.vehicle)
                     {id: 2, text: 'Trenggalek'},
                   ]}
                 />{' '}
-                <br />
-                <InputOpt
-                  name="date"
-                  placeholder="Date"
-                  data={[
-                    {id: 1, text: 'Jakarta'},
-                    {id: 2, text: 'Trenggalek'},
-                  ]}
-                />
               </div>
               <br />
               <SmallButton text="explore" className="bg-orange" />

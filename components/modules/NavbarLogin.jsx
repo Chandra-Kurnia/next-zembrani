@@ -9,8 +9,13 @@ import email from '../../assets/icons/email.png';
 import profile from '../../assets/img/profile2.jpg';
 import {useState} from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../../redux/actions/userAction';
+import { useRouter } from 'next/router';
 
 const NavbarLogin = (props) => {
+  const dispatch = useDispatch()
+  const {push} = useRouter()
   const [dropdown, setdropdown] = useState(0);
   const drop = () => {
     if (dropdown === 1) {
@@ -19,6 +24,11 @@ const NavbarLogin = (props) => {
       setdropdown(1);
     }
   };
+
+  const handleLogout = () => {
+    dispatch(userLogout(push))
+  }
+
   return (
     <Fragment>
       <div className={`navbar navbar-expand-lg pt-lg-4 pb-lg-3 ${styles.content}`}>
@@ -86,8 +96,8 @@ const NavbarLogin = (props) => {
                         <a className='text-decoration-none text-dark'>Help</a>
                       </Link>
                     </div>
-                    <div className={styles.dropmenu}>
-                      <Link href='/logout'>
+                    <div className={styles.dropmenu} onClick={handleLogout}>
+                      <Link href='#'>
                         <a className='text-decoration-none text-dark'>Log Out</a>
                       </Link>
                     </div>
