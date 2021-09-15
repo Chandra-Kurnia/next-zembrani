@@ -12,6 +12,7 @@ import ButtonPay from '../../../components/base/ButtonPay'
 import {useEffect} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { useSelector } from 'react-redux';
 
 export const getServerSideProps = async (context) => {
   try {
@@ -36,9 +37,10 @@ export const getServerSideProps = async (context) => {
 };
 
 const Show = (props) => {
+  const {user} = useSelector(state => state.user)
   const vehicle = props.vehicle;
   const populars = props.populars;
-  const dataUser = props.user;
+  const dataUser = user;
   let admin = false;
   // console.log(dataUser);
   if (dataUser) {

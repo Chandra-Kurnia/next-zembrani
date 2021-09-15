@@ -14,9 +14,12 @@ import { getPopularVehicle } from '../redux/actions/vehicleAction';
 
 const Index = (props) => {
   const dispatch = useDispatch()
+  const {vehicles} = useSelector(state => state.vehicle)
+  const {user} = useSelector(state => state.user)
+
   let admin = false
-  if(props.user){
-    if(props.user.roles === 'admin')
+  if(user){
+    if(user.roles === 'admin')
     admin = true;
   }
 
@@ -24,7 +27,6 @@ useEffect(() => {
  dispatch(getPopularVehicle)
 }, [])
 
-const {vehicles} = useSelector(state => state.vehicle)
 
   return (
     <Layout title="Zembrani | Home" home="navActive" {...props}>

@@ -3,6 +3,7 @@ import swal from 'sweetalert';
 
 export const userLogin = (form, push) => async (dispatch) => {
   try {
+      // const user = await axios.post('http://localhost:3000/api/login', form, {withCredentials: true})
       const user = await axios.post('https://next-zembrani.vercel.app/api/login', form, {withCredentials: true})
       // console.log(user);
       dispatch({type: 'LOGIN', payload: user.data.data})
@@ -11,11 +12,12 @@ export const userLogin = (form, push) => async (dispatch) => {
           push('/')
       })
   } catch (err) {
-    console.log(err.response);
-    if (err.response.data.error.length < 1) {
-      swal('Error', err.response.data.message, 'error');
+    console.log(err.response.data.error);
+    // swal('Error', 'Login Failed, please check your info', 'error')
+    if (err.response.data.error.error.length < 1) {
+      swal('Error', err.response.data.error.message, 'error');
     } else {
-      swal('Error', err.response.data.error[0].msg, 'error');
+      swal('Error', err.response.data.error.error[0].msg, 'error');
     }
   }
 };

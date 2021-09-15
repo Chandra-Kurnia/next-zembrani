@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 const Layout = (props) => {
   const {user} = useSelector(state => state.user)
   let auth = false;
-  if(props.user){
+  if(user){
     if(Object.keys(user).length > 0){
       auth = true;
     }

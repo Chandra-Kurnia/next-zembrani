@@ -13,10 +13,12 @@ import ButtonPay from '../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';
 import withAuth from '../utils/Auth';
+import { useSelector } from 'react-redux';
 
 const AddVehicle = (props) => {
+  const {user} = useSelector(state => state.user)
   const {push, back} = useRouter();
-  const dataUser = props.user;
+  const dataUser = user;
   useEffect(() => {
     if (dataUser.roles !== 'admin') {
       swal('Error', 'Only admin', 'error').then(() => {

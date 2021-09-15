@@ -20,7 +20,7 @@ const login = (req, res) => {
         })
         .catch(err => {
             res.status(400).json({
-                err
+                error: err.response.data
             })
         })
     }

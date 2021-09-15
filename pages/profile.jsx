@@ -10,9 +10,11 @@ import {useState} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
 import withAuth from './utils/Auth';
+import { useSelector } from 'react-redux';
 
 const Profile = (props) => {
-  const dataUser = props.user;
+  const {user} = useSelector(state => state.user)
+  const dataUser = user;
   const [form, setform] = useState({
     email: dataUser.email,
     address: dataUser.address,

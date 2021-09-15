@@ -1,8 +1,10 @@
 import { Component } from "react";
+import { useSelector } from "react-redux";
 import Index from '..'
 const withAuth = Component => {
     const Auth = (props) => {
-        if(Object.keys(props.user).length > 0){
+        const {user} = useSelector(state => state.user)
+        if(Object.keys(user).length > 0){
             return <Component {...props}/>
         }
         return <Index/>

@@ -12,6 +12,7 @@ import ButtonPay from '../../../components/base/ButtonPay';
 import axios from 'axios';
 import swal from 'sweetalert';
 import withAuth from '../../utils/Auth';
+import { useSelector } from 'react-redux';
 
 export const getServerSideProps = async (context) => {
   try {
@@ -35,9 +36,10 @@ export const getServerSideProps = async (context) => {
 };
 
 const UpdateVehicle = (props) => {
+  const {user} = useSelector(state => state.user)
   const {query, push, back} = useRouter();
   useEffect(() => {
-    if (props.user.roles !== 'admin') {
+    if (user.roles !== 'admin') {
       swal('Error', 'Only admin', 'error').then(() => {
         push('/');
       });
