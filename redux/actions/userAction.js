@@ -3,8 +3,8 @@ import swal from 'sweetalert';
 
 export const userLogin = (form, push) => async (dispatch) => {
   try {
-      const user = await axios.post(`${process.env.API_SERVER}/user/login`, form, {withCredentials: true})
-      console.log(user);
+      const user = await axios.post('https://next-zembrani.vercel.app/api/login', form, {withCredentials: true})
+      // console.log(user);
       dispatch({type: 'LOGIN', payload: user.data.data})
       swal('Login Success', 'Now you can explore vehicle!', 'success')
       .then(() => {
