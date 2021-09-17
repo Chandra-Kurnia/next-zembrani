@@ -3,9 +3,7 @@ import swal from 'sweetalert';
 
 export const userLogin = (form, push) => async (dispatch) => {
   try {
-      // const user = await axios.post('http://localhost:3000/api/login', form, {withCredentials: true})
-      const user = await axios.post('https://next-zembrani.vercel.app/api/login', form, {withCredentials: true})
-      // console.log(user);
+      const user = await axios.post(`${process.env.APP_URL}/api/login`, form, {withCredentials: true})
       dispatch({type: 'LOGIN', payload: user.data.data})
       swal('Login Success', 'Now you can explore vehicle!', 'success')
       .then(() => {
@@ -13,7 +11,6 @@ export const userLogin = (form, push) => async (dispatch) => {
       })
   } catch (err) {
     console.log(err.response.data.error);
-    // swal('Error', 'Login Failed, please check your info', 'error')
     if (err.response.data.error.error.length < 1) {
       swal('Error', err.response.data.error.message, 'error');
     } else {
@@ -35,7 +32,7 @@ export const userLogout = (push) => async(dispatch) => {
 
 export const getProfile = async(dispatch) => {
   try {
-    const user = await axios.get(`${process.env.API_SERVER}/user/checktoken`)
+    const user = await axios.get(`${process.env.APP_URL}/api/checktoken`)
     dispatch({type: 'LOGIN', payload: user.data.data})
   } catch (err) {
     console.log(err.response);

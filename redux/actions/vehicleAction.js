@@ -7,7 +7,6 @@ export const getPopularVehicle = async(dispatch) => {
         const popularVehicles = data.data
         dispatch({type: 'getPopularVehicles', payload: popularVehicles})
     }catch(err){
-        console.log(err.response);
-        swal('Error', 'Error get data popular vehicle', 'error')
+        dispatch({type: 'getPopularVehicles', payload: []})
     }
 }

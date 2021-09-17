@@ -65,7 +65,7 @@ useEffect(() => {
         </div>
       </div>
       <CardWrapper title="Popular in town" category="">
-        {vehicles
+        {vehicles.length > 0
           ? vehicles.map((vehicle, index) => (
               <Card
                 key={index}
@@ -75,7 +75,7 @@ useEffect(() => {
                 id={vehicle.vehicle_id}
               />
             ))
-          : 'Data Not Found'}
+          : 'Data Is Loading'}
         {admin && (
           <Link href="/admin/addvehicle">
             <a>
