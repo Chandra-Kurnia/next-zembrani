@@ -31,10 +31,14 @@ const ForgotPassword = () => {
         });
       })
       .catch((err) => {
-        if (err.response.data.error[0] === undefined) {
-          swal('Error', err.response.data.message, 'error');
-        } else {
-          swal('Error', err.response.data.error[0].msg, 'error');
+        try{
+          if (err.response.data.error[0] === undefined) {
+            swal('Error', err.response.data.message, 'error');
+          } else {
+            swal('Error', err.response.data.error[0].msg, 'error');
+          }
+        }catch{
+          swal("Error", 'Unknown error, please try again later', 'error')
         }
       });
   };
@@ -63,15 +67,6 @@ const ForgotPassword = () => {
               </span>
             </div>
             <div className="mt-5 pt-lg-5 pt-md-5 pt-2">
-              <InputAuth
-                onChange={(e) =>
-                  setemail({
-                    [e.target.name]: e.target.value,
-                  })
-                }
-                name="email"
-                placeholder="Enter your email address"
-              />
               <InputAuth
                 onChange={(e) =>
                   setemail({
