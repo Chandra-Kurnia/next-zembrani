@@ -11,6 +11,12 @@
     font-family: 'Custom-font', nunito;
 }
 
+.googleLogo{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
 @media (min-width: 768px) {
 }
 

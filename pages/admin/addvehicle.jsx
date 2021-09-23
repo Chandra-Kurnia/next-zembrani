@@ -14,11 +14,14 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import withAuth from '../utils/Auth';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addVehicle } from '../../redux/actions/vehicleAction';
 
 const AddVehicle = (props) => {
   const {user} = useSelector(state => state.user)
   const {push, back} = useRouter();
   const dataUser = user;
+  const dispatch = useDispatch()
   useEffect(() => {
     if (dataUser.roles !== 'admin') {
       swal('Error', 'Only admin', 'error').then(() => {
@@ -101,32 +104,7 @@ const AddVehicle = (props) => {
   };
 
   const handleSave = () => {
-    const formData = new FormData();
-    formData.append('location_id', form.location_id);
-    formData.append('type_id', form.type_id);
-    formData.append('vehicle_name', form.vehicle_name);
-    formData.append('price', form.price);
-    formData.append('status', form.status);
-    formData.append('stock', form.stock);
-    formData.append('description', form.description);
-    formData.append('vehicle_img', form.vehicle_img);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
-    axios
-      .post(`${process.env.API_SERVER}/vehicle/`, formData, {withCredentials: true})
-      .then((res) => {
-        swal('Success', res.data.message, 'success').then(() => {
-          push('/vechiles');
-        });
-      })
-      .catch((err) => {
-        if (err.response.data.error[0] === undefined) {
-          swal('Error', err.response.data.message, 'error');
-        } else {
-          swal('Error', err.response.data.error[0].msg, 'error');
-        }
-      });
+    dispatch(addVehicle(form, push))
   };
 
   const handleDrop = () => {
