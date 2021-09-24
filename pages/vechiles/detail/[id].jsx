@@ -144,7 +144,7 @@ const Show = (props) => {
                 </>
               ) : (
                 <>
-                  <ButtonPay className='bg-black w-100' text="Chat Admin" />
+                  <ButtonPay className='bg-black w-100' text="Chat Admin" onClick={() => swal('Info', 'Feature in development', 'info')} />
                   {Object.keys(dataUser).length > 0 ? (
                     <ButtonPay
                       onClick={() => push({pathname: `/vechiles/reservation/${vehicle.vehicle_id}`})}
@@ -156,6 +156,7 @@ const Show = (props) => {
                   <ButtonPay
                     text="Like"
                     className="bg-black w-100 mt-2"
+                    onClick={() => swal('Info', 'Feature in development', 'info')}
                   />
                 </>
               )}

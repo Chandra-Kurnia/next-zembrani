@@ -10,13 +10,16 @@ import {useState} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
 import withAuth from './utils/Auth';
-import { useSelector } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {getProfile} from '../redux/actions/userAction';
 
 const Profile = (props) => {
-  const {user} = useSelector(state => state.user)
+  const {user} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const dataUser = user;
   const [form, setform] = useState({
     email: dataUser.email,
+    gender: dataUser.gender,
     address: dataUser.address,
     phone_number: dataUser.phone_number,
     name: dataUser.name,
@@ -38,6 +41,7 @@ const Profile = (props) => {
   const handleSave = () => {
     const formData = new FormData();
     formData.append('email', form.email);
+    formData.append('gender', form.gender);
     formData.append('address', form.address);
     formData.append('phone_number', form.phone_number);
     formData.append('name', form.name);
@@ -49,6 +53,7 @@ const Profile = (props) => {
     axios
       .post(`${process.env.API_SERVER}/user/updateprofile`, formData, {withCredentials: true})
       .then(() => {
+        dispatch(getProfile);
         swal('Success', 'update data success', 'success');
       })
       .catch((err) => {
@@ -77,14 +82,44 @@ const Profile = (props) => {
             <span className={`${styles.desc}`}>{dataUser.phone_number}</span>
             <span className={`${styles.desc}`}>Has been active since {yearJoin}</span>
             <div className="row mt-3">
-              <div className={`col ${styles.male}`}>
-                <input className="me-1" type="radio" name="gender" id="male" />
-                <label htmlFor="male">Male</label>
-              </div>
-              <div className={`col ${styles.female}`}>
-                <input className="me-1" type="radio" name="gender" id="female" />
-                <label htmlFor="female">Female</label>
-              </div>
+              {dataUser.gender ? (
+                <>
+                  {dataUser.gender === 'female' ? (
+                    <>
+                      <div className={`col ${styles.male}`} onChange={(e) => handleForm(e)}>
+                        <input className="me-1" type="radio" name="gender" id="male" value='male' />
+                        <label htmlFor="male">Male</label>
+                      </div>
+                      <div className={`col ${styles.female}`} onChange={(e) => handleForm(e)}>
+                        <input className="me-1" type="radio" name="gender" id="female" value='female' defaultChecked/>
+                        <label htmlFor="female">Female</label>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className={`col ${styles.male}`} onChange={(e) => handleForm(e)}>
+                        <input className="me-1" type="radio" name="gender" id="male" value='male' defaultChecked/>
+                        <label htmlFor="male">Male</label>
+                      </div>
+                      <div className={`col ${styles.female}`} onChange={(e) => handleForm(e)}>
+                        <input className="me-1" type="radio" name="gender" id="female" value='female' />
+                        <label htmlFor="female">Female</label>
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className={`col ${styles.male}`} onChange={(e) => handleForm(e)}>
+                    <input className="me-1" type="radio" name="gender" id="male" value='male'/>
+                    <label htmlFor="male">Male</label>
+                  </div>
+                  <div className={`col ${styles.female}`} onChange={(e) => handleForm(e)}>
+                    <input className="me-1" type="radio" name="gender" id="female" value='female'/>
+                    <label htmlFor="female">Female</label>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="form mt-4">

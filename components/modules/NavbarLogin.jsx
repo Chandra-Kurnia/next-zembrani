@@ -68,20 +68,24 @@ const NavbarLogin = (props) => {
                   <a className={`text-decoration-none ${props.history} ${styles.navigation}`}>History</a>
                 </Link>
               </li>
-              <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
+              {/* <li className="nav-item ms-lg-5 mt-lg-0 mt-md-3 mt-3">
                 <Link href="">
                   <a className={`text-decoration-none ${props.about} ${styles.navigation}`}>About</a>
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item ms-lg-5 text-center d-flex align-items-center mt-3 mt-lg-0 ms-3 ms-lg-0">
-                <Link href="/chat">
+                {/* <Link href="/chat">
                   <a>
                     <Image src={email} alt="emailLogo" width="30px" height="27px" />
                   </a>
-                </Link>
+                </Link> */}
                 <section className="ms-4"></section>
                 <label htmlFor="dropdown">
+                  <ImgWrapper>
+                  
                   <Img src={props.avatar} alt="avatar" className="rounded-circle"/>
+                  </ImgWrapper>
+
                 </label>
                 <button className="d-none" id="dropdown" onClick={() => drop()}></button>
                 {dropdown === 1 && (
@@ -113,8 +117,14 @@ const NavbarLogin = (props) => {
 };
 
 const Img = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
+const ImgWrapper = styled.div`
+width: 40px;
+height: 40px;
 `
 
 export default NavbarLogin;

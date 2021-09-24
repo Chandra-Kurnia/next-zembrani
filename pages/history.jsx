@@ -67,10 +67,10 @@ const History = (props) => {
             <div className={styles.flexLeft}>
               <SearhHistory />
               <div className={styles.mainContent}>
-                <span className={styles.historyTitle}>Today</span>
+                {/* <span className={styles.historyTitle}>Today</span>
                 <NotifWrapper msg="Please finish your payment for vespa for Vespa Rental Jogja" />
                 <NotifWrapper msg="Your payment has been confirmed!" />
-                <span className={styles.historyTitle}>A Week ago</span>
+                <span className={styles.historyTitle}>A Week ago</span> */}
                 {histories.length > 0 ? (
                   histories.map((history, index) => (
                     <CardHistory

@@ -11,6 +11,7 @@ import Link from 'next/link';
 import {useSelector, useDispatch} from 'react-redux'
 import { useEffect } from 'react';
 import { getPopularVehicle } from '../redux/actions/vehicleAction';
+import swal from 'sweetalert';
 
 const Index = (props) => {
   const dispatch = useDispatch()
@@ -45,6 +46,8 @@ useEffect(() => {
                   data={[
                     {id: 1, text: 'Jakarta'},
                     {id: 2, text: 'Trenggalek'},
+                    {id: 2, text: 'Semarang'},
+                    {id: 2, text: 'Solo'},
                   ]}
                 />{' '}
               </div>
@@ -53,13 +56,15 @@ useEffect(() => {
                   name="type"
                   placeholder="Type"
                   data={[
-                    {id: 1, text: 'Jakarta'},
-                    {id: 2, text: 'Trenggalek'},
+                    {id: 1, text: 'Motor'},
+                    {id: 2, text: 'Mobil'},
+                    {id: 2, text: 'Vespa'},
+                    {id: 2, text: 'Matic'},
                   ]}
                 />{' '}
               </div>
               <br />
-              <SmallButton text="explore" className="bg-orange" />
+              <SmallButton text="explore" className="bg-orange" onClick={() => swal('Info', 'Feature in development', 'info')} />
             </div>
           </div>
         </div>
