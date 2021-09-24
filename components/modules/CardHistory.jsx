@@ -2,7 +2,6 @@
 import {Fragment} from 'react';
 import styles from '../../styles/CardHistory.module.css';
 import Link from 'next/link';
-import moment from 'moment';
 
 const CardHistory = (props) => {
   return (
@@ -15,7 +14,7 @@ const CardHistory = (props) => {
           <a className={styles.a}>
             <div className={styles.content}>
               <span className={styles.title}>{props.title}</span>
-              <span className={styles.time}>{moment(props.time).format('LLLL')}</span>
+              <span className={styles.time}>{props.time}</span>
               <span className={styles.prepay}>Cost : Rp. {props.prepay}</span>
               <span className={styles.status}>{props.status}</span>
             </div>

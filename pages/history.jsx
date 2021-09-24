@@ -10,6 +10,7 @@ import axios from 'axios';
 import {useRouter} from 'next/router';
 import withAuth from './utils/Auth';
 import {useEffect, useState} from 'react';
+import moment from 'moment';
 
 const History = (props) => {
   const {push} = useRouter();
@@ -62,7 +63,7 @@ const History = (props) => {
                       idHistory={history.rental_id}
                       imgsrc={history.image}
                       title={history.vehicle_name}
-                      time={`${history.start_date} to ${history.return_date}`}
+                      time={`${moment(history.start_date).format('ll')}  to  ${moment(history.return_date).format('ll')}`}
                       prepay={history.cost}
                       status={history.status}
                       onClick={() => handleDelete(history.rental_id)}
