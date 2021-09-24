@@ -9,33 +9,21 @@ import swal from 'sweetalert';
 import axios from 'axios';
 import {useRouter} from 'next/router';
 import withAuth from './utils/Auth';
-
-export const getServerSideProps = async (context) => {
-  try {
-    const cookie = context.req.headers.cookie || '';
-    const resHistory = await axios.get(`${process.env.API_SERVER}/history/getAll`, {
-      withCredentials: true,
-      headers: {cookie},
-    });
-    const histories = resHistory.data.data || [];
-    return {
-      props: {
-        histories,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        histories: [],
-      },
-    };
-  }
-};
+import {useEffect, useState} from 'react';
 
 const History = (props) => {
   const {push} = useRouter();
-  // console.log(props.histories);
-  const histories = props.histories;
+  const [histories, sethistories] = useState();
+  useEffect(() => {
+    axios.get(`${process.env.API_SERVER}/history/getAll`, {
+      withCredentials: true,
+    }).then((result) => {
+      sethistories(result.data.data);
+    })
+    .catch(err => {
+      console.log(err.response);
+    })
+  }, []);
   const handleDelete = (rental_id) => {
     swal({
       title: 'Are you sure?',
@@ -46,7 +34,7 @@ const History = (props) => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .post(`${process.env.API_SERVER}/history/deletehistory`, {rental_id},{withCredentials: true})
+          .post(`${process.env.API_SERVER}/history/deletehistory`, {rental_id}, {withCredentials: true})
           .then((res) => {
             swal('Success', res.data.message, 'success').then(() => {
               push(`/history`);
@@ -67,11 +55,7 @@ const History = (props) => {
             <div className={styles.flexLeft}>
               <SearhHistory />
               <div className={styles.mainContent}>
-                {/* <span className={styles.historyTitle}>Today</span>
-                <NotifWrapper msg="Please finish your payment for vespa for Vespa Rental Jogja" />
-                <NotifWrapper msg="Your payment has been confirmed!" />
-                <span className={styles.historyTitle}>A Week ago</span> */}
-                {histories.length > 0 ? (
+                {histories && histories.length > 0 ? (
                   histories.map((history, index) => (
                     <CardHistory
                       key={index}
@@ -90,11 +74,13 @@ const History = (props) => {
               </div>
             </div>
             <div className={styles.flexRight}>
-              {histories[0] && (
+              {histories && histories[0] && (
                 <div className={styles.arrival}>
                   <span className={styles.titleSpan}>New Arrival</span>
-                  <Card imgsrc={histories[0].image} title={histories[0].vehicle_name} subtitle="Yogyakarta" />
-                  {histories[1] && <Card imgsrc={histories[1].image} title={histories[1].vehicle_name} subtitle="South Jakarta" />}
+                  <Card imgsrc={histories[0].image} title={histories[0].vehicle_name} id={histories[0].vehicle_id} subtitle="Yogyakarta" />
+                  {histories[1] && (
+                    <Card imgsrc={histories[1].image} title={histories[1].vehicle_name} id={histories[1].vehicle_id} subtitle="South Jakarta" />
+                  )}
                 </div>
               )}
               {/* <SideCardHistory/> */}

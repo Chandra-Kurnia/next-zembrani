@@ -7,7 +7,7 @@ module.exports = {
     // API_SERVER: 'http://localhost:4646',
     API_SERVER: 'https://api-zembrani.candrakurnia.xyz',
     // APP_URL: 'http://localhost:3000'
-    APP_URL: 'https://next-zembrani.vercel.app'
+    // APP_URL: 'https://next-zembrani.vercel.app'
   },
   typescript: {
     // !! WARN !!
