@@ -8,6 +8,7 @@ import styles from '../../styles/payment.module.css';
 import {useRouter} from 'next/router';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { useSelector } from 'react-redux';
 
 export const getServerSideProps = async (context) => {
   const rental_id = context.query.id;

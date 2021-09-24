@@ -1,96 +1,135 @@
-<img src="https://i.postimg.cc/5Np8xQTC/banner.png">
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/Chandra-Kurnia/next-zembrani">
+    <img src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/zembrani.png?token=AR6DFDPQRFZFTM4WXXP7OYTBJZKLO" alt="Logo" width="180" height="180">
+  </a>
 
-## Contents
+  <h3 align="center">Zembrani - Vehicle Rental</h3>
 
-- [Contents](#contents)
-- [About](#about)
-- [Packages](#packages)
-  - [Built With](#built-with)
-  - [Packages](#packages-1)
-- [Installation](#installation)
-- [Zembrani - Backend](#zembrani-backend)
-- [Screenshots](#screenshots)
-- [Authors](#authors)
-
-## About
-
-<p align="justify">
-Zembrani is a vehicle rental application built with Next JS.
-This application provides various features such as vehicle rental, vehicle search, history, profile, and others.
+  <p align="center">
+    Zembrani is a vehicle rental application built using NextJs and ExpressJs.
+    <br />
+    <a href="https://github.com/Chandra-Kurnia/next-zembrani"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="http://next-zembrani.vercel.app/">View Demo</a>
+    ·
+    <a href="https://github.com/Chandra-Kurnia/next-zembrani">Report Bug</a>
+    ·
+    <a href="https://github.com/Chandra-Kurnia/next-zembrani">Request Feature</a>
+  </p>
 </p>
 
-## Packages
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+        <ol>
+            <li>
+                <a href="#build-with">Build With</a>
+            </li>
+        </ol>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ol>
+        <li>
+          <a href="#installation">Installation</a>
+        </li>
+        <li>
+          <a href="#prerequisites">Prerequisites</a>
+        </li>
+        <li>
+          <a href="#related-project">Related Project</a>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#our-team">Our Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-### Built With
+## About The Project
 
-- NextJs
-- Redux
-- JavaScript
-- Styled Component
-- bootstrap
+<p align="justify">
+<b>Zembrani</b> is a vehicle rental application built using NextJs and ExpressJs. This application provides various features, such as vehicle rental, popular vehicles, rental history, etc. Also equipped with admin access that can manage the application, add new vehicles, delete vehicles, update vehicles, and the main feature is rental.
+</p>
 
-### Packages
+### Build With
 
-    "axios": "^0.21.1",
-    "bootstrap": "^5.0.0-beta3",
-    "js-cookie": "^3.0.0",
-    "next": "11.1.0",
-    "nextjs-progressbar": "0.0.11",
-    "rc-pagination": "^3.1.9",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-redux": "^7.2.4",
-    "redux": "^4.1.1",
-    "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0",
-    "redux-persist-cookie-storage": "^1.0.0",
-    "redux-thunk": "^2.3.0",
-    "socket.io-client": "^4.1.3",
-    "styled-components": "^5.3.1",
-    "sweetalert": "^2.1.2"
+* [JavaScript](https://www.javascript.com/)
+* [Next Js](https://nextjs.org/)
+* [Redux](https://redux.js.org/)
+* [Bootsrap 5](getbootstrap.com/)
+* [Moment js](https://momentjs.com/)
 
-## Installation
+## Getting Started
 
-- Clone This Front End Repo
+### Prerequisites
 
+This is an example of how to list things you need to use the software and how to install them.
+
+* [Node Js](https://nodejs.org/en/download/)
+
+### Installation
+
+1. Clone These 2 Repos (Backend and Frontend)
+
+```sh
+https://github.com/Chandra-Kurnia/next-zembrani.git
 ```
-git clone https://github.com/Chandra-Kurnia/next-zembrani.git
 
-```
+2. Go To Folder Repo
 
-- Go To Folder Repo
-
-```
+```sh
 cd next-zembrani
 ```
 
-- Install Module
+3. Install Module
 
-```
+```sh
 npm install
 ```
 
-- Type ` npm run dev` To Start Website
+4. Edit env in next.configs.js for API server
 
-<br/>
+```sh
+API_SERVER: '',
+```
 
-## Zembrani - Backend
+5. Start website
 
-:rocket: [`Backend Zembrani`](https://github.com/Chandra-Kurnia/express-zembrani.git)
+```sh
+npm run dev
+```
+
+### Related Project
+
+* [`Frontend Zembrani`](https://github.com/Chandra-Kurnia/next-zembrani)
+* [`Backend Zembrani`](https://github.com/Chandra-Kurnia/express-zembrani)
 
 <br/>
 
 ## Screenshots
 
-<p align="center">
-  <span>
-   <img src="https://i.postimg.cc/W1GjJ8H0/landing.png"   alt= border="0" /> <br/><br/><br/><br/>
-   <img src="https://i.postimg.cc/PqdHbDg9/type.png"   alt= border="0" /> <br/><br/><br/><br/>
-   <img src="https://i.postimg.cc/qMCpp4cb/history.png"   alt= border="0" /> <br/><br/><br/><br/>
-   <img src="https://i.postimg.cc/kg3q4zfn/profile.png"   alt= border="0" /> <br/><br/><br/><br/>
-  </span>
-</p>
+<div align="center">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/1.homeadmin.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/2.login.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/5.vehicletype.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/6.vehiclecategory.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/8.history.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/10.addVehicle.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/11.edit.png">
+    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/12.profile.png">
 
-## Author
+</div>
 
-[Chandra Kurniawan](https://github.com/Chandra-Kurnia) - https://github.com/Chandra-Kurnia
+## Contact
+
+My Email : candrakurniawan.dev@gmail.com
+
+Project Link: [https://github.com/Chandra-Kurnia/next-zembrani](https://github.com/Chandra-Kurnia/next-zembrani)
