@@ -121,8 +121,8 @@ npm run dev
     <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/2.login.png">
     <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/5.vehicletype.png">
     <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/6.vehiclecategory.png">
-    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/8.history.png">
-    <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/10.addVehicle.png">
+    <img width="250" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/8.history.png">
+    <img width="250" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/10.addVehicle.png">
     <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/11.edit.png">
     <img width="700" src="https://raw.githubusercontent.com/Chandra-Kurnia/assets/main/Zembrani/12.profile.png">
 
