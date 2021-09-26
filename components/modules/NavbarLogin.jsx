@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { userLogout } from '../../redux/actions/userAction';
 import { useRouter } from 'next/router';
+import swal from 'sweetalert';
 
 const NavbarLogin = (props) => {
   const dispatch = useDispatch()
@@ -95,10 +96,10 @@ const NavbarLogin = (props) => {
                         <a className='text-decoration-none text-dark'>Edit Profile</a>
                       </Link>
                     </div>
-                    <div className={styles.dropmenu}>
-                      <Link href='/help'>
+                    <div className={styles.dropmenu} onClick={() => swal('Info', 'feature in development', 'info')}>
+                      {/* <Link href='/help'> */}
                         <a className='text-decoration-none text-dark'>Help</a>
-                      </Link>
+                      {/* </Link> */}
                     </div>
                     <div className={styles.dropmenu} onClick={handleLogout}>
                       <Link href='#'>

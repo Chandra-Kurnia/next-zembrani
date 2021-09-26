@@ -6,7 +6,7 @@ const InputProfle = (props) => {
     <Fragment>
       <div className={props.className}>
         <span className={styles.title}>{props.title}</span>
-        <input className={styles.input} type="text" onChange={(e) => props.onChange(e)} name={props.name} id="" defaultValue={props.value} />
+        <input className={styles.input} type={props.type || 'text'} onChange={(e) => props.onChange(e)} name={props.name} id="" value={props.value} />
       </div>
     </Fragment>
   );

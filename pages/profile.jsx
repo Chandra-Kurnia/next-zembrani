@@ -38,6 +38,31 @@ const Profile = (props) => {
   const handleForm = (e) => {
     setform({...form, [e.target.name]: e.target.value});
   };
+
+  const handleCancel = () => {
+    swal({
+      title: 'Reset your form',
+      text: 'The data you just input will return as before.',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willReset) => {
+      if (willReset) {
+        setform({
+          email: dataUser.email,
+          gender: dataUser.gender,
+          address: dataUser.address,
+          phone_number: dataUser.phone_number,
+          name: dataUser.name,
+          date_of_birth: dataUser.date_of_birth,
+          avatar: '',
+        });
+        setavatar(`${process.env.API_SERVER}${dataUser.avatar}`)
+        swal('Info', 'Successfully reset data', 'info')
+      }
+    });
+  };
+
   const handleSave = () => {
     const formData = new FormData();
     formData.append('email', form.email);
@@ -82,27 +107,27 @@ const Profile = (props) => {
             <span className={`${styles.desc}`}>{dataUser.phone_number}</span>
             <span className={`${styles.desc}`}>Has been active since {yearJoin}</span>
             <div className="row mt-3">
-              {dataUser.gender ? (
+              {form.gender ? (
                 <>
-                  {dataUser.gender === 'female' ? (
+                  {form.gender === 'female' ? (
                     <>
                       <div className={`col ${styles.male}`} onChange={(e) => handleForm(e)}>
-                        <input className="me-1" type="radio" name="gender" id="male" value='male' />
+                        <input className="me-1" type="radio" name="gender" id="male" value="male" />
                         <label htmlFor="male">Male</label>
                       </div>
                       <div className={`col ${styles.female}`} onChange={(e) => handleForm(e)}>
-                        <input className="me-1" type="radio" name="gender" id="female" value='female' defaultChecked/>
+                        <input className="me-1" type="radio" name="gender" id="female" value="female" defaultChecked />
                         <label htmlFor="female">Female</label>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className={`col ${styles.male}`} onChange={(e) => handleForm(e)}>
-                        <input className="me-1" type="radio" name="gender" id="male" value='male' defaultChecked/>
+                        <input className="me-1" type="radio" name="gender" id="male" value="male" defaultChecked />
                         <label htmlFor="male">Male</label>
                       </div>
                       <div className={`col ${styles.female}`} onChange={(e) => handleForm(e)}>
-                        <input className="me-1" type="radio" name="gender" id="female" value='female' />
+                        <input className="me-1" type="radio" name="gender" id="female" value="female" />
                         <label htmlFor="female">Female</label>
                       </div>
                     </>
@@ -111,11 +136,11 @@ const Profile = (props) => {
               ) : (
                 <>
                   <div className={`col ${styles.male}`} onChange={(e) => handleForm(e)}>
-                    <input className="me-1" type="radio" name="gender" id="male" value='male'/>
+                    <input className="me-1" type="radio" name="gender" id="male" value="male" />
                     <label htmlFor="male">Male</label>
                   </div>
                   <div className={`col ${styles.female}`} onChange={(e) => handleForm(e)}>
-                    <input className="me-1" type="radio" name="gender" id="female" value='female'/>
+                    <input className="me-1" type="radio" name="gender" id="female" value="female" />
                     <label htmlFor="female">Female</label>
                   </div>
                 </>
@@ -124,20 +149,20 @@ const Profile = (props) => {
           </div>
           <div className="form mt-4">
             <span className={styles.formtitle}>Contact</span> <br />
-            <InputProfle onChange={(e) => handleForm(e)} title="Email address :" name="email" value={dataUser.email} />
+            <InputProfle onChange={(e) => handleForm(e)} title="Email address :" name="email" value={form.email} />
             <InputProfle
               onChange={(e) => handleForm(e)}
               className="mt-3"
               title="Address :"
               name="address"
-              value={dataUser.address}
+              value={form.address}
             />
             <InputProfle
               onChange={(e) => handleForm(e)}
               className="mt-3"
               title="Mobile Number :"
               name="phone_number"
-              value={dataUser.phone_number}
+              value={form.phone_number}
             />
             <span className={`mt-5 d-block ${styles.formtitle}`}>Identity</span> <br />
             <div className="row mb-3">
@@ -147,23 +172,28 @@ const Profile = (props) => {
                   className="mt-3"
                   title="Display name :"
                   name="name"
-                  value={dataUser.name}
+                  value={form.name}
                 />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
                 <InputProfle
                   onChange={(e) => handleForm(e)}
                   className="mt-3"
-                  title="DD/MM/YY"
+                  title="Date Of Birth"
                   name="date_of_birth"
-                  value={dataUser.date_of_birth}
+                  // type='date'
+                  value={form.date_of_birth}
                 />
               </div>
             </div>
             <div className="d-flex justify-content-between justify-content-lg-start flex-wrap ps-2 ps-lg-0">
               <SmallButton onClick={handleSave} text="Save changes" className="fw-bold mb-3 bg-orange" />
-              <SmallButton text="Edit password" className="fw-bold mb-3 bg-black" />
-              <SmallButton text="Cancel" className="fw-bold mb-3" />
+              <SmallButton
+                onClick={() => swal('Info', 'feature in development', 'info')}
+                text="Edit password"
+                className="fw-bold mb-3 bg-black"
+              />
+              <SmallButton onClick={handleCancel} text="Cancel" className="fw-bold mb-3" />
             </div>
           </div>
         </div>
