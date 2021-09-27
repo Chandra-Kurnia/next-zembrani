@@ -8,33 +8,45 @@ import styles from '../../styles/payment.module.css';
 import {useRouter} from 'next/router';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export const getServerSideProps = async (context) => {
   const rental_id = context.query.id;
   const resRental = await axios(`${process.env.API_SERVER}/history/${rental_id}`);
   const rental = resRental.data.data;
-  const cookie = context.req.headers.cookie || '';
-  const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
-    withCredentials: true,
-    headers: {cookie},
-  });
-  const dataUser = ResdataUser.data.data;
+  // const cookie = context.req.headers.cookie || '';
+  // const ResdataUser = await axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+  //   withCredentials: true,
+  //   headers: {cookie},
+  // });
+  // const dataUser = ResdataUser.data.data;
   return {
     props: {
-      data: {rental, dataUser},
+      data: {rental},
     },
   };
 };
 
 const Payment = (props) => {
   const {back, push, query} = useRouter();
-  const {rental, dataUser} = props.data;
+  const {rental} = props.data;
+  const [dataUser, setdataUser] = useState()
+  useEffect(() => {
+    axios.get(`${process.env.API_SERVER}/user/checktoken`, {
+      withCredentials: true,
+    }).then((result) => {
+      setdataUser(result.data.data);
+    })
+    .catch(err => {
+      console.log(err.response);
+    })
+  }, []);
   let admin = false;
-  if(dataUser === {}){
+  if(dataUser && dataUser === {}){
     push('/auth/login')
   }
-  if(dataUser.roles === 'admin'){
+  if(dataUser && dataUser.roles === 'admin'){
     admin = true;
   }
   const rentalStatus = rental.status;
