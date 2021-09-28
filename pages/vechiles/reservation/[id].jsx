@@ -126,10 +126,10 @@ const Reservation = (props) => {
                 <span className={styles.resdate}>Reservation Date : </span>
                 <div className="row">
                   <div className="col-12 col-md-12 col-lg-6">
-                    <label htmlFor="date">
+                    {/* <label htmlFor="date">
                       <span className={styles.inputDate}>{date}</span>
-                    </label>
-                    <input type="date" name="" id="date" className="d-none" onChange={(e) => handleStartDate(e)} />
+                    </label> */}
+                    <input type="date" name="" id="date" className={`${styles.inputDate} pb-2 pe-2`} onChange={(e) => handleStartDate(e)} />
                   </div>
                   <div className="col-12 col-md-12 col-lg-6 pt-3 pt-md-3 pt-lg-0">
                     <InputOpt
