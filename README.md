@@ -131,7 +131,7 @@ npm run dev
 
 </div>
 
-## Contact
+## My Contact
 
 My Email : candrakurniawan.dev@gmail.com
 
